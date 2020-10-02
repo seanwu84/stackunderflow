@@ -1,4 +1,4 @@
-# Bonus: User Home Page
+# Bonus: User's Questions
 ## Models Needed
 ## Endpoints Needed
 ## Templates Needed
