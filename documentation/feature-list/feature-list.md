@@ -39,3 +39,7 @@
 - As a User
 - I want code snippets in answers
 - So that I receive better information.
+- ## Bonus: User's Questions
+- As a User
+- I want to see all of the questions that I have asked
+- So that I can keep track of them.
