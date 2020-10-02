@@ -1,4 +1,7 @@
-# slipbopOverflow
+# SlipbopOverflow
+
+## Database Diagram
+![ERD](erd.png)
 
 ## Routes
 * /
