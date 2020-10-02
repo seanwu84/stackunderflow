@@ -1,4 +1,12 @@
 # Stack Overflow Clone
+## User Sign-Up
+- As a prospective user
+- I want to be able to sign-up
+- So that I have an account
+## User Login
+- As a User
+- I want to be able to login
+- So that I can make posts
 ## Ask Questions
 - As a User 
 - I want to be able to post questions
@@ -31,6 +39,3 @@
 - As a User
 - I want code snippets in answers
 - So that I receive better information.
-
-***
-## Bonus: Post Without Being Logged In
