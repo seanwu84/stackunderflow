@@ -3,6 +3,7 @@
 ## Routes
 * /
 * /users
+* /users/{user-id}
 * /users/signup
 * /users/login
 * /search?q={the-question}
