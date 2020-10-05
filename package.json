@@ -1,0 +1,33 @@
+{
+  "name": "slipbopOverflow",
+  "version": "1.0.0",
+  "description": "## Database Diagram ![ERD](erd.png)",
+  "main": "app.js",
+  "scripts": {
+    "start": "per-env",
+    "start:development": "nodemon -r dotenv/config ./bin/www",
+    "start:production": "./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanwu84/slipbopOverflow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seanwu84/slipbopOverflow/issues"
+  },
+  "homepage": "https://github.com/seanwu84/slipbopOverflow#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "per-env": "^1.0.2",
+    "pg": "^8.4.0",
+    "sequelize": "^5.22.3"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4",
+    "sequelize-cli": "^6.2.0"
+  }
+}
