@@ -1,4 +1,6 @@
 class Questions {
-
+  constructor() {
+      
+  }
 }
 
