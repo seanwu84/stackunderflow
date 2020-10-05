@@ -1,7 +1,7 @@
 {
   "name": "slipbopOverflow",
   "version": "1.0.0",
-  "description": "## Database Diagram ![ERD](erd.png)",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "start": "per-env",
@@ -26,7 +26,7 @@
     "sequelize": "^5.22.3"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
+    "dotenv-cli": "^4.0.0",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.2.0"
   }
