@@ -10,7 +10,7 @@ module.exports = {
       }, { transaction: t });
 
       await queryInterface.addColumn("QuestionComments", "questionId", {
-        type: Sequelize.IER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: "Questions" },
       }, { transaction: t });
