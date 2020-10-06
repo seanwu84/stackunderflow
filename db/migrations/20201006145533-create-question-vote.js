@@ -11,7 +11,7 @@ module.exports = {
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Users'}
+        references: { model: 'Users' }
       },
       value: {
         allowNull: false,
@@ -26,15 +26,8 @@ module.exports = {
         type: Sequelize.DATE
       }
     },
-      // {
-      //   uniqueKeys: {
-      //     unique_tag: {
-      //       customIndex: true,
-      //       fields: ['userId']
-      //     }
-      //   }
-      // }
-      );
+
+    );
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('QuestionVotes');

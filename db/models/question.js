@@ -1,4 +1,6 @@
+
 "use strict";
+
 module.exports = (sequelize, DataTypes) => {
   const Question = sequelize.define(
     "Question",
@@ -25,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   Question.associate = function (models) {
     Question.belongsTo(models.User, { foreignKey: "userId" });
     Question.hasMany(models.QuestionComment, { foreignKey: "questionId" });
+    Question.hasMany(models.QuestionVote, {foreignKey: 'questionId' })
   };
   return Question;
 };
