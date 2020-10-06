@@ -9,7 +9,7 @@ const checkLoginDetails = async (req, res, next) =>{
     const user = await User.findOne({where: {email}});
     let passResult = false;
     if(user){
-        passResult = bcrypt.compare(password, user.hashedPassword)
+        passResult = bcrypt.compare(password, user.hashedPassword.toString())
     }
     if(!user || !passResult){
         if(!req.errors){
@@ -17,6 +17,7 @@ const checkLoginDetails = async (req, res, next) =>{
         }
         req.errors.push("Email or Password is incorrect")
         const err = new Error("Email or Password is incorrect");
+        err.status = 401;
         next(err);
         return;
     }
