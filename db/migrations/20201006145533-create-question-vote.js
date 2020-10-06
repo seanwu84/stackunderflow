@@ -26,14 +26,14 @@ module.exports = {
         type: Sequelize.DATE
       }
     },
-      {
-        uniqueKeys: {
-          unique_tag: {
-            customIndex: true,
-            fields: ['userId']
-          }
-        }
-      }
+      // {
+      //   uniqueKeys: {
+      //     unique_tag: {
+      //       customIndex: true,
+      //       fields: ['userId']
+      //     }
+      //   }
+      // }
       );
   },
   down: (queryInterface, Sequelize) => {
