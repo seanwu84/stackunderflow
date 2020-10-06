@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     },
-
     {}
   );
   User.associate = function (models) {

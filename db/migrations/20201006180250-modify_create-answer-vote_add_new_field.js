@@ -1,35 +1,32 @@
 'use strict';
 
 module.exports = {
-  up(queryInterface, Sequelize) {
-    return Promise.all([
-      queryInterface.addColumn(
-        'AnswerVotes',
-        'answerId',
-        {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'Answers',
-            key: 'id'
-          }
-        },
-      ),
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.addColumn(
+      'AnswerVotes',
+      'answerId',
+      {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Answers',
+          key: 'id'
+        }
+      }
+    );
 
-      queryInterface.addConstraint(
-        'AnswerVotes',
-        ['userId', 'answerId'],
-        {
-          type: 'unique',
-          customIndex: true
-        },
-      ),
-    ]);
+    await queryInterface.addConstraint(
+      'AnswerVotes',
+      ['userId', 'answerId'],
+      {
+        type: 'unique',
+        customIndex: true
+      }
+    );
   },
 
-  down(queryInterface, Sequelize) {
-    return Promise.all([
-      queryInterface.removeColumn('AnswerVotes', 'answerId'),
-    ]);
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeConstraint('AnswerVotes', 'AnswerVotes_userId_answerId_uk');
+    await queryInterface.removeColumn('AnswerVotes', 'answerId');
   },
 };

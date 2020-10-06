@@ -25,17 +25,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    },
-      // {
-      //   uniqueKeys: {
-      //     unique_tag: {
-      //       customIndex: true,
-      //       fields: ['userId']
-      //     }
-      //   }
-      // }
-    );
-
+    });
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('AnswerVotes');
