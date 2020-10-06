@@ -1,4 +1,7 @@
 'use strict';
+
+const { foreign_key } = require("inflection");
+
 module.exports = (sequelize, DataTypes) => {
   const Question = sequelize.define('Question', {
     title: {
@@ -11,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Question.associate = function(models) {
-    // associations can be defined here
+    Question.hasMany(models.QuestionVote, {foreignKey: 'questionId' })
   };
   return Question;
 };

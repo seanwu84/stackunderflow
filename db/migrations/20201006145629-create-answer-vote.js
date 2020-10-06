@@ -11,7 +11,7 @@ module.exports = {
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Users'}
+        references: { model: 'Users' }
       },
       value: {
         allowNull: false,
@@ -34,7 +34,7 @@ module.exports = {
       //     }
       //   }
       // }
-  );
+    );
 
   },
   down: (queryInterface, Sequelize) => {
