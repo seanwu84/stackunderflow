@@ -58,12 +58,14 @@ const generateNewToken = async (username) =>{
 const checkToken = async (req, res, next) =>{
     const token = req.token;
     if(!token){
-        res.set("WWW-Authenticate", "Bearer").status(401).end();
+        req.user = null;
+        next();
         return;
     }
     jwt.verify(token, secret, null, async (err, payload) =>{
         if(err || !payload){
-            res.set("WWW-Authenticate", "Bearer").status(401).end();
+            req.user = null;
+            next();
             return;
         }
         const {username} = payload;
@@ -81,7 +83,13 @@ const checkToken = async (req, res, next) =>{
         }
         req.user = user;
         if(!user){
-            res.set("WWW-Authenticate", "Bearer").status(401).end();
+            if(!req.errors){
+                req.errors = [];
+            }
+            req.errors.push("User not found")
+            const err = new Error("User not found");
+            err.status = 500;
+            next(err)
             return;
         };
         next();
