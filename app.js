@@ -7,7 +7,7 @@ const app = express();
 // const morgan = require('morgan');
 // const csrfProtection = require('csurf')({ cookie: true });
 // const apiRouter = require('./routes/api');
-// const pagesRouter = require('./routes/pages');
+const questionsRouter = require('./routes/questions');
 
 // app.use(morgan('dev'));
 // app.set('view engine', 'pug');
@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(verifyUser);
 app.set("view engine", "pug");
 
-app.use("/", indexRouter);
+app.use("/", indexRouter)
 
 app.use(express.static("public"));
 
