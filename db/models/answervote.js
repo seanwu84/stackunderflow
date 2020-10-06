@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     answerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true
     },
     userId: {
       type: DataTypes.INTEGER,

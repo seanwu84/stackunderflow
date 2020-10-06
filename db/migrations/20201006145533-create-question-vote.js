@@ -8,10 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      questionId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -29,7 +25,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    },
+      {
+        uniqueKeys: {
+          unique_tag: {
+            customIndex: true,
+            fields: ['userId']
+          }
+        }
+      }
+      );
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('QuestionVotes');
