@@ -1,0 +1,7 @@
+.nav {
+  position: relative;
+}
+
+.nav #links {
+  display: none;
+}
