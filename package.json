@@ -22,8 +22,11 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "jsonwebtoken": "^8.5.1",
     "per-env": "^1.0.2",
     "pg": "^8.4.0",
+    "pug": "^2.0.4",
     "sequelize": "^5.22.3"
   },
   "devDependencies": {

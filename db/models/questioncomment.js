@@ -7,11 +7,22 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: "Users" },
+      },
+      questionId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: "Questions" },
+      },
     },
     {}
   );
   QuestionComment.associate = function (models) {
-    // associations can be defined here
+    QuestionComment.belongsTo(models.User, { foreignKey: "userId" });
+    QuestionComment.belongsTo(models.Question, { foreignKey: "questionId" });
   };
   return QuestionComment;
 };
