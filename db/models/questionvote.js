@@ -4,12 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     questionId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true
     },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true
     },
     value: {
       type: DataTypes.INTEGER,
