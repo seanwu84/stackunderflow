@@ -14,7 +14,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allow: false
     }
-  }, {});
+  }, 
+  {
+    indexes: [
+      {
+        unique: true,
+        fields: ['userId', 'answerId']
+      }
+    ]
+  });
   AnswerVote.associate = function(models) {
     // associations can be defined here
   };
