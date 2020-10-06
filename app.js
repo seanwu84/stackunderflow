@@ -29,4 +29,24 @@ app.get('/', (req, res) => {
 app.use(express.static('public'))
 
 
+
+//still need a 404
+
+const generalErrorHandler = (err, req, res, next) =>{
+    if(err.status){
+        res.status = err.status;
+    } else{
+        res.status = 500;
+    }
+    if(!req.errors || req.errors.length === 0){
+        req.errors = ["Internal server error"]
+    }
+    res.json(JSON.stringify({
+        messages: req.errors
+    }))
+}
+
+app.use(generalErrorHandler)
+
+
 module.exports = app;
