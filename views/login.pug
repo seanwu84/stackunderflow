@@ -1,9 +1,13 @@
+link(rel="stylesheet", href="/css/login.css")
+
+
+
 script(src="/js/login.js")
 
-
-form(action="/login", method="post" id="login-form")
-    label(for="email") Email
-    input(type="email", name="email", id="email")
-    label(for="password") Password
-    input(type="password", id="password", name="password")
-    button(type="submit") Login
+.container
+    form(action="/login", method="post" id="login-form")
+        label(for="email") Email
+        input(type="email", name="email", id="email")
+        label(for="password") Password
+        input(type="password", id="password", name="password")
+        button(type="submit") Login
