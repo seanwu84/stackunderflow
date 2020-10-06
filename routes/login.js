@@ -5,8 +5,12 @@ const {checkToken, checkLoginDetails, generateNewToken} = require("../utils/auth
 const router = express.Router();
 
 
-router.get("/", (req, res, next) =>{
-    res.render("login")
+router.get("/", checkToken, (req, res, next) =>{
+    if(req.user){
+        res.redirect("/");
+        return;
+    }
+    res.render("login");
 });
 
 
