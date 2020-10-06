@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/seanwu84/slipbopOverflow#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "per-env": "^1.0.2",
     "pg": "^8.4.0",
