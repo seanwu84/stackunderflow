@@ -8,10 +8,18 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      },
     }
   }, {});
   Question.associate = function(models) {
-    // associations can be defined here
+    Question.belongsTo(models.User, { foreignKey: 'userId' });
   };
   return Question;
 };
