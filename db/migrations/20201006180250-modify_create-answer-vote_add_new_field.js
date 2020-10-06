@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = {
-  up(queryInterface, Sequelize) {
-    return Promise.all([
-      queryInterface.addColumn(
+  up: async (queryInterface, Sequelize) => {
+    return queryInterface.sequelize.transaction(async (t) => {
+      await queryInterface.addColumn(
         'AnswerVotes',
         'answerId',
         {
@@ -14,22 +14,25 @@ module.exports = {
             key: 'id'
           }
         },
-      ),
+        { transaction: t }
+      );
 
-      queryInterface.addConstraint(
+      await queryInterface.addConstraint(
         'AnswerVotes',
         ['userId', 'answerId'],
         {
           type: 'unique',
           customIndex: true
         },
-      ),
-    ]);
+        { transaction: t }
+      );
+    });
   },
 
   down(queryInterface, Sequelize) {
-    return Promise.all([
-      queryInterface.removeColumn('AnswerVotes', 'answerId'),
-    ]);
+    return queryInterface.sequelize.transaction(async (t) => {
+      await queryInterface.removeConstraint('AnswerVotes', 'AnswerVotes_userId_answerId_uk', { transaction: t });
+      await queryInterface.removeColumn('AnswerVotes', 'answerId', { transaction: t });
+    });
   },
 };

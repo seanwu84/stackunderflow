@@ -1,39 +1,26 @@
 "use strict";
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    /*
-      Add altering commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.createTable('users', { id: Sequelize.INTEGER });
-    */
-    return Promise.all([
-      queryInterface.addColumn("QuestionComments", "userId", {
+  up: async (queryInterface, Sequelize) => {
+    return queryInterface.sequelize.transaction(async (t) => {
+      await queryInterface.addColumn("QuestionComments", "userId", {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: "Users" },
-      }),
-      queryInterface.addColumn("QuestionComments", "questionId", {
-        type: Sequelize.INTEGER,
+      }, { transaction: t });
+
+      await queryInterface.addColumn("QuestionComments", "questionId", {
+        type: Sequelize.IER,
         allowNull: false,
         references: { model: "Questions" },
-      }),
-    ]);
+      }, { transaction: t });
+    });
   },
 
-  down: (queryInterface, Sequelize) => {
-    /*
-      Add reverting commands here.
-      Return a promise to correctly handle asynchronicity.
-
-      Example:
-      return queryInterface.dropTable('users');
-    */
-    return Promise.all([
-      queryInterface.removeColumn("QuestionComments", "userId"),
-      queryInterface.removeColumn("QuestionComments", "questionId"),
-    ]);
+  down: async (queryInterface, Sequelize) => {
+    return queryInterface.sequelize.transaction(async (t) => {
+      await queryInterface.removeColumn("QuestionComments", "userId", { transaction: t });
+      await queryInterface.removeColumn("QuestionComments", "questionId", { transaction: t });
+    });
   },
 };
