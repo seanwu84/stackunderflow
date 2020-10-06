@@ -1,13 +1,16 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {User} = require("../db/models");
-const {secret, expiresIn} = require("../config")
+const {secret, expiresIn} = require("../config").jwtConfig
 
 
 const checkLoginDetails = async (req, res, next) =>{
+    console.log(req)
     const {email, password, username} = req.body;
+    console.log(req.body)
+    let user;
     try{
-        const user = await User.findOne({where: {username}});
+        user = await User.findOne({where: {email}});
     } catch(e){
         if(!req.error){
             req.error = [];
@@ -19,7 +22,7 @@ const checkLoginDetails = async (req, res, next) =>{
     }
     let passResult = false;
     if(user){
-        passResult = bcrypt.compare(password, user.hashedPassword.toString())
+        passResult = await bcrypt.compare(password, user.hashedPassword.toString())
     }
     if(!user || !passResult){
         if(!req.errors){
@@ -31,15 +34,15 @@ const checkLoginDetails = async (req, res, next) =>{
         next(err);
         return;
     }
-    const token = generateNewToken(username);
-    req.token = token;
+    const token = await generateNewToken(username);
+    req.newToken = token;
     next();
     return;
 };
 
 
 const generateNewToken = async (username) =>{
-    return jwt.sign({username}, secret, {expiresIn})
+    return await jwt.sign({username}, secret, {expiresIn});
 }
 
 const checkToken = async (req, res, next) =>{
@@ -48,7 +51,7 @@ const checkToken = async (req, res, next) =>{
         res.set("WWW-Authenticate", "Bearer").status(401).end();
         return;
     }
-    jwt.verify(token, secret, null, (err, payload) =>{
+    jwt.verify(token, secret, null, async (err, payload) =>{
         if(err || !payload){
             res.set("WWW-Authenticate", "Bearer").status(401).end();
             return;
