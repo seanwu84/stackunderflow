@@ -34,9 +34,9 @@ app.use(express.static('public'))
 
 const generalErrorHandler = (err, req, res, next) =>{
     if(err.status){
-        res.status = err.status;
+        res.status(err.status);
     } else{
-        res.status = 500;
+        res.status(500);
     }
     if(!req.errors || req.errors.length === 0){
         req.errors = ["Internal server error"]

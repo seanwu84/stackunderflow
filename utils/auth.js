@@ -1,3 +1,15 @@
+/*
+Security middlewear:
+    Use checktoken on all places where a token needs to be checked. This will add the
+    user onto req.user.
+    If the token is illegitament, then it will throw a 401 error
+*/
+
+
+
+
+
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {User} = require("../db/models");
@@ -5,9 +17,7 @@ const {secret, expiresIn} = require("../config").jwtConfig
 
 
 const checkLoginDetails = async (req, res, next) =>{
-    console.log(req)
     const {email, password, username} = req.body;
-    console.log(req.body)
     let user;
     try{
         user = await User.findOne({where: {email}});
@@ -34,7 +44,7 @@ const checkLoginDetails = async (req, res, next) =>{
         next(err);
         return;
     }
-    const token = await generateNewToken(username);
+    const token = await generateNewToken(user.username);
     req.newToken = token;
     next();
     return;
@@ -42,7 +52,7 @@ const checkLoginDetails = async (req, res, next) =>{
 
 
 const generateNewToken = async (username) =>{
-    return await jwt.sign({username}, secret, {expiresIn});
+    return await jwt.sign({username}, secret);
 }
 
 const checkToken = async (req, res, next) =>{
@@ -56,9 +66,10 @@ const checkToken = async (req, res, next) =>{
             res.set("WWW-Authenticate", "Bearer").status(401).end();
             return;
         }
-        const {username} = payload.data;
+        const {username} = payload;
+        let user;
         try{
-            const user = await User.findOne({where: {username}});
+            user = await User.findOne({where: {username}});
         } catch(e){
             if(!req.error){
                 req.error = [];
