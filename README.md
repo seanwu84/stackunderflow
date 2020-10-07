@@ -5,23 +5,38 @@
 ![ERD](./documentation/database-schema/erd.png)
 
 ## Routes
-
+### Front-End Routes
 - GET /
-- GET /signup
+  - When logged in - Similar to /questions
+  - When not logged in - Splash page
+  
+- GET /users
+- GET /users/{user-id}
+- GET /users/signup
+- GET /users/login
+  
+- GET /questions/
+- GET /questions/{question-id}
+  - Will grab associated answers
+- GET /questions/ask
+- GET /search?q={the-question}
+
+### Back-End Routes
 - POST /api/users
 - POST /api/users/token
-- GET /login
-- GET /users/{user-id}
-- GET /search?q={the-question}
-- GET /questions/
 - POST /api/questions
-- GET /questions/ask
-- GET /questions/{question-id}
-- POST /api/questions/{question-id}/answers
-- POST /api/questions/{question-id}/comment
-- POST /api/questions/{question-id}/answers/{answer-id}/comment
 - GET /api/questions/{question-id}/comments
+  - question comments - AJAX on /questions/{id} page
 - GET /api/questions/{question-id}/answers/{answer-id}/comments
+  - answer comments - AJAX on /questions/{id} page
+- POST /api/questions/{question-id}/answers
+  - answer a question - AJAX on /questions/{id} page
+- POST /api/questions/{question-id}/comment
+  - post a question comment - AJAX on /questions/{id} page
+- POST /api/questions/{question-id}/answers/{answer-id}/comment
+  - post an answer comment - AJAX on /questions/{id} page
+- POST /api/questions/{question-id}/votes
+- POST /api/questions/{question-id}/answers/{answer-id}/votes
 
 ### Stretch
 
