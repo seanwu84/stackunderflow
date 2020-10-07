@@ -2,7 +2,8 @@ const express = require("express");
 const bearer = require("express-bearer-token");
 
 const indexRouter = require("./routes/index");
-const apiRouter = require("./routes/api")
+const apiRouter = require("./routes/api");
+const usersRouter = require("./routes/api/users")
 const app = express();
 // const morgan = require('morgan');
 // const csrfProtection = require('csurf')({ cookie: true });
@@ -21,6 +22,7 @@ app.set("view engine", "pug");
 app.use("/api", apiRouter);
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
+app.use("/api/users", usersRouter)
 
 app.get("/", (req, res) => {
   res.send("hello world");

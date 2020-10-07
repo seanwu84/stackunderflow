@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
 const { asyncHandler, handleValidationErrors } = require("../../utils/utils");
-const { generateNewToken, requireAuth } = require("../../utils/auth");
+const { generateNewToken } = require("../../utils/auth");
 const router = express.Router();
 const db = require("../../db/models");
 
@@ -39,7 +39,7 @@ router.post(
 );
 
 router.post(
-    "/token",
+    //"/token",
     validateEmailAndPassword,
     asyncHandler(async (req, res, next) => {
         const { email, password } = req.body;
