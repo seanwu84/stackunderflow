@@ -6,7 +6,6 @@ const path = require("path");
 
 const indexRouter = require("./routes/index");
 const apiRouter = require("./routes/api")
-const loginRouter = require("./routes/login")
 const app = express();
 // const morgan = require('morgan');
 // const csrfProtection = require('csurf')({ cookie: true });
