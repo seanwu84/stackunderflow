@@ -1,13 +1,26 @@
+/*
+Security middlewear:
+    Use checktoken on all places where a token needs to be checked. This will add the
+    user onto req.user.
+    If the token is illegitament, then it will throw a 401 error
+*/
+
+
+
+
+
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {User} = require("../db/models");
-const {secret, expiresIn} = require("../config")
+const {secret, expiresIn} = require("../config").jwtConfig
 
 
 const checkLoginDetails = async (req, res, next) =>{
     const {email, password, username} = req.body;
+    let user;
     try{
-        const user = await User.findOne({where: {username}});
+        user = await User.findOne({where: {email}});
     } catch(e){
         if(!req.error){
             req.error = [];
@@ -19,7 +32,7 @@ const checkLoginDetails = async (req, res, next) =>{
     }
     let passResult = false;
     if(user){
-        passResult = bcrypt.compare(password, user.hashedPassword.toString())
+        passResult = await bcrypt.compare(password, user.hashedPassword.toString())
     }
     if(!user || !passResult){
         if(!req.errors){
@@ -31,31 +44,34 @@ const checkLoginDetails = async (req, res, next) =>{
         next(err);
         return;
     }
-    const token = generateNewToken(username);
-    req.token = token;
+    const token = await generateNewToken(user.username);
+    req.newToken = token;
     next();
     return;
 };
 
 
 const generateNewToken = async (username) =>{
-    return jwt.sign({username}, secret, {expiresIn})
+    return await jwt.sign({username}, secret);
 }
 
 const checkToken = async (req, res, next) =>{
     const token = req.token;
     if(!token){
-        res.set("WWW-Authenticate", "Bearer").status(401).end();
+        req.user = null;
+        next();
         return;
     }
-    jwt.verify(token, secret, null, (err, payload) =>{
+    jwt.verify(token, secret, null, async (err, payload) =>{
         if(err || !payload){
-            res.set("WWW-Authenticate", "Bearer").status(401).end();
+            req.user = null;
+            next();
             return;
         }
-        const {username} = payload.data;
+        const {username} = payload;
+        let user;
         try{
-            const user = await User.findOne({where: {username}});
+            user = await User.findOne({where: {username}});
         } catch(e){
             if(!req.error){
                 req.error = [];
@@ -67,7 +83,13 @@ const checkToken = async (req, res, next) =>{
         }
         req.user = user;
         if(!user){
-            res.set("WWW-Authenticate", "Bearer").status(401).end();
+            if(!req.errors){
+                req.errors = [];
+            }
+            req.errors.push("User not found")
+            const err = new Error("User not found");
+            err.status = 500;
+            next(err)
             return;
         };
         next();
