@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.use("/api", apiRouter);
 
-router.use("/user", userRouter);
+router.use("/users", userRouter);
 
 router.get("/", (req, res) => {
   res.render("index");
