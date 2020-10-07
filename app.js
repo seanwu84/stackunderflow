@@ -1,7 +1,10 @@
-const express = require('express');
+const express = require("express");
 const bearer = require("express-bearer-token");
 
 const loginRouter = require("./routes/login")
+const path = require("path");
+
+const indexRouter = require("./routes/index");
 const app = express();
 // const morgan = require('morgan');
 // const csrfProtection = require('csurf')({ cookie: true });
@@ -16,16 +19,22 @@ const app = express();
 app.use(express.json())
 app.use(bearer());
 app.set("view engine", "pug");
+<<<<<<< HEAD
 
 
 app.use("/login", loginRouter);
 
+=======
+>>>>>>> 14a061c... Added bbase mobile-first styling
 
+app.use("/", indexRouter);
+app.use(express.static(path.join(__dirname, "public")));
 
-app.get('/', (req, res) => {
-    res.send('hello world')
+app.get("/", (req, res) => {
+  res.send("hello world");
 });
 
+<<<<<<< HEAD
 app.use(express.static('public'))
 
 
@@ -50,3 +59,6 @@ app.use(generalErrorHandler)
 
 
 module.exports = app;
+=======
+module.exports = app;
+>>>>>>> 14a061c... Added bbase mobile-first styling
