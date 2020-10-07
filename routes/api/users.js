@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
 const { asyncHandler, handleValidationErrors } = require("../../utils/utils");
-const { getUserToken, requireAuth } = require("../../utils/auth");
+const { generateNewToken, requireAuth } = require("../../utils/auth");
 const router = express.Router();
 const db = require("../../db/models");
 
@@ -30,7 +30,7 @@ router.post(
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({ username, email, hashedPassword });
 
-        const token = getUserToken(user);
+        const token = generateNewToken(user);
         res.status(201).json({
             user: { id: user.id },
             token,
@@ -55,7 +55,7 @@ router.post(
             err.errors = ["The provided credentials were invalid."];
             return next(err);
         }
-        const token = getUserToken(user);
+        const token = generateNewToken(user);
         res.json({ token, user: { id: user.id } });
     })
 );
