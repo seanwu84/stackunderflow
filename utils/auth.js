@@ -5,11 +5,6 @@ Security middlewear:
     If the token is illegitament, then it will throw a 401 error
 */
 
-
-
-
-
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {User} = require("../db/models");
