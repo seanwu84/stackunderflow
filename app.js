@@ -1,9 +1,7 @@
 const express = require("express");
 const bearer = require("express-bearer-token");
-
+const cookieParser = require("cookie-parser")
 const indexRouter = require("./routes/index");
-const apiRouter = require("./routes/api");
-const usersRouter = require("./routes/api/users")
 const app = express();
 // const morgan = require('morgan');
 // const csrfProtection = require('csurf')({ cookie: true });
@@ -14,19 +12,14 @@ const app = express();
 // app.set('view engine', 'pug');
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
-// app.use(require('cookie-parser')());
+
 app.use(express.json());
 app.use(bearer());
+app.use(cookieParser())
 app.set("view engine", "pug");
 
-app.use("/api", apiRouter);
-app.use("/login", loginRouter);
-app.use("/", indexRouter);
-app.use("/api/users", usersRouter)
+app.use("/", indexRouter)
 
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
 
 app.use(express.static("public"));
 

@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
 const { asyncHandler, handleValidationErrors } = require("../../utils/utils");
-const { generateNewToken } = require("../../utils/auth");
+const {checkToken, checkLoginDetails, generateNewToken} = require("../../utils/auth");
 const router = express.Router();
 const db = require("../../db/models");
 
@@ -38,26 +38,14 @@ router.post(
     })
 );
 
-// router.post(
-//     //"/token",
-//     validateEmailAndPassword,
-//     asyncHandler(async (req, res, next) => {
-//         const { email, password } = req.body;
-//         const user = await User.findOne({
-//             where: {
-//                 email,
-//             },
-//         });
-//         if (!user || !user.validatePassword(password)) {
-//             const err = new Error("Login failed");
-//             err.status = 401;
-//             err.title = "Login failed";
-//             err.errors = ["The provided credentials were invalid."];
-//             return next(err);
-//         }
-//         const token = generateNewToken(user);
-//         res.json({ token, user: { id: user.id } });
-//     })
-// );
+
+router.post("/token", checkLoginDetails, (req, res, next) =>{
+    res.json({token: req.newToken})
+});
+
+//this sends back the username as a test route
+router.get("/test-token", checkToken, (req, res)=>{
+    res.send(req.user.username)
+})
 
 module.exports = router;
