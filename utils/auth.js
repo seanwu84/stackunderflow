@@ -5,16 +5,11 @@ Security middlewear:
     If the token is illegitament, then it will throw a 401 error
 */
 
-
-
-
-
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {User} = require("../db/models");
+const bearerToken = require("express-bearer-token");
 const {secret, expiresIn} = require("../config").jwtConfig
-
 
 const checkLoginDetails = async (req, res, next) =>{
     const {email, password, username} = req.body;
@@ -98,4 +93,4 @@ const checkToken = async (req, res, next) =>{
 
 };
 
-module.exports = {checkToken, checkLoginDetails, generateNewToken}
+module.exports = {checkToken, checkLoginDetails, generateNewToken }
