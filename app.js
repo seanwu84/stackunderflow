@@ -1,12 +1,9 @@
 const express = require("express");
 const bearer = require("express-bearer-token");
 
-const loginRouter = require("./routes/login");
-const path = require("path");
-
 const indexRouter = require("./routes/index");
-const apiRouter = require("./routes/api")
-const loginRouter = require("./routes/login")
+const apiRouter = require("./routes/api");
+const loginRouter = require("./routes/login");
 const app = express();
 // const morgan = require('morgan');
 // const csrfProtection = require('csurf')({ cookie: true });
@@ -22,7 +19,7 @@ app.use(express.json());
 app.use(bearer());
 app.set("view engine", "pug");
 
-app.use("/api", apiRouter)
+app.use("/api", apiRouter);
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
 
@@ -52,5 +49,4 @@ const generalErrorHandler = (err, req, res, next) => {
 
 app.use(generalErrorHandler);
 
-module.exports = app;
 module.exports = app;
