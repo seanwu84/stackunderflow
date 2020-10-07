@@ -2,8 +2,7 @@ const express = require("express");
 const bearer = require("express-bearer-token");
 
 const indexRouter = require("./routes/index");
-const apiRouter = require("./routes/api");
-const loginRouter = require("./routes/login");
+const apiRouter = require("./routes/api")
 const app = express();
 // const morgan = require('morgan');
 // const csrfProtection = require('csurf')({ cookie: true });

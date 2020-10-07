@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
 const { asyncHandler, handleValidationErrors } = require("../../utils/utils");
-const { getUserToken, requireAuth } = require("../../auth");
+const { getUserToken, requireAuth } = require("../../utils/auth");
 const router = express.Router();
 const db = require("../../db/models");
 
@@ -48,7 +48,6 @@ router.post(
                 email,
             },
         });
-
         if (!user || !user.validatePassword(password)) {
             const err = new Error("Login failed");
             err.status = 401;
@@ -58,19 +57,6 @@ router.post(
         }
         const token = getUserToken(user);
         res.json({ token, user: { id: user.id } });
-    })
-);
-
-router.get(
-    "/:id/tweets",
-    requireAuth,
-    asyncHandler(async (req, res, next) => {
-        const tweets = await Tweet.findAll({
-            where: {
-                userId: req.params.id,
-            },
-        });
-        res.json({ tweets });
     })
 );
 
