@@ -3,7 +3,6 @@ body {
   margin-left: auto;
   padding-right: 10px;
   padding-left: 10px;
-  max-width: 960px;
 }
 
 .navbar {
@@ -13,7 +12,6 @@ body {
 }
 
 .navbar a {
-  display: block;
   padding: 3px 11px;
 }
 .navbar #links {
@@ -65,4 +63,24 @@ body {
   display: flex;
   justify-content: space-around;
   margin-top: 10px;
+}
+
+.search {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .search-icon {
+    display: none;
+  }
+  .search {
+    display: inline-flex;
+    position: absolute;
+    bottom: 15px;
+    margin-left: 30px;
+  }
+
+  .search input {
+    width: 26em;
+  }
 }

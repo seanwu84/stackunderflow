@@ -18,10 +18,15 @@ html
             i(class="fa fa-bars icon")
           a(href="")
             img(src="../images/stacks-icon.png")
-          a(href="")
+          a(class="search-icon" href="")
             i(class="fa fa-search icon") 
+        div(class="search")
+          form(action="/search")
+            input(type="text" placeholder="Search..." name="search")
+            button(type="submit")
+              i(class="fa fa-search")
         div(id="links-right")
-          a(class="pure-button button-right") Login
+          a(class="pure-button button-right" href="/login") Login
           a(class="pure-button button-right") Sign Up
       footer.footer
         div
