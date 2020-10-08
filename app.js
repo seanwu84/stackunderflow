@@ -5,7 +5,6 @@ const morgan = require('morgan');
 
 const { verifyUser } = require("./utils/auth");
 const indexRouter = require("./routes/index");
-const questionsRouter = require('./routes/questions');
 
 const app = express();
 
