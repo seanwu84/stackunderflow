@@ -43,7 +43,6 @@ router.post("/token", checkLoginDetails, (req, res, next) =>{
     res.json({token: req.newToken})
 });
 
-//this sends back the username as a test route
 router.get("/test-token", checkToken, (req, res)=>{
     res.send(req.user.username)
 })
