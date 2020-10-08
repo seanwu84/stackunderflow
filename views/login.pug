@@ -1,20 +1,20 @@
-link(rel="stylesheet", href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous")
+extend layout
 
-link(rel="stylesheet", href="/css/login.css")
-
-
-
-script(src="/js/login.js")
-
-.container
-    .form-div
-        form.pure-form(action="/login", method="post" id="login-form")
-            .inner-form-div
-                .group
-                    label.slipbop-label(for="email") Email
-                    input.slipbop-input(type="email", name="email", id="email")
-                .group
-                    label.slipbop-label(for="password") Password
-                    input.slipbop-input(type="password", id="password", name="password")
-                .group
-                    button.slipbop-button.pure-button.pure-button-primary(type="submit") Login
+block content
+    #errorDiv
+    .formBoxContainer
+        .raisedSlipbopFormContainer
+            .formHeaderContainer
+                h2.smallerMargin Login to Slipbop
+            form.pure-form#login-form
+                .formgroup
+                    label(for="email") Email
+                    input(type="email", id="email", name="email")
+                .formgroup
+                    label(for="password") Password
+                    input(type="password", id="password", name="password")
+                .formButtonContainer
+                    button.slipbop-button.formSubmit Login
+                .formButtonContainer
+                    button.slipbop-button.formSubmit#demoLogin Demo Login
+    script(src="/js/login.js")
