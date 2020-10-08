@@ -2,6 +2,7 @@ const express = require("express");
 const bearer = require("express-bearer-token");
 const cookieParser = require("cookie-parser")
 const indexRouter = require("./routes/index");
+const { verifyForFrontend } = require("./utils/auth");
 const app = express();
 // const morgan = require('morgan');
 // const csrfProtection = require('csurf')({ cookie: true });
@@ -16,6 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(bearer());
 app.use(cookieParser())
+app.use(verifyForFrontend)
 app.set("view engine", "pug");
 
 app.use("/", indexRouter)
