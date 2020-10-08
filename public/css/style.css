@@ -1,5 +1,6 @@
 @import "navbar.css";
 @import "footer.css";
+@import "login.css";
 
 :root {
   --dark-color: #141c1f;
@@ -10,6 +11,11 @@
 body {
   margin-right: auto;
   margin-left: auto;
-  padding-right: 10px;
-  padding-left: 10px;
+}
+
+.slipbop-button{
+  border-radius: 4px;
+  background: var(--primary-color);
+  color: white;
+  font-size: 14px;
 }

@@ -2,6 +2,7 @@
   padding: 10px;
   position: relative;
   border-bottom: 1px solid #dddd;
+  background-color: white;
 }
 
 .navbar a {
@@ -21,16 +22,12 @@
 }
 
 .button-right {
-  border-radius: 4px;
-  background: var(--primary-color);
-  color: white;
-  font-size: 14px;
   margin-right: 5px;
 }
 
 #links-left {
   display: inline-flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
 #links-right {
