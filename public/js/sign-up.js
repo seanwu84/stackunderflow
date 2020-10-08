@@ -1,4 +1,4 @@
-import { handleErrors } from "./utils.js";
+import { handleErrors } from "/js/utils.js";
 
 const signUpForm = document.querySelector(".sign-up-form");
 
@@ -10,7 +10,7 @@ signUpForm.addEventListener("submit", async (e) => {
     const password = formData.get("password");
     const body = { email, password, username };
     try {
-        const res = await fetch("../../routes/api/users.js", {
+        const res = await fetch("/api/users", {
             method: "POST",
             body: JSON.stringify(body),
             headers: {
@@ -24,8 +24,9 @@ signUpForm.addEventListener("submit", async (e) => {
             token,
             user: { id },
         } = await res.json();
-        localStorage.setItem("SLIPBOP_OVERFLOW_ACCESS_TOKEN", token);
-        localStorage.setItem("SLIPBOP_OVERFLOW_CURRENT_USER_ID", id);
+        //localStorage.setItem("SLIPBOP_OVERFLOW_ACCESS_TOKEN", token);
+        document.cookie = `loginToken=${token}`
+        //localStorage.setItem("SLIPBOP_OVERFLOW_CURRENT_USER_ID", id);
         window.location.href = "/";
     } catch (err) {
         handleErrors(err);
