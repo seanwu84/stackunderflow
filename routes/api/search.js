@@ -1,15 +1,22 @@
 const express = require("express");
-const {Question, Answer} = require("../../db/models");
+const {Question, Answer, sequelize} = require("../../db/models");
 const {Op} = require("sequelize")
 const {asyncHandler} = require("../../utils/utils");
 const router = express.Router();
 
-router.post("/:sortType", asyncHandler( async(req, res, next) =>{
-    console.log("Got here")
-    console.log(req.body)
+router.post("/:sortType/:page", asyncHandler( async(req, res, next) =>{
+    let {sortType, page} = req.params;
+    page--;
     const {searchTerm} = req.body;
     const questions = await Question.findAll({
-        limit: 50,
+        attributes: {
+            include:[[
+                sequelize.literal(`(SELECT COALESCE(SUM(qv.value), 0)
+                                    FROM "QuestionVotes" AS qv
+                                    WHERE qv."questionId" = "Question".id)`
+                ), "score"
+            ]]       
+        },
         where: {
             [Op.or]: {
                 title: {
@@ -20,12 +27,39 @@ router.post("/:sortType", asyncHandler( async(req, res, next) =>{
                 }
             }
             
-        }
+        },
+        order: [
+            [sequelize.literal('score'), 'DESC']
+          ],
     });
-    res.json(questions)
+    const answers = await Answer.findAll({
+        attributes: {
+            include:[[
+                sequelize.literal(`(SELECT COALESCE(SUM(av.value), 0)
+                                    FROM "AnswerVotes" AS av
+                                    WHERE av."answerId" = "Answer".id)`
+                ), "score"
+            ]]       
+        },
+        where: {
+            content: {
+                [Op.like]: `%${searchTerm}%`
+            }
+        },
+        order: [
+            [sequelize.literal('score'), 'DESC']
+          ],
+    });
+    const results = questions.concat(answers)
+
+    res.json(results)
 
 }));
 
 
 module.exports = router;
+
+
+
+
 
