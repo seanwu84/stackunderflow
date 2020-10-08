@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
 const { asyncHandler, handleValidationErrors } = require("../../utils/utils");
-const {verifyUser, checkLoginDetails, generateNewToken, createCookie} = require("../../utils/auth");
+const {verifyUser, checkLoginDetails, generateNewToken, createCookie, deleteCookie} = require("../../utils/auth");
 const router = express.Router();
 const db = require("../../db/models");
 
@@ -46,5 +46,8 @@ router.post("/token", checkLoginDetails, async (req, res, next) =>{
 router.get("/test-token", verifyUser, (req, res)=>{
     res.send(req.user.username)
 })
+
+
+
 
 module.exports = router;

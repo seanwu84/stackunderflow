@@ -99,5 +99,9 @@ const createCookie = async (username, res) => {
     res.cookie("loginToken", token, {httpOnly: true});
 }
 
+const deleteCookie = (res) => {
+    res.cookie("loginToken", null, {httpOnly: true});
+}
 
-module.exports = {checkLoginDetails, generateNewToken, createCookie, verifyUser}
+
+module.exports = {checkLoginDetails, generateNewToken, createCookie, verifyUser, deleteCookie}

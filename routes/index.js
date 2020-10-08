@@ -27,6 +27,10 @@ router.get("/test-cookie", verifyUser, (req, res, next) =>{
   res.send(req.user.username)
 })
 
+router.get("/logout", (req, res) =>{
+  deleteCookie(res);
+  res.redirect("/")
+})
 
 
 
