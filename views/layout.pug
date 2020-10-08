@@ -13,11 +13,11 @@ html
         div(id="links-left") 
           a
             i(id="hamburger" class="fa fa-bars icon")
-          a(class="logo" href="")
+          a(class="logo" href="/")
             img(src="../images/logo.png")
-          a(class="desktop-links" href="") Home
-          a(class="desktop-links" href="") Questions
-          a(class="desktop-links" href="") Users
+          a(class="desktop-links" href="/") Home
+          a(class="desktop-links" href="/questions") Questions
+          a(class="desktop-links" href="/users") Users
           a
             i(id="search-icon" class="fa fa-search icon") 
         div(id="desktop-searchBar")
@@ -26,12 +26,12 @@ html
             button(type="submit")
               i(class="fa fa-search")
         div(id="links-right")
-          a(class="pure-button button-right" href="/login") Login
-          a(class="pure-button button-right") Sign Up
+          a(class="pure-button button-right" href="/users/login") Login
+          a(class="pure-button button-right" href="/users/signup") Sign Up
       div(id="links")
-        a(href="") Home
-        a(href="") Questions
-        a(href="") Users    
+        a(href="/") Home
+        a(href="/questions") Questions
+        a(href="/users") Users    
       div(id="mobile-searchBar")
         form(action="/search")
           input(id="mobile-search" type="text" placeholder="Search..." name="search")
@@ -39,8 +39,12 @@ html
         div
           span.footer-text SlipBop Overflow
           div.footer-icons
-            i(class="fa fa-github")
-            i(class="fa fa-github")
-            i(class="fa fa-github")
-            i(class="fa fa-github")
+            a(href="https://github.com/jessabels")
+              i(class="fa fa-github" )
+            a(href="https://github.com/seanwu84")
+              i(class="fa fa-github" )
+            a(href="https://github.com/the-harry-higgins")
+              i(class="fa fa-github")
+            a(href="https://github.com/bacbartlett")
+              i(class="fa fa-github")
     block content
