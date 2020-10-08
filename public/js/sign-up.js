@@ -1,6 +1,6 @@
-import { handleErrors } from "/js/utils.js";
 
-const signUpForm = document.querySelector(".sign-up-form");
+import { handleErrors } from "/js/utils.js";
+const signUpForm = document.querySelector(".pure-form");
 
 signUpForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -18,7 +18,15 @@ signUpForm.addEventListener("submit", async (e) => {
             },
         });
         if (!res.ok) {
-            throw res;
+            const errorjson = await res.json();
+            const err = JSON.parse(errorjson).messages;
+            err.forEach(function (el) {
+                const errorMessageDisplay = document.createElement("p");
+                errorMessageDisplay.innerHTML = el;
+                errorMessageDisplay.classList.add("errorMessage")
+                document.getElementById("errorDiv").appendChild(errorMessageDisplay)
+            }) 
+            return           
         }
         window.location.href = "/";
     } catch (err) {
