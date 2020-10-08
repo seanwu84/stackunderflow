@@ -1,0 +1,19 @@
+extends layout.pug
+
+block content
+  .question
+    p ID: #{question.id}
+    p Title: #{question.title}
+    p Content: #{question.content}
+    p Score:  #{question.score}
+    p Posted At: #{question.posted}
+    p User: #{question.user.username}
+  ol
+    each answer in answers
+      li
+        ul
+          li ID: #{answer.id}
+          li Content: #{answer.content}
+          li Posted At: #{answer.posted}
+          li Score:  #{answer.score}
+          li User: #{answer.user.username}
