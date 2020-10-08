@@ -9,11 +9,17 @@ router.post("/:sortType", asyncHandler( async(req, res, next) =>{
     console.log(req.body)
     const {searchTerm} = req.body;
     const questions = await Question.findAll({
-        limit: 10,
+        limit: 50,
         where: {
-            title: {
-                [Op.like]: `%${searchTerm}%`
+            [Op.or]: {
+                title: {
+                    [Op.like]: `%${searchTerm}%`
+                },
+                content: {
+                    [Op.like]: `%${searchTerm}%`
+                }
             }
+            
         }
     });
     res.json(questions)
