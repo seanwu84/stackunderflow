@@ -1,20 +1,24 @@
 extends layout.pug
 
 block content
-  div(class="sign-up-container") Create a Slipbop Overflow Account.
-    div(class="sign-up-container")
-    h2 Sign Up
-    form(class="sign-up-form")
-      .form-group
-        label(for='username') Username
-        input#username.form-control(type='text' name='username' placeholder="Username")
-      .form-group
-        label(for='email') Email address
-        input#email.form-control(type='email', name="email", placeholder='Enter email')
-      .form-group
-        label(for='password') Password
-        input#password.form-control(type='password', name="password", placeholder='Password')
-      button.btn.btn-primary(type='submit') Sign Up 
-      div   
-        a(href='/login') Already have an account? Log in here.
-      script(type="module" src="/js/sign-up.js")
+    #errorDiv
+    .formBoxContainer 
+      .raisedSlipbopFormContainer
+        .formHeaderContainer
+          h2.smallMargin Sign Up
+        form.pure-form#login-form
+          .formgroup
+            label(for='username') Username
+            input(type='text' name='username' placeholder="Username")
+          .formgroup
+            label(for='email') Email address
+            input(type='email', name="email", placeholder='Enter email')
+          .formgroup
+            label(for='password') Password
+            input(type='password', name="password", placeholder='Password')
+          .formButtonContainer  
+            button.slipbop-button.formSubmit(type='submit') Sign Up 
+          .formButtonContainer
+            .haveAccount
+              a(href='/users/login') Already have an account? Log in here.
+    script(type="module" src="js/sign-up.js")
