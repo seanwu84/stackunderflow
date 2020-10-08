@@ -44,6 +44,7 @@
   - upvote an answer (or take away a previous upvote)
 - DELETE /api/questions/{question-id}/answers/{answer-id}/votes
   - downvote an answer (or take away a previous downvote)
+- POST /api/search/{sort}
 
 ### Stretch
 
