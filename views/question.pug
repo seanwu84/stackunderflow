@@ -1,0 +1,10 @@
+extends layout.pug
+
+block content
+  .question
+    p= question.title
+    p= question.content
+    p= question.id
+  ol
+    each answer in answers
+      li= answer.content

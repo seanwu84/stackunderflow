@@ -37,7 +37,13 @@
 - POST /api/questions/{question-id}/answers/{answer-id}/comment
   - post an answer comment - AJAX on /questions/{id} page
 - POST /api/questions/{question-id}/votes
+  - upvote a question (or take away a previous upvote)
+- DELETE /api/questions/{question-id}/votes/
+  - downvote a question (or take away a previous downvote)
 - POST /api/questions/{question-id}/answers/{answer-id}/votes
+  - upvote an answer (or take away a previous upvote)
+- DELETE /api/questions/{question-id}/answers/{answer-id}/votes
+  - downvote an answer (or take away a previous downvote)
 
 ### Stretch
 
