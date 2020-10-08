@@ -31,11 +31,12 @@ const generalErrorHandler = (err, req, res, next) => {
   console.log(err);
   res.status(err.status || 500);
   if (!req.errors || req.errors.length === 0) {
-    req.errors = ["Internal server error"];
+    req.errors = [err.message];
   }
   res.json(
     JSON.stringify({
       messages: req.errors,
+      stackTrace: err.stack,
     })
   );
 };
