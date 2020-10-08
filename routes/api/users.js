@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
 const { asyncHandler, handleValidationErrors } = require("../../utils/utils");
-const {checkToken, checkLoginDetails, generateNewToken} = require("../../utils/auth");
+const {verifyForBackend, checkLoginDetails, generateNewToken} = require("../../utils/auth");
 const router = express.Router();
 const db = require("../../db/models");
 
@@ -43,7 +43,9 @@ router.post("/token", checkLoginDetails, (req, res, next) =>{
     res.json({token: req.newToken})
 });
 
-router.get("/test-token", checkToken, (req, res)=>{
+
+//this sends back the username as a test route
+router.get("/test-token", verifyForBackend, (req, res)=>{
     res.send(req.user.username)
 })
 

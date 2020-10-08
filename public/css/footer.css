@@ -1,0 +1,23 @@
+.footer {
+  background-color: var(--dark-color);
+  color: white;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+}
+.footer-text {
+  display: block;
+  font-size: 13px;
+  text-align: center;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+.footer-icons a {
+  color: var(--secondary-color);
+}

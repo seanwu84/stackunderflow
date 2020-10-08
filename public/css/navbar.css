@@ -1,0 +1,98 @@
+.navbar {
+  padding: 10px;
+  position: relative;
+  border-bottom: 1px solid #dddd;
+}
+
+.navbar a {
+  padding: 3px 11px;
+}
+#links {
+  display: none;
+  background: #141c1f;
+}
+
+#mobile-searchBar {
+  display: none;
+}
+
+#mobile-searchBar input {
+  width: 100%;
+}
+
+.button-right {
+  border-radius: 4px;
+  background: var(--primary-color);
+  color: white;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+#links-left {
+  display: inline-flex;
+  align-items: flex-end;
+}
+
+#links-right {
+  display: inline-flex;
+  align-items: flex-end;
+  position: absolute;
+  right: 0;
+  bottom: 15px;
+}
+
+.icon {
+  color: black;
+}
+
+#desktop-searchBar {
+  display: none;
+}
+
+#links a {
+  display: block;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: white;
+  font-size: 13px;
+}
+
+.desktop-links {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  #search-icon,
+  #hamburger {
+    display: none;
+  }
+
+  #desktop-searchBar {
+    display: inline-flex;
+    position: absolute;
+    bottom: 15px;
+    margin-left: 30px;
+  }
+
+  .desktop-links {
+    display: block;
+    text-decoration: none;
+    color: var(--dark-color);
+  }
+
+  #links {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  #desktop-searchBar input {
+    width: 28em;
+  }
+
+  @media (min-width: 1440px) {
+    #desktop-searchBar input {
+      width: 50em;
+    }
+  }
+}
