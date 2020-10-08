@@ -1,86 +1,15 @@
+@import "navbar.css";
+@import "footer.css";
+
+:root {
+  --dark-color: #141c1f;
+  --primary-color: #6494a7;
+  --secondary-color: #9bc9d1;
+}
+
 body {
   margin-right: auto;
   margin-left: auto;
   padding-right: 10px;
   padding-left: 10px;
-}
-
-.navbar {
-  padding: 10px;
-  position: relative;
-  border-bottom: 1px solid #dddd;
-}
-
-.navbar a {
-  padding: 3px 11px;
-}
-.navbar #links {
-  display: none;
-}
-
-.button-right {
-  border-radius: 4px;
-  background: #0077cc;
-  color: white;
-  font-size: 14px;
-  margin-right: 5px;
-}
-
-#links-left {
-  display: inline-flex;
-  align-items: flex-end;
-}
-
-#links-right {
-  display: inline-flex;
-  align-items: flex-end;
-  position: absolute;
-  right: 0;
-  bottom: 15px;
-}
-
-.icon {
-  color: black;
-}
-
-.footer {
-  background-color: #252729;
-  color: white;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  padding: 10px;
-}
-
-.footer-text {
-  display: block;
-  font-size: 13px;
-  text-align: center;
-}
-
-.footer-icons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 10px;
-}
-
-.search {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .search-icon {
-    display: none;
-  }
-  .search {
-    display: inline-flex;
-    position: absolute;
-    bottom: 15px;
-    margin-left: 30px;
-  }
-
-  .search input {
-    width: 26em;
-  }
 }
