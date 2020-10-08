@@ -4,7 +4,7 @@ const submitForm = async (e) =>{
     const data = new FormData(form);
     const email = data.get("email");
     const password = data.get("password")
-    const res = await fetch("/api/user/token", {
+    const res = await fetch("/api/users/token", {
         method: "POST",
         headers:{
             "Content-Type": "application/json"

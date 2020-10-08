@@ -31,14 +31,14 @@ router.post(
         const user = await User.create({ username, email, hashedPassword });
 
         await createCookie(user.username, res);
-        res.status(201).end()
+        res.status(201).json("success")
     })
 );
 
 
 router.post("/token", checkLoginDetails, async (req, res, next) =>{
     await createCookie(req.user.username, res);
-    res.status(201).end();
+    res.status(201).json("success")
 });
 
 

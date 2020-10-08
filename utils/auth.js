@@ -29,6 +29,7 @@ const checkLoginDetails = async (req, res, next) =>{
     if(user){
         passResult = await bcrypt.compare(password, user.hashedPassword.toString())
     }
+    console.log(passResult)
     if(!user || !passResult){
         if(!req.errors){
             req.errors = [];
@@ -39,8 +40,8 @@ const checkLoginDetails = async (req, res, next) =>{
         next(err);
         return;
     }
-    const token = await generateNewToken(user.username);
-    req.newToken = token;
+    req.user = user
+    console.log("sucess")
     next();
     return;
 };
@@ -51,15 +52,12 @@ const generateNewToken = async (username) =>{
 }
 
 const verifyUser = async (req, res, next) =>{
-    console.log("starting middleware")
     if(!req.cookies){
         req.user = null;
         next();
         return
     };
     const token = req.cookies.loginToken
-    console.log(req.cookies)
-    console.log(token)
     jwt.verify(token, secret, null, async (err, payload) =>{
         if(err || !payload){
             req.user = null;

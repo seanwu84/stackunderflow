@@ -1,5 +1,5 @@
 const express = require("express");
-const {verifyUser, checkLoginDetails, generateNewToken, verifyUser} = require("../utils/auth")
+const {verifyUser, checkLoginDetails, generateNewToken} = require("../utils/auth")
 
 
 const router = express.Router();
@@ -13,7 +13,7 @@ router.get("/login", verifyUser, (req, res, next) =>{
     res.render("login");
 });
 
-router.get("/sign-up", (req, res) => {
+router.get("/signup", (req, res) => {
     res.render("sign-up");
   });
 
