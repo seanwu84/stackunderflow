@@ -14,7 +14,8 @@
 - GET /users/{user-id}
 - GET /users/signup
 - GET /users/login
-  
+- GET /users/logout
+
 - GET /questions/
 - GET /questions/{question-id}
   - Will grab associated answers
