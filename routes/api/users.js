@@ -30,9 +30,9 @@ router.post(
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({ username, email, hashedPassword });
 
-        const token = generateNewToken(user);
+        const token = generateNewToken(user.username);
         res.status(201).json({
-            user: { id: user.id },
+          //  user: { id: user.id },
             token,
         });
     })
@@ -42,6 +42,7 @@ router.post(
 router.post("/token", checkLoginDetails, (req, res, next) =>{
     res.json({token: req.newToken})
 });
+
 
 //this sends back the username as a test route
 router.get("/test-token", verifyForBackend, (req, res)=>{
