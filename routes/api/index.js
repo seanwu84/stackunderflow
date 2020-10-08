@@ -1,10 +1,10 @@
 const express = require("express");
-const { verifyForBackend } = require("../../utils/auth");
+const { verifyUser } = require("../../utils/auth");
 const apiUsersRouter = require("./users")
 
 const router = express.Router();
 
-router.use(verifyForBackend)
+router.use(verifyUser)
 router.use("/users", apiUsersRouter);
 
 module.exports = router;

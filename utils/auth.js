@@ -1,6 +1,6 @@
 /*
 Security middlewear:
-    Use verifyForBackend on all places where a token needs to be checked. This will add the
+    Use verifyUser on all places where a token needs to be checked. This will add the
     user onto req.user.
     If the token is illegitament, then it will throw a 401 error
 */
@@ -50,50 +50,7 @@ const generateNewToken = async (username) =>{
     return await jwt.sign({username}, secret);
 }
 
-const verifyForBackend = async (req, res, next) =>{
-    const token = req.token;
-    if(!token){
-        req.user = null;
-        next();
-        return;
-    }
-    jwt.verify(token, secret, null, async (err, payload) =>{
-        if(err || !payload){
-            req.user = null;
-            next();
-            return;
-        }
-        const {username} = payload;
-        let user;
-        try{
-            user = await User.findOne({where: {username}});
-        } catch(e){
-            if(!req.error){
-                req.error = [];
-            };
-            req.error.push("Could not access database. Try again later");
-            const err = new Error(e);
-            err.status = 500;
-            next(err)
-        }
-        req.user = user;
-        if(!user){
-            if(!req.errors){
-                req.errors = [];
-            }
-            req.errors.push("User not found")
-            const err = new Error("User not found");
-            err.status = 500;
-            next(err)
-            return;
-        };
-        next();
-        return
-    });
-
-};
-
-const verifyForFrontend = async (req, res, next) =>{
+const verifyUser = async (req, res, next) =>{
     console.log("starting middleware")
     if(!req.cookies){
         req.user = null;
@@ -104,7 +61,6 @@ const verifyForFrontend = async (req, res, next) =>{
     console.log(req.cookies)
     console.log(token)
     jwt.verify(token, secret, null, async (err, payload) =>{
-        console.log("veryifying")
         if(err || !payload){
             req.user = null;
             next();
@@ -142,8 +98,8 @@ const verifyForFrontend = async (req, res, next) =>{
 
 const createCookie = async (username, res) => {
     const token = await generateNewToken(username)
-    res.cookie("loginToken", token);
+    res.cookie("loginToken", token, {httpOnly: true});
 }
 
 
-module.exports = {verifyForBackend, checkLoginDetails, generateNewToken, verifyForFrontend, createCookie}
+module.exports = {checkLoginDetails, generateNewToken, createCookie, verifyUser}

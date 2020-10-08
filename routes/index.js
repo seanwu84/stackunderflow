@@ -13,12 +13,12 @@ router.get("/", (req, res) => {
 
 
 
-const {verifyForFrontend, createCookie} = require("../utils/auth");
+const {verifyUser, createCookie} = require("../utils/auth");
 router.get("/make-cookie", async (req, res, next) =>{
   const token = await createCookie("Cierra14", res)
   res.send("You got a cookie")
 })
-router.get("/test-cookie", verifyForFrontend, (req, res, next) =>{
+router.get("/test-cookie", verifyUser, (req, res, next) =>{
   if(!req.cookies){
     res.send("No cookie found");
     return

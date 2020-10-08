@@ -1,11 +1,11 @@
 const express = require("express");
-const {verifyForBackend, checkLoginDetails, generateNewToken, verifyForFrontend} = require("../utils/auth")
+const {verifyUser, checkLoginDetails, generateNewToken, verifyUser} = require("../utils/auth")
 
 
 const router = express.Router();
 
 
-router.get("/login", verifyForFrontend, (req, res, next) =>{
+router.get("/login", verifyUser, (req, res, next) =>{
     if(req.user){
         res.redirect("/");
         return;
