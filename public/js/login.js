@@ -4,7 +4,7 @@ const submitForm = async (e) =>{
     const data = new FormData(form);
     const email = data.get("email");
     const password = data.get("password")
-    const res = await fetch("/api/user/token", {
+    const res = await fetch("/api/users/token", {
         method: "POST",
         headers:{
             "Content-Type": "application/json"
@@ -12,8 +12,7 @@ const submitForm = async (e) =>{
         body: JSON.stringify({email, password})
     });
     const resJSON = await res.json();
-    if(res.status === 200){
-        localStorage.setItem("token", resJSON.token);
+    if(res.status === 201){
         window.location.href = "/";
     } else{
         const errors = JSON.parse(resJSON).messages;

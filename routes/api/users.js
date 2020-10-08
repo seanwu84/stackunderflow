@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
 const { asyncHandler, handleValidationErrors } = require("../../utils/utils");
-const {verifyForBackend, checkLoginDetails, generateNewToken} = require("../../utils/auth");
+const {verifyUser, checkLoginDetails, generateNewToken, createCookie, deleteCookie} = require("../../utils/auth");
 const router = express.Router();
 const db = require("../../db/models");
 
@@ -30,23 +30,24 @@ router.post(
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({ username, email, hashedPassword });
 
-        const token = generateNewToken(user.username);
-        res.status(201).json({
-          //  user: { id: user.id },
-            token,
-        });
+        await createCookie(user.username, res);
+        res.status(201).json("success")
     })
 );
 
 
-router.post("/token", checkLoginDetails, (req, res, next) =>{
-    res.json({token: req.newToken})
+router.post("/token", checkLoginDetails, async (req, res, next) =>{
+    await createCookie(req.user.username, res);
+    res.status(201).json("success")
 });
 
 
 //this sends back the username as a test route
-router.get("/test-token", verifyForBackend, (req, res)=>{
+router.get("/test-token", verifyUser, (req, res)=>{
     res.send(req.user.username)
 })
+
+
+
 
 module.exports = router;
