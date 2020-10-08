@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
 const { asyncHandler, handleValidationErrors } = require("../../utils/utils");
-const {verifyUser, checkLoginDetails, generateNewToken} = require("../../utils/auth");
+const {verifyUser, checkLoginDetails, generateNewToken, createCookie} = require("../../utils/auth");
 const router = express.Router();
 const db = require("../../db/models");
 
@@ -36,8 +36,9 @@ router.post(
 );
 
 
-router.post("/token", checkLoginDetails, (req, res, next) =>{
-    res.json({token: req.newToken})
+router.post("/token", checkLoginDetails, async (req, res, next) =>{
+    await createCookie(req.user.username, res);
+    res.status(201).end();
 });
 
 

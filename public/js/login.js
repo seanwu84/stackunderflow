@@ -12,8 +12,7 @@ const submitForm = async (e) =>{
         body: JSON.stringify({email, password})
     });
     const resJSON = await res.json();
-    if(res.status === 200){
-        localStorage.setItem("token", resJSON.token);
+    if(res.status === 201){
         window.location.href = "/";
     } else{
         const errors = JSON.parse(resJSON).messages;

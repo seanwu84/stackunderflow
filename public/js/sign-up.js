@@ -20,13 +20,6 @@ signUpForm.addEventListener("submit", async (e) => {
         if (!res.ok) {
             throw res;
         }
-        const {
-            token,
-            user: { id },
-        } = await res.json();
-        //localStorage.setItem("SLIPBOP_OVERFLOW_ACCESS_TOKEN", token);
-        document.cookie = `loginToken=${token}`
-        //localStorage.setItem("SLIPBOP_OVERFLOW_CURRENT_USER_ID", id);
         window.location.href = "/";
     } catch (err) {
         handleErrors(err);
