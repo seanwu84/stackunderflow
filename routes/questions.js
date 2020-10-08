@@ -1,65 +1,129 @@
 const express = require('express');
 
 const { asyncHandler } = require('../utils/utils');
-const { Question, Answer, QuestionVote, AnswerVote, sequelize } = require('../db/models');
+const { Question, Answer, QuestionVote, AnswerVote, User, sequelize } = require('../db/models');
 
 const router = express.Router();
 
-const countVotes = (votes) => {
-  return votes.map()(vote => vote.value).reduce((acc, vote) => acc + vote, 0);
-}
-
 router.get('/', asyncHandler(async (req, res, next) => {
-  const questions = await sequelize.query("SELECT ")
   const questions = await Question.findAll({
+    attributes: {
+      include: [
+        [
+          sequelize.literal(`(
+                    SELECT COALESCE(SUM(qv.value), 0)
+	                  FROM "QuestionVotes" AS qv
+	                  WHERE
+                    qv."questionId" = "Question".id
+                )`),
+          'score'
+        ],
+      ]
+    },
     include: [{
-      model: QuestionVote,
-      
-    }]
+      model: User
+    }],
+    order: [
+      [sequelize.literal('score'), 'DESC']
+    ],
+    limit: 50,
+    offset: 0
   });
-  console.log(questions);
-  res.send("HEllo");
+
+  questionData = questions.map(question => {
+    return {
+      id: question.id,
+      title: question.title,
+      content: question.content,
+      posted: question.createdAt.toString(),
+      score: question.dataValues.score,
+      user: {
+        username: question.User.username
+      }
+    }
+  });
+
+  res.render('questions', {
+    questions: questionData
+  });
 }));
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
-  // const question = await Question.findOne({
-  //   where: id,
-  //   include: [{
-  //     model: User
-  //   }, {
-  //     model: Answer,
-  //     limit: 50,
-  //     order: []
-  //     include: [{ model: AnswerVote }]
-  //   }, {
-  //     model: QuestionVote
-  //   }]
-  // });
+  const question = await Question.findOne({
+    where: id,
+    attributes: {
+      include: [
+        [
+          sequelize.literal(`(
+                    SELECT COALESCE(SUM(qv.value), 0)
+	                  FROM "QuestionVotes" AS qv
+	                  WHERE
+                    qv."questionId" = "Question".id
+                )`),
+          'score'
+        ],
+      ]
+    },
+    include: [{
+      model: User
+    }],
+  });
 
-  // console.log(question);
-  // console.log(question.User);
-  // console.log(question.QuestionVotes);
-  // const questionScore = countVotes(question.QuestionVotes);
-  // console.log(questionScore);
-  // questionData = {
-  //   id: question.id,
-  //   title: question.title,
-  //   content: question.content,
-  //   posted: question.createdAt,
-  //   votes: questionScore,
-  //   user: question.User
-  // }
-  // answerData = question.Answers.map(answer => {
-  //   {
-  //     id: answer.id,
+  questionData = {
+    id: question.id,
+    title: question.title,
+    content: question.content,
+    posted: question.createdAt.toString(),
+    score: question.dataValues.score,
+    user: {
+      username: question.User.username
+    }
+  }
 
-  //   }
-  // })
-  // }
+  const answers = await Answer.findAll({
+    attributes: {
+      where: {
+        questionId: question.id
+      },
+      include: [
+        [
+          sequelize.literal(`(
+                    SELECT COALESCE(SUM(av.value), 0)
+	                  FROM "AnswerVotes" AS av
+	                  WHERE
+                    av."answerId" = "Answer".id
+                )`),
+          'score'
+        ],
+      ]
+    },
+    include: [{
+      model: User
+    }],
+    order: [
+      [sequelize.literal('score'), 'DESC']
+    ],
+    limit: 5,
+    offset: 0
+  });
+
+  answerData = answers.map(answer => {
+    return {
+      id: answer.id,
+      content: answer.content,
+      posted: answer.createdAt.toString(),
+      score: answer.dataValues.score,
+      user: {
+        username: answer.User.username
+      }
+    }
+  });
+
   res.render('question', {
-    questionData
+    question: questionData,
+    answers: answerData
   });
 }));
 
