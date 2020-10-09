@@ -26,3 +26,9 @@ export const handleErrors = async (err) => {
         );
     }
 };
+
+
+// export const render = () => {
+//     console.log("rendering")
+
+// }
