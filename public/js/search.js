@@ -1,8 +1,23 @@
-const query = window.location.href.split("=")[1]
+let page = window.location.href.toString();
+let query;
+if(page.includes("search")){
+    page = "search";
+    query = window.location.href.split("=")[1]
+} else{
+    page = "home";
+}
+
+
 
 
 const getQuery = async(query) => {
-    const res = await fetch("/api/search/popular/1", {
+    let url;
+    if(page === "search"){
+        url = "/api/search/popular/1";
+    } else{
+        url = "/api/search/homePage";
+    }
+    const res = await fetch(url, {
         method: "POST",
         headers:{
             "Content-Type": "application/json"
@@ -83,7 +98,9 @@ const addQuestions = (resdata) =>{
         }
         h6answers.innerHTML = "Answers";
         questionTitle.innerHTML = el.title || el.Question.title;
-        questionTitle.innerHTML = type + questionTitle.innerHTML;
+        if(page === "search"){
+            questionTitle.innerHTML = type + questionTitle.innerHTML;
+        }
         if(el.Question){
             questionTitle.innerHTML = `<a class="colorMeBlack" href="/questions/${el.Question.id}"> ${questionTitle.innerHTML}</a>`;
         } else{
