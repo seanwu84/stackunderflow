@@ -53,6 +53,12 @@ router.post("/:sortType/:page", asyncHandler( async(req, res, next) =>{
             [sequelize.literal('score'), 'DESC']
           ],
     });
+    questions.forEach(function(el){
+        el.User.hashedPassword = null;
+    });
+    answers.forEach(function(el){
+        el.User.hashedPassword = null;
+    });
     let results = questions.concat(answers)
     if((questions.length > 0) && (answers.length > 0)){
         results = [];

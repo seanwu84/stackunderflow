@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser")
 const morgan = require('morgan');
 
 const { restoreUser } = require("./utils/auth");
+const {convertUserNameToHex} = require("./utils/utils")
 const indexRouter = require("./routes/index");
 const app = express();
 
@@ -12,6 +13,8 @@ app.use(bearer());
 app.use(cookieParser())
 app.use(restoreUser)
 app.use(morgan('dev'));
+app.use(verifyUser);
+app.use(convertUserNameToHex)
 app.set("view engine", "pug");
 
 app.use("/", indexRouter);

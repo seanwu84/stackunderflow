@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", (req, res) =>{
   const user = req.user;
-  res.render("search", {user})
+  res.render("search", {user, title: "Most Popular Questions"})
 })
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
@@ -82,14 +82,11 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
       }
     }
   });
-
+  req.user.hashedPassword = null;
   res.render('question', {
     question: questionData,
     answers: answerData,
-    user: req.user ? {
-      id: req.user.id,
-      username: req.user.username
-    } : null
+    user: req.user
   });
 }));
 
