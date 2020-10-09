@@ -123,7 +123,11 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 
   res.render('question', {
     question: questionData,
-    answers: answerData
+    answers: answerData,
+    user: req.user ? {
+      id: req.user.id,
+      username: req.user.username
+    } : null
   });
 }));
 

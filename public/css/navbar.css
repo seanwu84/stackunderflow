@@ -1,13 +1,17 @@
 .navbar {
-  padding: 10px;
-  position: relative;
+  padding: 10px 20px;
+  /* position: relative; */
   border-bottom: 1px solid #dddd;
   background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar a {
   padding: 3px 11px;
 }
+
 #links {
   display: none;
   background: #141c1f;
@@ -33,9 +37,6 @@
 #links-right {
   display: inline-flex;
   align-items: flex-end;
-  position: absolute;
-  right: 0;
-  bottom: 15px;
 }
 
 .icon {
@@ -58,17 +59,19 @@
   display: none;
 }
 
-@media (min-width: 768px) {
-  #search-icon,
-  #hamburger {
+@media (min-width: 500px) {
+  #search-icon-anchor {
     display: none;
   }
 
   #desktop-searchBar {
     display: inline-flex;
-    position: absolute;
-    bottom: 15px;
-    margin-left: 30px;
+  }
+}
+
+@media (min-width: 768px) {
+  #hamburger-anchor {
+    display: none;
   }
 
   .desktop-links {
@@ -80,16 +83,22 @@
   #links {
     display: none;
   }
+
+  #desktop-searchBar input {
+    width: 15em;
+  }
 }
+
 
 @media (min-width: 1024px) {
   #desktop-searchBar input {
     width: 28em;
   }
+}
 
-  @media (min-width: 1440px) {
-    #desktop-searchBar input {
-      width: 50em;
-    }
+@media (min-width: 1440px) {
+  #desktop-searchBar input {
+    width: 50em;
   }
 }
+
