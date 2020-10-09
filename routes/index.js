@@ -13,6 +13,10 @@ router.use("/questions", questionsRouter);
 router.use("/search", searchRouter);
 
 router.get("/", (req, res) => {
+  if(req.user){
+    res.redirect("/questions");
+    return;
+  }
   res.render("index");
 });
 

@@ -5,48 +5,10 @@ const { Question, Answer, QuestionVote, AnswerVote, User, sequelize } = require(
 
 const router = express.Router();
 
-router.get('/', asyncHandler(async (req, res, next) => {
-  const questions = await Question.findAll({
-    attributes: {
-      include: [
-        [
-          sequelize.literal(`(
-                    SELECT COALESCE(SUM(qv.value), 0)
-	                  FROM "QuestionVotes" AS qv
-	                  WHERE
-                    qv."questionId" = "Question".id
-                )`),
-          'score'
-        ],
-      ]
-    },
-    include: [{
-      model: User
-    }],
-    order: [
-      [sequelize.literal('score'), 'DESC']
-    ],
-    limit: 50,
-    offset: 0
-  });
-
-  questionData = questions.map(question => {
-    return {
-      id: question.id,
-      title: question.title,
-      content: question.content,
-      posted: question.createdAt.toString(),
-      score: question.dataValues.score,
-      user: {
-        username: question.User.username
-      }
-    }
-  });
-
-  res.render('questions', {
-    questions: questionData
-  });
-}));
+router.get("/", (req, res) =>{
+  const user = req.user;
+  res.render("search", {user})
+})
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
