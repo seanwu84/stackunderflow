@@ -1,0 +1,13 @@
+extend layout
+
+block content
+    .title
+        h1.titleText Users
+    .usersContainer
+        each thisUser in users
+            .userDiv
+                .userLogoDiv(style=`background-color:#${thisUser.color};`)
+                    a(class="userLetter" href=`/users/${thisUser.id}`)= thisUser.capitalLetter
+                .textPart
+                    p.username=thisUser.username
+                    p User since #{thisUser.displayDate}

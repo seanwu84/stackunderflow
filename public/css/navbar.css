@@ -102,3 +102,26 @@
   }
 }
 
+
+.user-logo{
+  position: relative;
+  top: 3px;
+  color: white;
+  border-radius: 4px;
+  border: 1px solid #dddd;
+  height: 27px;
+  width: 27px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.makeMeWhite{
+  font-size: 26px;
+  color:white;
+  text-decoration: none;
+  font-weight: 700;
+  font-style: italic;
+  font-family: 'Josefin Sans', sans-serif;
+}
+

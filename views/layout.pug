@@ -4,12 +4,14 @@ html
     title SlipBop Overflow
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel="icon" type="image/png" href="/images/logo.png")
+    link(href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&display=swap" rel="stylesheet")
     link(rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous")
     link(rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/base-min.css")
     link(rel="stylesheet" type="text/css" href="/css/style.css")
     script(src="/js/index.js")
     script(src="https://kit.fontawesome.com/087b3c0ec0.js" crossorigin="anonymous")
     script(src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js")
+    script(type="module" src="/js/convertUsernameToHex.js")
   body
     nav.navbar
       div(id="links-left") 
@@ -26,7 +28,8 @@ html
             i(class="fa fa-search")
       div(id="links-right")
         if user
-          a(class="pure-button button-right slipbop-button" href=`/users/${user.id}`)= user.username
+          .user-logo(style=`background-color:#${user.color};` class="user-logo" )
+            a(href=`/users/${user.id}` class="makeMeWhite")= user.capitalLetter
           a(class="pure-button button-right slipbop-button" href="/users/logout") Logout
         else
           a(class="pure-button button-right slipbop-button" href="/users/login") Login
@@ -52,4 +55,4 @@ html
           a(href="https://github.com/the-harry-higgins")
             i(class="fa fa-github") Harrison Higgins
           a(href="https://github.com/bacbartlett")
-            i(class="fa fa-github")
+            i(class="fa fa-github") Brandon Bartlett

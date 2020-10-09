@@ -20,8 +20,39 @@ const handleValidationErrors = (req, res, next) => {
   next();
 };
 
+function hashCode(str) { // java String#hashCode
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+     hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+} 
+
+function intToRGB(i){
+  var c = (i & 0x00FFFFFF)
+      .toString(16)
+      .toUpperCase();
+
+  return "00000".substring(0, 6 - c.length) + c;
+}
+
+function convert(username){
+  return intToRGB(hashCode(username))
+}
+
+const convertUserNameToHex = (req, res, next) =>{
+  if(req.user){
+    req.user.color = convert(req.user.username);
+    req.user.capitalLetter = req.user.username[0].toUpperCase();
+  }
+  next();
+  return
+}
+
 module.exports = {
   csrfProtection,
   asyncHandler,
-  handleValidationErrors
+  handleValidationErrors,
+  convertUserNameToHex,
+  convert
 }
