@@ -1,5 +1,5 @@
 const express = require("express");
-const {Question, Answer, sequelize} = require("../../db/models");
+const {Question, Answer, sequelize, User} = require("../../db/models");
 const {Op} = require("sequelize")
 const {asyncHandler} = require("../../utils/utils");
 const router = express.Router();
@@ -7,7 +7,8 @@ const router = express.Router();
 router.post("/:sortType/:page", asyncHandler( async(req, res, next) =>{
     let {sortType, page} = req.params;
     page--;
-    const {searchTerm} = req.body;
+    const {query} = req.body;
+    console.log(query)
     const questions = await Question.findAll({
         attributes: {
             include:[[
@@ -20,14 +21,15 @@ router.post("/:sortType/:page", asyncHandler( async(req, res, next) =>{
         where: {
             [Op.or]: {
                 title: {
-                    [Op.like]: `%${searchTerm}%`
+                    [Op.iLike]: `%${query}%`
                 },
                 content: {
-                    [Op.like]: `%${searchTerm}%`
+                    [Op.iLike]: `%${query}%`
                 }
             }
             
         },
+        include: [User, Answer],
         order: [
             [sequelize.literal('score'), 'DESC']
           ],
@@ -43,15 +45,39 @@ router.post("/:sortType/:page", asyncHandler( async(req, res, next) =>{
         },
         where: {
             content: {
-                [Op.like]: `%${searchTerm}%`
+                [Op.iLike]: `%${query}%`
             }
         },
+        include: [Question, User],
         order: [
             [sequelize.literal('score'), 'DESC']
           ],
     });
-    const results = questions.concat(answers)
-
+    let results = questions.concat(answers)
+    if((questions.length > 0) && (answers.length > 0)){
+        results = [];
+        let index1 = 0;
+        let index2 = 0;
+        for(let i =0; i < questions.length + answers.length; i++){
+            if((index1 + 1) === questions.length){
+                results.push(answers[index2]);
+                index2++;
+                continue;
+            } else if((index2 + 1) === answers.length){
+                results.push(questions[index1]);
+                index1++;
+                continue;
+            } else if(questions[index1].dataValues.score >= answers[index2].dataValues.score){
+                results.push(questions[index1]);
+                index1++
+                continue;
+            } else if(questions[index1].dataValues.score < answers[index2].dataValues.score){
+                results.push(answers[index2]);
+                index2++
+                continue;
+            }
+        }
+    }
     res.json(results)
 
 }));

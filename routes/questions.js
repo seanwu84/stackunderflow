@@ -83,10 +83,10 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
   }
 
   const answers = await Answer.findAll({
+    where: {
+      questionId: question.id
+    },
     attributes: {
-      where: {
-        questionId: question.id
-      },
       include: [
         [
           sequelize.literal(`(
