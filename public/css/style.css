@@ -1,6 +1,7 @@
 @import "navbar.css";
 @import "footer.css";
 @import "login.css";
+@import "search.css";
 
 :root {
   --dark-color: #141c1f;
