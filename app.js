@@ -3,16 +3,15 @@ const bearer = require("express-bearer-token");
 const cookieParser = require("cookie-parser")
 const morgan = require('morgan');
 
-const { verifyUser } = require("./utils/auth");
+const { restoreUser } = require("./utils/auth");
 const indexRouter = require("./routes/index");
-
 const app = express();
 
 app.use(express.json());
 app.use(bearer());
 app.use(cookieParser())
+app.use(restoreUser)
 app.use(morgan('dev'));
-app.use(verifyUser);
 app.set("view engine", "pug");
 
 app.use("/", indexRouter);

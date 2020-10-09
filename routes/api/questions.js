@@ -1,6 +1,7 @@
 const express = require("express");
 const { check } = require("express-validator");
 const { handleValidationErrors, asyncHandler } = require("../../utils/utils");
+const { verifyUser } = require("../../utils/auth");
 const router = express.Router();
 const db = require("../../db/models");
 const { User, Question, Answer, QuestionComment, AnswerComment } = db;
@@ -98,6 +99,7 @@ router.get(
 
 router.post(
   "/:questionId(\\d+)/comment",
+  verifyUser,
   validateComment,
   asyncHandler(async (req, res) => {
     const { content } = req.body;
@@ -111,7 +113,8 @@ router.post(
 );
 
 router.post(
-  "/:questionId(\\d+)/answers/:answerId(\\d)/comment",
+  "/:questionId(\\d+)/answers/:answerId(\\d+)/comment",
+  verifyUser,
   validateComment,
   asyncHandler(async (req, res) => {
     const { content } = req.body;

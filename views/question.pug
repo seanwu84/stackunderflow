@@ -9,9 +9,10 @@ block content
     p Posted At: #{question.posted}
     p User: #{question.user.username}
     .comments 
-    form(class="add-question-comment-form")
-      textarea(name="content")
-      button(type="submit") Add Comment
+    if user
+      form(class="add-question-comment-form")
+        textarea(name="content")
+        button(type="submit") Add Comment
     .errors-container
 
   
@@ -25,8 +26,9 @@ block content
           li Score:  #{answer.score}
           li User: #{answer.user.username}
           .answer-comments(data-answer-id=answer.id)
-          form(id=`${answer.id}` class="add-question-comment-form")
-            textarea(name="content")
-            button(type="submit") Add Comment
+          if user
+            form(id=`${answer.id}` class="add-question-comment-form")
+              textarea(name="content")
+              button(type="submit") Add Comment
           .errors-container
   script(type="module" src="/js/comments.js")
