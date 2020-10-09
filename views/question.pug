@@ -1,13 +1,14 @@
 extends layout.pug
 
 block content
-  .question
+  .question(data-question-id=question.id)
     p ID: #{question.id}
     p Title: #{question.title}
     p Content: #{question.content}
     p Score:  #{question.score}
     p Posted At: #{question.posted}
     p User: #{question.user.username}
+    .comments 
   ol
     each answer in answers
       li
@@ -17,3 +18,5 @@ block content
           li Posted At: #{answer.posted}
           li Score:  #{answer.score}
           li User: #{answer.user.username}
+
+  script(type="module" src="/js/comments.js")
