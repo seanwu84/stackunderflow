@@ -13,7 +13,6 @@ app.use(bearer());
 app.use(cookieParser())
 app.use(restoreUser)
 app.use(morgan('dev'));
-app.use(verifyUser);
 app.use(convertUserNameToHex)
 app.set("view engine", "pug");
 
