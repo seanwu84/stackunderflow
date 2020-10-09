@@ -9,14 +9,24 @@ block content
     p Posted At: #{question.posted}
     p User: #{question.user.username}
     .comments 
+    form(class="add-question-comment-form")
+      textarea(name="content")
+      button(type="submit") Add Comment
+    .errors-container
+
+  
   ol
     each answer in answers
-      li
+      li(class=`answer-${answer.id}`)
         ul
           li ID: #{answer.id}
           li Content: #{answer.content}
           li Posted At: #{answer.posted}
           li Score:  #{answer.score}
           li User: #{answer.user.username}
-
+          .answer-comments(data-answer-id=answer.id)
+          form(id=`${answer.id}` class="add-question-comment-form")
+            textarea(name="content")
+            button(type="submit") Add Comment
+          .errors-container
   script(type="module" src="/js/comments.js")

@@ -66,6 +66,10 @@ const verifyUser = async (req, res, next) =>{
         }
         const {username} = payload;
         let user;
+          if (!token) {
+            res.status(401);
+          }
+        
         try{
             user = await User.findOne({where: {username}});
         } catch(e){
@@ -77,6 +81,8 @@ const verifyUser = async (req, res, next) =>{
             err.status = 500;
             next(err)
         }
+
+      
         if(!user){
             if(!req.errors){
                 req.errors = [];
