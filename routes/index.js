@@ -13,7 +13,11 @@ router.use("/questions", questionsRouter);
 router.use("/search", searchRouter);
 
 router.get("/", (req, res) => {
-  res.render("index", {user: req.user});
+  if(req.user){
+    res.redirect("/questions");
+    return;
+  }
+  res.render("index");
 });
 
 router.get("/logout", (req, res) =>{

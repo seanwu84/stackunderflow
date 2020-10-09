@@ -82,6 +82,27 @@ router.post("/:sortType/:page", asyncHandler( async(req, res, next) =>{
 
 }));
 
+router.post("/homePage", asyncHandler( async(req, res, next) =>{
+    const {query} = req.body;
+    console.log(query)
+    const questions = await Question.findAll({
+        limit: 100,
+        attributes: {
+            include:[[
+                sequelize.literal(`(SELECT COALESCE(SUM(qv.value), 0)
+                                    FROM "QuestionVotes" AS qv
+                                    WHERE qv."questionId" = "Question".id)`
+                ), "score"
+            ]]       
+        },
+        include: [User, Answer],
+        order: [
+            [sequelize.literal('score'), 'DESC']
+          ],
+    });
+    res.json(questions)
+}));
+
 
 module.exports = router;
 
