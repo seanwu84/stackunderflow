@@ -3,7 +3,7 @@ const { check } = require("express-validator");
 
 const { verifyUser } = require("../../utils/auth");
 const { handleValidationErrors, asyncHandler, csrfProtection } = require("../../utils/utils");
-const { User, Question, QuestionComment, AnswerComment } = require("../../db/models");
+const { User, Question, Answer, QuestionComment, AnswerComment, QuestionVote, AnswerVote, sequelize } = require("../../db/models");
 const apiAnswersRouter = require("./answers");
 
 const router = express.Router();
@@ -74,6 +74,46 @@ router.post(
     res.json({ questionComment });
   })
 );
+
+router.get('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
+  if(!req.user){
+    res.json({});
+    return;
+  }
+  const user = req.user;
+  const qvote = await QuestionVote.findOne({
+    where:{
+      userId: user.id,
+      questionId: req.params.questionId
+    }
+  });
+  const nestedAnswerVotes = await Question.findOne({
+    where:{
+      id: req.params.questionId
+    },
+    include: {
+      model: Answer,
+      include:{
+        model: AnswerVote,
+        where:{
+          userId: user.id
+        }
+      }
+    }
+  });
+const relevantVotes = {};
+relevantVotes.questionVote = qvote.value;
+nestedAnswerVotes.Answers.forEach(function(el){
+  console.log(el);
+  console.log(el.AnswerVotes)
+  relevantVotes[el.id]= el.AnswerVotes[0].value;
+})
+  
+
+  res.json(relevantVotes)
+
+}))
+
 
 router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
   const questionId = req.params.questionId;

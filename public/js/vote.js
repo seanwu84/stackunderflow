@@ -3,28 +3,56 @@ const upvote = document.querySelectorAll('.upvote');
 const downvote = document.querySelectorAll('.downvote')
 let qId;
 try{
-    window.location.href.split("questions")[1].slice(1)
+    qId=window.location.href.split("questions")[1].slice(1)
 } catch{
-    console.log("Guess you weren't on a question page")
+    //you weren't on a questions page
 }
-console.log(qId)
+
+const getVotes = async() =>{
+    const res = await fetch(`/api/questions/${qId}/vote`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    const votes = await res.json();
+    for(let id in votes){
+        if(id = "questionVote"){
+            if(votes.questionVote === 1){
+                document.querySelector(".questionVoteInsert>.upvote").classList.add("on")
+            }else if(votes.questionVote === -1){
+                document.querySelector(".questionVoteInsert>.downvote").classList.add("on")
+            }
+        }
+        ////ADD ANSWER ID SELECT!!!!!!!!!
+    }
+}
+
+if(qId){
+    getVotes();
+}
+
 
 upvote.forEach((el) => {
     el.addEventListener('click', async (e) => {
       let type;
       let id;
+      let url;
       let elem = e.target
       while(!elem.classList.contains("question") && !elem.classList.contains("answer")) {
           elem = elem.parentNode;
           if(elem.classList.contains("question")) {
               type = 'questions';
-              id = elem.getAttribute("data-question-id")
+              id = elem.getAttribute("data-question-id");
+              url = `/api/${type}/${id}/vote`;
           } else {
               type = 'answers';
-              id = elem.getAttribute("answer-id")
+              id = elem.getAttribute("answer-id");
+              url = `/api/questions/${qId}/${type}/${id}/vote`;
             }
       }
-      const res = await fetch(`/api/${type}/${id}/vote`, { 
+      
+      const res = await fetch(url, { 
           method: "POST",
           body: JSON.stringify({voteValue: 1 }),
           headers: {
