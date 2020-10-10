@@ -8,7 +8,7 @@ const fetchQuestionComments = async () => {
   const comments = await res.json();
 
   const commentsHtml = await renderTemplate("/templates/comments.hb", {
-    comments: comments.questionComments,
+    comments: comments
   });
 
   document.querySelector(".question .comments").innerHTML = commentsHtml;
@@ -33,7 +33,6 @@ const addQuestionComment = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Cookie: `${document.cookie}`,
         },
         body: JSON.stringify({ content }),
       });
@@ -69,7 +68,7 @@ const fetchAnswerComments = async () => {
     );
     const comments = await res.json();
     const commentsHtml = await renderTemplate("/templates/comments.hb", {
-      comments: comments.answerComments,
+      comments: comments
     });
     document.querySelector(
       `.answer-${answerId} .answer-comments`
