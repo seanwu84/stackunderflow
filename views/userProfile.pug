@@ -3,7 +3,7 @@ extend layout
 block content
     .profileContainer
         .logoAndStats
-            .logo
+            .logoForProfile
                 .userLogoProfile(style=`background-color:#${profileUser.color};`)
                     a(class="userLetterProfile")= profileUser.capitalLetter
             .stats
@@ -11,7 +11,10 @@ block content
                 p Total Questions Answered: #{profileUser.Answers.length}
                 p Total Comments: #{profileUser.QuestionComments.length+profileUser.QuestionComments.length}
         .tabs
-            p Questions
-            p Answers
-            p Comments
+            .userProfileQuestionTab.userProfileTab
+                p Questions
+            .userProfileAnswerTab.userProfileTab
+                p Answers
+            .userProfileCommentsTab.userProfileTab
+                p Comments
         .search-results
