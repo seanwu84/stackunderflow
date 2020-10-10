@@ -118,7 +118,7 @@ nestedAnswerVotes.Answers.forEach(function(el){
 router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
   const questionId = req.params.questionId;
   const { voteValue } = req.body;
-  const currentState = await QuestionVote.findOne({
+  let currentState = await QuestionVote.findOne({
     where: {
       questionId: questionId,
       userId: req.user.id
@@ -126,7 +126,7 @@ router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
   })
 
   if (!currentState) {
-    await QuestionVote.create({
+    currentState = await QuestionVote.create({
       userId: req.user.id,
       value: voteValue,
       questionId: req.params.questionId,
