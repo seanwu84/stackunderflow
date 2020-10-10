@@ -5,9 +5,9 @@ const { Question, Answer, User, sequelize } = require('../db/models');
 
 const router = express.Router();
 
-router.get("/", (req, res) =>{
+router.get("/", (req, res) => {
   const user = req.user;
-  res.render("search", {user, title: "Most Popular Questions"})
+  res.render("search", { user, title: "Most Popular Questions" })
 })
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
@@ -19,11 +19,11 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
       include: [
         [
           sequelize.literal(`(
-                    SELECT COALESCE(SUM(qv.value), 0)
-	                  FROM "QuestionVotes" AS qv
-	                  WHERE
-                    qv."questionId" = "Question".id
-                )`),
+            SELECT COALESCE(SUM(qv.value), 0)
+            FROM "QuestionVotes" AS qv
+            WHERE
+            qv."questionId" = "Question".id
+          )`),
           'score'
         ],
       ]
@@ -82,7 +82,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
       }
     }
   });
-  if(req.user){
+  if (req.user) {
     req.user.hashedPassword = 0000;
   }
 
