@@ -1,5 +1,6 @@
+import { handleErrors } from "/js/utils.js";
+
 const submitForm = async (e) =>{
-    document.getElementById("errorDiv").innerHTML = ""
     e.preventDefault() 
     const form = e.target;
     const data = new FormData(form);
@@ -12,19 +13,11 @@ const submitForm = async (e) =>{
         },
         body: JSON.stringify({email, password})
     });
-    const resJSON = await res.json();
     if(res.status === 201){
         window.location.href = "/";
     } else{
-        const errors = JSON.parse(resJSON).messages;
-        errors.forEach(function(el) {
-            const errorMessageDisplay = document.createElement("p");
-            errorMessageDisplay.innerHTML = el;
-            errorMessageDisplay.classList.add("errorMessage")
-            document.getElementById("errorDiv").appendChild(errorMessageDisplay)
-        })
-    }
-    
+        handleErrors(res);
+    }  
 }
 
 const demoLogin = (e) =>{

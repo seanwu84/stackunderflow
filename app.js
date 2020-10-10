@@ -15,10 +15,10 @@ app.use(restoreUser)
 app.use(morgan('dev'));
 app.use(convertUserNameToHex)
 app.set("view engine", "pug");
+app.use(express.static("public"));
+app.use(verifyUser);
 
 app.use("/", indexRouter);
-
-app.use(express.static("public"));
 
 // Unhandled request catch
 app.use((req, res, next) => {
@@ -28,20 +28,16 @@ app.use((req, res, next) => {
   next(err);
 })
 
-const generalErrorHandler = (err, req, res, next) => {
+app.use((err, req, res, next) => {
   console.log(err);
   res.status(err.status || 500);
   if (!req.errors || req.errors.length === 0) {
     req.errors = [err.message];
   }
-  res.json(
-    JSON.stringify({
-      messages: req.errors,
-      stackTrace: err.stack,
-    })
-  );
-};
-
-app.use(generalErrorHandler);
+  res.json({
+    errors: req.errors,
+    stackTrace: err.stack,
+  });
+});
 
 module.exports = app;

@@ -1,0 +1,18 @@
+extend layout
+
+block content
+  .errors-container
+  .formBoxContainer 
+      .raisedSlipbopFormContainer
+        .formHeaderContainer
+          h2.smallMargin Ask a public question
+        form.pure-form.question-form(method="POST" action="/api/questions")
+          .formgroup
+            label(for="title") Title
+            input(type="text", id="title", name="title")
+          .formgroup
+            label(for="content") Body
+            textarea(type="text", id="content", name="content")
+          .formButtonContainer  
+            button.slipbop-button.formSubmit(type='submit') Ask your Question
+        script(type="module" src="/js/ask-question.js")

@@ -3,6 +3,7 @@
 @import "login.css";
 @import "search.css";
 @import "users.css";
+@import "errors.css";
 
 :root {
   --dark-color: #141c1f;
