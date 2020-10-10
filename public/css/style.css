@@ -16,6 +16,10 @@ body {
   margin-left: auto;
 }
 
+main {
+  min-height: 85vh;
+}
+
 .slipbop-button{
   border-radius: 4px;
   background: var(--primary-color);

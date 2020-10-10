@@ -11,12 +11,11 @@ const app = express();
 app.use(express.json());
 app.use(bearer());
 app.use(cookieParser())
-app.use(restoreUser)
 app.use(morgan('dev'));
-app.use(convertUserNameToHex)
-app.set("view engine", "pug");
 app.use(express.static("public"));
-app.use(verifyUser);
+app.use(restoreUser);
+app.use(convertUserNameToHex);
+app.set("view engine", "pug");
 
 app.use("/", indexRouter);
 

@@ -101,7 +101,9 @@ router.get('/ask', csrfProtection, (req, res, next) => {
     csrfToken: req.csrfToken(),
     user: {
       id: req.user.id,
-      username: req.user.username
+      username: req.user.username,
+      color: req.user.color,
+      capitalLetter: req.user.capitalLetter
     }
   });
 });
