@@ -42,10 +42,13 @@ const convertUserNameToHex = (req, res, next) =>{
   return
 }
 
+const prettifyDate = date => date.toString().split(':').slice(0, -1).join(':');
+
 module.exports = {
   csrfProtection,
   asyncHandler,
   handleValidationErrors,
   convertUserNameToHex,
-  convert
+  convert,
+  prettifyDate
 }

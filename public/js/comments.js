@@ -11,16 +11,11 @@ const fetchQuestionComments = async () => {
     comments: comments
   });
 
-  document.querySelector(".question .comments").innerHTML = commentsHtml;
+  document.querySelector(".question__comments").innerHTML = commentsHtml;
 };
 
-fetchQuestionComments();
-
-const addQuestionCommentForm = document.querySelector(
-  ".add-question-comment-form"
-);
-
 const addQuestionComment = () => {
+  const addQuestionCommentForm = document.querySelector(".add-question-comment-form");
   addQuestionCommentForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(addQuestionCommentForm);
@@ -36,33 +31,24 @@ const addQuestionComment = () => {
         },
         body: JSON.stringify({ content }),
       });
-      if (res.status === 401) {
-        window.location.href = "/users/login";
-        return;
-      }
       if (!res.ok) {
         throw res;
       }
       addQuestionCommentForm.reset();
 
-      await fetchQuestionComments();
+      await fetchQuestionComments(); 
     } catch (e) {
-      handleErrors(e);
+      handleErrors(e); //TODO
     }
   });
 };
 
-if (addQuestionCommentForm) {
-  addQuestionComment();
-}
-
 const fetchAnswerComments = async () => {
   const question = document.querySelector(".question");
   const questionId = question.dataset.questionId;
-  const answers = document.querySelectorAll(".answer-comments");
+  const answers = document.querySelectorAll(".answer__comments");
   answers.forEach(async (answer) => {
     const answerId = answer.dataset.answerId;
-    // console.log(answerId);
     const res = await fetch(
       `/api/questions/${questionId}/answers/${answerId}/comments`
     );
@@ -71,17 +57,15 @@ const fetchAnswerComments = async () => {
       comments: comments
     });
     document.querySelector(
-      `.answer-${answerId} .answer-comments`
+      `#answer-${answerId} .answer__comments`
     ).innerHTML = commentsHtml;
   });
 };
 
-fetchAnswerComments();
-
 const addAnswerComment = () => {
   //add event listener to each answer comment form
   document
-    .querySelectorAll(".answer-comments + form")
+    .querySelectorAll(".answer__comments + form")
     .forEach((answerCommentForm) => {
       answerCommentForm.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -101,10 +85,6 @@ const addAnswerComment = () => {
               body: JSON.stringify({ content }),
             }
           );
-          if (res.status === 401) {
-            window.location.href = "/users/login";
-            return;
-          }
           if (!res.ok) {
             throw res;
           }
@@ -118,4 +98,14 @@ const addAnswerComment = () => {
     });
 };
 
-addAnswerComment();
+fetchQuestionComments();
+fetchAnswerComments();
+
+const userId = document.querySelector(".question__user").dataset.userId;
+
+if (userId) {
+  addQuestionComment();
+  addAnswerComment();
+}
+
+

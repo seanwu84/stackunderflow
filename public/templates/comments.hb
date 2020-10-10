@@ -1,5 +1,4 @@
-<ul class="comments">
+<h3>Comments</h3>
 {{#each comments}}
-  <li>{{this.content}} <span>posted by {{this.user}} at {{this.createdAt}}</span></li>
+ <div class="comment">{{this.content}}</div>
  {{/each}}
-</ul>

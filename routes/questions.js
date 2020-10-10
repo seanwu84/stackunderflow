@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { asyncHandler, csrfProtection } = require('../utils/utils');
+const { asyncHandler, csrfProtection, prettifyDate } = require('../utils/utils');
 const { Question, Answer, User, sequelize } = require('../db/models');
 
 const router = express.Router();
@@ -37,7 +37,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     id: question.id,
     title: question.title,
     content: question.content,
-    posted: question.createdAt.toString().split(':').slice(0, -1).join(':'),
+    posted: prettifyDate(question.createdAt),
     score: question.dataValues.score,
     user: {
       username: question.User.username
@@ -75,7 +75,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     return {
       id: answer.id,
       content: answer.content,
-      posted: answer.createdAt.toString(),
+      posted: prettifyDate(answer.createdAt),
       score: answer.dataValues.score,
       user: {
         username: answer.User.username
