@@ -6,7 +6,13 @@
 @import "question.css";
 @import "errors.css";
 @import "vote.css";
+<<<<<<< HEAD
 @import "homepage.css";
+=======
+@import "userProfile.css";
+
+
+>>>>>>> Need to do some other stuff on other branches. Be back later
 
 :root {
   --dark-color: #141c1f;

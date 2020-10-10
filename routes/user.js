@@ -36,6 +36,15 @@ router.get("/signup", (req, res) => {
       res.redirect("/")
   })
 
+  router.get("/:id(\\d+)", asyncHandler(async(req, res, next)=>{
+      const user = req.user;
+      const profileUser = await User.findByPk(req.params.id);
+      profileUser.color = convert(profileUser.username);
+      profileUser.capitalLetter = profileUser.username[0].toUpperCase();
+      res.render("userProfile", {user, profileUser})
+
+  }))
+
 
 
 

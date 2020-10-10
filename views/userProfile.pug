@@ -1,0 +1,14 @@
+extend layout
+
+block content
+    .profileContainer
+        .logoAndStats
+            .logo
+                .userLogoProfile(style=`background-color:#${profileUser.color};`)
+                    a(class="userLetterProfile")= profileUser.capitalLetter
+            .stats
+        .tabs
+            p Questions
+            p Answers
+            p Comments
+        .search-results
