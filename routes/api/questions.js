@@ -3,9 +3,7 @@ const { check } = require("express-validator");
 
 const { verifyUser } = require("../../utils/auth");
 const { handleValidationErrors, asyncHandler, csrfProtection } = require("../../utils/utils");
-const { User, Question, QuestionComment, AnswerComment } = require("../../db/models");
 const apiAnswersRouter = require("./answers");
-
 const router = express.Router();
 const db = require("../../db/models");
 const { User, Question, Answer, QuestionComment, AnswerComment, AnswerVote, QuestionVote, sequelize } = db;
@@ -152,12 +150,14 @@ router.get(
 
 
 router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
-  console.log('req.user is:',req.user)
+  console.log('req.user is:', req.user)
   const questionId = req.params.questionId;
   const { voteValue } = req.body;
   const currentState = await QuestionVote.findOne({
-    where: { id: questionId,
-             userId: req.user.id }
+    where: {
+      id: questionId,
+      userId: req.user.id
+    }
   })
   if (!currentState) {
     await QuestionVote.create({
@@ -165,14 +165,14 @@ router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
       value: voteValue,
       questionId: req.params.questionId,
     });
-  } else if(currentState.value === voteValue) {
+  } else if (currentState.value === voteValue) {
     currentState.value = 0;
     await currentState.save()
-  } 
+  }
   else {
     currentState.value = voteValue;
     await currentState.save()
-  } 
+  }
   const question = await Question.findOne({
     where: { id: questionId },
     attributes: {
@@ -194,30 +194,51 @@ router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
   res.json({ currentVoteValue: question.score, currentStateValue: currentState.value })
 }));
 
-//delete rougte same pattern above
-//if > -1, subtract
-// if no entry, make entry
 
 
 router.post('/:questionId(\\d+)/answers/:answerId(\\d)/vote', asyncHandler(async (req, res) => {
-  const answerVote = await AnswerVote.create({
-    userId: req.user.id,
-    answerId: req.params.answerId,
-    value: 1
-  });
-  res.json({ answerVote })
-}));
+  console.log('req.user is:', req.user)
+  const answerId = req.params.questionId;
+  const { voteValue } = req.body;
+  const currentState = await AnswerVote.findOne({
+    where: {
+      id: answerId,
+      answerId: req.user.id
+    }
+  })
+  if (!currentState) {
+    await AnswerVote.create({
+      userId: req.userId.id,
+      value: voteValue,
+      answerId: req.params.answerId,
+    });
+  } else if (currentState.value === voteValue) {
+    currentState.value = 0;
+    await currentState.save()
+  }
+  else {
+    currentState.value = voteValue;
+    await currentState.save()
+  }
+  const answer = await Answer.findOne({
+    where: { id: answerId },
+    attributes: {
+      include: [
+        [
+          sequelize.literal(`(
+                    SELECT COALESCE(SUM(av.value), 0)
+	                  FROM "AnswerVotes" AS av
+	                  WHERE
+                    av."answerId" = "Answer".id
+                )`),
+          'score'
+        ],
+      ]
+    },
+  }
+  );
 
-
-
-router.delete('/:questionId(\\d+)/votes', asyncHandler(async (req, res) => {
-
-  // const questionVote = await QuestionVote.create({
-  //   userId: req.user.id,
-  //   questionId: req.params.questionId,
-  //   value: 0
-  // });
-  // res.json({ questionVote })
+  res.json({ currentVoteValue: answer.score, currentStateValue: currentState.value })
 }));
 
 module.exports = router;
