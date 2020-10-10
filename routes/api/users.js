@@ -26,11 +26,10 @@ router.post(
     .withMessage("Please provide a username"),
   validateEmailAndPassword,
   asyncHandler(async (req, res) => {
-    if (!req.errors.isEmpty()) {
-      const err = newError("Bad request.");
+    if (req.errors) {
+      const err = new Error("User signup validation error.");
       err.status = 400;
       err.title = "Bad request.";
-      err.errors = errors;
       return next(err);
     }
     const { username, email, password } = req.body;
