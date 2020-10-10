@@ -82,7 +82,10 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
       }
     }
   });
-  req.user.hashedPassword = null;
+  if(req.user){
+    req.user.hashedPassword = 0000;
+  }
+
   res.render('question', {
     question: questionData,
     answers: answerData,
