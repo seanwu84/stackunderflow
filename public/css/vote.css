@@ -1,0 +1,32 @@
+.voteInsert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.upvote {
+    display: inline-block;
+    overflow: hidden;
+    width: 40px;
+    height: 25px;
+    cursor: pointer;
+    background-image: url('/images/upvote.png');
+    background-position: 0 -25px;
+}
+
+.upvote.on {
+    background-position: 0 2px;
+}
+
+.downvote {
+    display: inline-block;
+    overflow: hidden;
+    width: 40px;
+    height: 25px;
+    cursor: pointer;
+    background-image: url('/images/downvote.png');
+    background-position: 0 2px;
+}
+
+.downvote.on {
+    background-position: 0 -25px;
+}

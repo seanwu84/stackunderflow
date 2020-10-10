@@ -70,4 +70,48 @@ router.post(
   })
 );
 
+router.post('/:answerId(\\d)/vote', asyncHandler(async (req, res) => {
+  const answerId = req.params.questionId;
+  const { voteValue } = req.body;
+  const currentState = await AnswerVote.findOne({
+    where: {
+      answerId: answerId,
+      userId: req.user.id
+    }
+  })
+  if (!currentState) {
+    await AnswerVote.create({
+      userId: req.userId.id,
+      value: voteValue,
+      answerId: req.params.answerId,
+    });
+  } else if (currentState.value === voteValue) {
+    currentState.value = 0;
+    await currentState.save()
+  }
+  else {
+    currentState.value = voteValue;
+    await currentState.save()
+  }
+  const answer = await Answer.findOne({
+    where: { id: answerId },
+    attributes: {
+      include: [
+        [
+          sequelize.literal(`(
+                    SELECT COALESCE(SUM(av.value), 0)
+                    FROM "AnswerVotes" AS av
+                    WHERE
+                    av."answerId" = "Answer".id
+                )`),
+          'score'
+        ],
+      ]
+    },
+  }
+  );
+
+  res.json({ currentVoteValue: answer.dataValues.score, currentStateValue: currentState.value })
+}));
+
 module.exports = router;
