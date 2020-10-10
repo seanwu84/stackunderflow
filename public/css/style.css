@@ -6,6 +6,7 @@
 @import "question.css";
 @import "errors.css";
 @import "vote.css";
+@import "homepage.css";
 
 :root {
   --dark-color: #141c1f;
