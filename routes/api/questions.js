@@ -145,7 +145,16 @@ router.get(
 
 
 router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
-  //get entry
+  const questionId = req.params.questionId;
+  //get the number for that question
+  const currentState = await QuestionVote.findOne({
+    where: { id: questionId,
+             userId: req.user.id }
+  })
+  if (currentState.value < 1) {
+    
+  } 
+
   //if < 1, increment, save back to vote
   //if no entry, make entry
   

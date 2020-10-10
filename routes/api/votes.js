@@ -3,6 +3,7 @@ const { check } = require("express-validator");
 const { handleValidationErrors, asyncHandler } = require("../../utils/utils");
 const router = express.Router();
 const db = require("../../db/models");
+const { check } = require('express-validator');
 
 const { User, Question, Answer, QuestionComment, AnswerComment, AnswerVote, QuestionVote, sequelize } = db;
 
@@ -42,8 +43,9 @@ router.get('/', asyncHandler(async (req, res, next) => {
             ]
         },
     });
-    res.json({questionVotes, answerVotes})
+    res.json(questionVotes, answerVotes)
 }));
+
 
 router.get('/questionvotestatus', asyncHandler(async(req, res) => {
     const questionVoteStatus = await QuestionVote.findOne({
