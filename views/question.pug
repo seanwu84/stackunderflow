@@ -2,18 +2,26 @@ extends layout.pug
 
 block content
   .question(data-question-id=question.id)
-    p ID: #{question.id}
-    p Title: #{question.title}
-    p Content: #{question.content}
-    p Score:  #{question.score}
-    p Posted At: #{question.posted}
-    p User: #{question.user.username}
+    .question__header
+      h1 #{question.title}
+    .question__vote-container
+      span.question__upvote: i(id="upvote" class="fas fa-chevron-up fa-2x")
+      .question__score-container= question.score
+      span.question__downvote: i(id="upvote" class="fas fa-chevron-down fa-2x")
+    .question__content
+      p= question.content
+    .question__user
+      p= question.user.username
+      p Asked on #{question.posted}
     .comments 
     if user
       form(class="add-question-comment-form")
         textarea(name="content")
         button(type="submit") Add Comment
     .errors-container
+
+  .answer__sum
+    h2 #{answers.length} Answers
 
   
   ol

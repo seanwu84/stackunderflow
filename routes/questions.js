@@ -37,7 +37,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     id: question.id,
     title: question.title,
     content: question.content,
-    posted: question.createdAt.toString(),
+    posted: question.createdAt.toString().split(':').slice(0, -1).join(':'),
     score: question.dataValues.score,
     user: {
       username: question.User.username
