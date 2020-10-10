@@ -6,7 +6,7 @@ block content
       h1 #{question.title}
     .voteInsert
       div.upvote 
-      span.count 0
+      span.count=question.score
       div.downvote
     //- .question__vote-container
     //-   span.question__upvote: i(id="upvote" class="fas fa-chevron-up fa-2x")
