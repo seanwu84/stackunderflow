@@ -1,6 +1,13 @@
 
 const upvote = document.querySelectorAll('.upvote');
-const downvote = document.querySelectorAll('.downvote')  
+const downvote = document.querySelectorAll('.downvote')
+let qId;
+try{
+    window.location.href.split("questions")[1].slice(1)
+} catch{
+    console.log("Guess you weren't on a question page")
+}
+console.log(qId)
 
 upvote.forEach((el) => {
     el.addEventListener('click', async (e) => {
