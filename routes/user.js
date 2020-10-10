@@ -1,7 +1,7 @@
 const express = require("express");
 const {verifyUser, checkLoginDetails, generateNewToken, deleteCookie} = require("../utils/auth");
 const { asyncHandler } = require("../utils/utils");
-const {User, Question, Answer, QuestionComment, AnswerCommet} = require("../db/models")
+const {User, Question, Answer, QuestionComment, AnswerComment} = require("../db/models")
 const {convert} = require("../utils/utils")
 
 
@@ -40,8 +40,9 @@ router.get("/signup", (req, res) => {
       const user = req.user;
       const profileUser = await User.findOne({
           where:{id:req.params.id},
-          include: [{model: Question}, {model: Answer}, {model: QuestionComment}, {model: AnswerCommet}]
+          include: [{model: Question}, {model: Answer}, {model: QuestionComment}, {model: AnswerComment}]
       })
+      profileUser.hashedPassword = null;
       profileUser.color = convert(profileUser.username);
       profileUser.capitalLetter = profileUser.username[0].toUpperCase();
       res.render("userProfile", {user, profileUser})
