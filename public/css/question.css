@@ -27,6 +27,20 @@
   color: white;
 }
 
+.question__upvote,
+.question__downvote,
+.answer__upvote,
+.answer__downvote {
+  cursor: pointer;
+}
+
+.question__upvote.on,
+.question__downvote.on,
+.answer__upvote.on,
+.answer__downvote.on {
+  color: orange;
+}
+
 .question__content {
   grid-column: 1 / 3;
   grid-row: 2 / 3;

@@ -32,9 +32,9 @@ block content
     each answer in answers
       .question-answer(id=`answer-${answer.id}`)
         .vote-container
-          span.upvote: i(id="upvote" class="fas fa-chevron-up fa-2x")
+          span.answer__upvote: i(id="upvote" class="fas fa-chevron-up fa-2x")
           .answer__score-container= answer.score
-          span.downvote: i(id="upvote" class="fas fa-chevron-down fa-2x")
+          span.answer__downvote: i(id="upvote" class="fas fa-chevron-down fa-2x")
         .answer__content
           p= answer.content
         .answer__user

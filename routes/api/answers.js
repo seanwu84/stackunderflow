@@ -37,8 +37,7 @@ router.post(
   validateContent,
   asyncHandler(async (req, res, next) => {
     if (req.errors) {
-      // console.log(req.errors);
-      const err = new Error("Answer validation error.");
+      const err = new Error("Answer validation error.")
       err.status = 400;
       return next(err);
     }
