@@ -92,30 +92,30 @@ router.post(
   })
 );
 
-router.get(
-  "/:questionId(\\d+)/votestotal",
-  asyncHandler(async(req, res) => {
-    const questionId = req.params.questionId;
-    const question = await Question.findOne({
-      where: {id:questionId },
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-                    SELECT COALESCE(SUM(qv.value), 0)
-	                  FROM "QuestionVotes" AS qv
-	                  WHERE
-                    qv."questionId" = "Question".id
-                )`),
-            'score'
-          ],
-        ]
-      },
-    }
-    );
-    res.json({ score: question.get().score })
-  })
-)
+// router.get(
+//   "/:questionId(\\d+)/votestotal",
+//   asyncHandler(async(req, res) => {
+//     const questionId = req.params.questionId;
+//     const question = await Question.findOne({
+//       where: {id:questionId },
+//       attributes: {
+//         include: [
+//           [
+//             sequelize.literal(`(
+//                     SELECT COALESCE(SUM(qv.value), 0)
+// 	                  FROM "QuestionVotes" AS qv
+// 	                  WHERE
+//                     qv."questionId" = "Question".id
+//                 )`),
+//             'score'
+//           ],
+//         ]
+//       },
+//     }
+//     );
+//     res.json({ score: question.get().score })
+//   })
+// )
 
 
 router.get(
@@ -144,26 +144,54 @@ router.get(
 )
 
 
+//current state   upvote   downvote
+//1               0        -1
+//0               1        -1
+//-1              1         0
+//undef           create/1 create/-1
+
+
 router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
+  console.log('req.user is:',req.user)
   const questionId = req.params.questionId;
-  //get the number for that question
+  const { voteValue } = req.body;
   const currentState = await QuestionVote.findOne({
     where: { id: questionId,
              userId: req.user.id }
   })
-  if (currentState.value < 1) {
-    
+  if (!currentState) {
+    await QuestionVote.create({
+      userId: req.userId.id,
+      value: voteValue,
+      questionId: req.params.questionId,
+    });
+  } else if(currentState.value === voteValue) {
+    currentState.value = 0;
+    await currentState.save()
   } 
+  else {
+    currentState.value = voteValue;
+    await currentState.save()
+  } 
+  const question = await Question.findOne({
+    where: { id: questionId },
+    attributes: {
+      include: [
+        [
+          sequelize.literal(`(
+                    SELECT COALESCE(SUM(qv.value), 0)
+	                  FROM "QuestionVotes" AS qv
+	                  WHERE
+                    qv."questionId" = "Question".id
+                )`),
+          'score'
+        ],
+      ]
+    },
+  }
+  );
 
-  //if < 1, increment, save back to vote
-  //if no entry, make entry
-  
-  const questionVote = await QuestionVote.create({
-    userId: req.user.id,
-    value: 1,
-    questionId: req.params.questionId,
-  });
-  res.json({ questionVote })
+  res.json({ currentVoteValue: question.score, currentStateValue: currentState.value })
 }));
 
 //delete rougte same pattern above
