@@ -3,6 +3,7 @@
 @import "login.css";
 @import "search.css";
 @import "users.css";
+@import "errors.css";
 
 :root {
   --dark-color: #141c1f;
@@ -13,6 +14,10 @@
 body {
   margin-right: auto;
   margin-left: auto;
+}
+
+main {
+  min-height: 85vh;
 }
 
 .slipbop-button{

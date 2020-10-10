@@ -3,6 +3,8 @@ html
   head
     title SlipBop Overflow
     meta(name="viewport" content="width=device-width, initial-scale=1")
+    if csrfToken
+      meta(name="csrf-token" content=csrfToken)
     link(rel="icon" type="image/png" href="/images/logo.png")
     link(href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&display=swap" rel="stylesheet")
     link(rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous")
@@ -17,7 +19,7 @@ html
       div(id="links-left") 
         a#hamburger-anchor: i(id="hamburger" class="fa fa-bars icon")
         a(class="logo" href="/"): img(src="../images/logo.png")
-        a(class="desktop-links" href="/") Home
+        a(class="desktop-links" href="/questions/ask") Ask
         a(class="desktop-links" href="/questions") Questions
         a(class="desktop-links" href="/users") Users
         a#search-icon-anchor: i(id="search-icon" class="fa fa-search icon") 
@@ -35,14 +37,14 @@ html
           a(class="pure-button button-right slipbop-button" href="/users/login") Login
           a(class="pure-button button-right slipbop-button" href="/users/signup") Sign Up
     div(id="links")
-      a(href="/") Home
+      a(href="/questions/ask") Ask
       a(href="/questions") Questions
       a(href="/users") Users    
     div(id="mobile-searchBar")
       form(action="/search")
         input(id="mobile-search" type="text" placeholder="Search..." name="search")
-
-    block content
+    main
+      block content
 
     footer.footer
       div

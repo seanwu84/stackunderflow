@@ -1,10 +1,10 @@
 const express = require("express");
 const { check } = require("express-validator");
-const { handleValidationErrors, asyncHandler } = require("../../utils/utils");
 const { verifyUser } = require("../../utils/auth");
+const { handleValidationErrors, asyncHandler, csrfProtection } = require("../../utils/utils");
+const { User, Question, Answer, QuestionComment, AnswerComment } = require("../../db/models");
+
 const router = express.Router();
-const db = require("../../db/models");
-const { User, Question, Answer, QuestionComment, AnswerComment } = db;
 
 const validateComment = [
   check("content")
@@ -13,25 +13,57 @@ const validateComment = [
   handleValidationErrors,
 ];
 
-router.get(
+const validateQuestion = [
+  check("title")
+    .exists({ checkFalsy: true })
+    .withMessage("Title can't be empty.")
+    .isLength({ max: 100 })
+    .withMessage("Title must be 100 characters or less."),
+  check("content")
+    .exists({ checkFalsy: true })
+    .withMessage("Question can't be empty."),
+  handleValidationErrors,
+]
+
+// router.get(
+//   "/",
+//   asyncHandler(async (req, res) => {
+//     const questions = await Question.findAll();
+//     res.json({ questions });
+//   })
+// );
+
+router.post(
   "/",
-  asyncHandler(async (req, res) => {
-    const questions = await Question.findAll();
-    res.json({ questions });
+  csrfProtection,
+  validateQuestion,
+  asyncHandler(async (req, res, next) => {
+    if (!req.user) {
+      res.redirect('./users/login');
+    }
+    if (req.errors) {
+      console.log(req.errors);
+      const err = new Error("Question validation error.")
+      err.status = 400;
+      return next(err);
+    }
+    const { title, content } = req.body;
+    const question = await Question.create({ title, content, userId: req.user.id });
+    res.status(201).json(`/questions/${question.id}`);
   })
 );
 
-router.get(
-  "/:questionId(\\d+)",
-  asyncHandler(async (req, res) => {
-    const questions = await Question.findOne({
-      where: {
-        id: req.params.questionId,
-      },
-    });
-    res.json({ questions });
-  })
-);
+// router.get(
+//   "/:questionId(\\d+)",
+//   asyncHandler(async (req, res) => {
+//     const questions = await Question.findOne({
+//       where: {
+//         id: req.params.questionId,
+//       },
+//     });
+//     res.json({ questions });
+//   })
+// );
 
 router.get(
   "/:questionId(\\d+)/comments",
@@ -47,42 +79,42 @@ router.get(
   })
 );
 
-router.get(
-  "/:questionId(\\d+)/answers",
-  asyncHandler(async (req, res) => {
-    const answers = await Answer.findAll({
-      include: [
-        {
-          model: Question,
-          where: {
-            id: req.params.questionId,
-          },
-        },
-      ],
-    });
+// router.get(
+//   "/:questionId(\\d+)/answers",
+//   asyncHandler(async (req, res) => {
+//     const answers = await Answer.findAll({
+//       include: [
+//         {
+//           model: Question,
+//           where: {
+//             id: req.params.questionId,
+//           },
+//         },
+//       ],
+//     });
 
-    res.json({ answers });
-  })
-);
+//     res.json({ answers });
+//   })
+// );
 
-router.get(
-  "/:questionId(\\d+)/answers/:answerId(\\d+)",
-  asyncHandler(async (req, res) => {
-    const answers = await Answer.findOne({
-      where: { id: req.params.answerId },
-      include: [
-        {
-          model: Question,
-          where: {
-            id: req.params.questionId,
-          },
-        },
-      ],
-    });
+// router.get(
+//   "/:questionId(\\d+)/answers/:answerId(\\d+)",
+//   asyncHandler(async (req, res) => {
+//     const answers = await Answer.findOne({
+//       where: { id: req.params.answerId },
+//       include: [
+//         {
+//           model: Question,
+//           where: {
+//             id: req.params.questionId,
+//           },
+//         },
+//       ],
+//     });
 
-    res.json({ answers });
-  })
-);
+//     res.json({ answers });
+//   })
+// );
 
 router.get(
   "/:questionId(\\d+)/answers/:answerId(\\d+)/comments",

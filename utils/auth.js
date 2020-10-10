@@ -58,7 +58,7 @@ const restoreUser = async (req, res, next) => {
   }
   const token = req.cookies.loginToken;
   jwt.verify(token, secret, null, async (err, payload) => {
-      console.log("err",err, "payload", payload)
+      // console.log("err",err, "payload", payload)
     if (err || !payload) {
       req.user = null;
       next();

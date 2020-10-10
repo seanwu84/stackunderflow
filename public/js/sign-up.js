@@ -18,15 +18,8 @@ signUpForm.addEventListener("submit", async (e) => {
             },
         });
         if (!res.ok) {
-            const errorjson = await res.json();
-            const err = JSON.parse(errorjson).messages;
-            err.forEach(function (el) {
-                const errorMessageDisplay = document.createElement("p");
-                errorMessageDisplay.innerHTML = el;
-                errorMessageDisplay.classList.add("errorMessage")
-                document.getElementById("errorDiv").appendChild(errorMessageDisplay)
-            }) 
-            return           
+            handleErrors(res);
+            return;
         }
         window.location.href = "/";
     } catch (err) {

@@ -1,7 +1,7 @@
 extend layout
 
 block content
-    #errorDiv
+    .errors-container
     .formBoxContainer
         .raisedSlipbopFormContainer
             .formHeaderContainer
@@ -17,4 +17,4 @@ block content
                     button.slipbop-button.formSubmit Login
                 .formButtonContainer
                     button.slipbop-button.formSubmit#demoLogin Demo Login
-    script(src="/js/login.js")
+    script(type="module" src="/js/login.js")

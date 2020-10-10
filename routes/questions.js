@@ -1,7 +1,7 @@
 const express = require('express');
 
-const { asyncHandler } = require('../utils/utils');
-const { Question, Answer, QuestionVote, AnswerVote, User, sequelize } = require('../db/models');
+const { asyncHandler, csrfProtection } = require('../utils/utils');
+const { Question, Answer, User, sequelize } = require('../db/models');
 
 const router = express.Router();
 
@@ -92,5 +92,20 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     user: req.user
   });
 }));
+
+router.get('/ask', csrfProtection, (req, res, next) => {
+  if (!req.user) {
+    res.redirect('/users/login');
+  }
+  res.render('ask-question', {
+    csrfToken: req.csrfToken(),
+    user: {
+      id: req.user.id,
+      username: req.user.username,
+      color: req.user.color,
+      capitalLetter: req.user.capitalLetter
+    }
+  });
+});
 
 module.exports = router;
