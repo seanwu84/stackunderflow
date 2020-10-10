@@ -7,9 +7,9 @@ upvote.forEach((el) => {
       let type;
       let id;
       let elem = e.target
-      while(!elem.classlist.includes("question") || !elem.classlist.includes("answer")) {
+      while(!elem.classList.contains("question") && !elem.classList.contains("answer")) {
           elem = elem.parentNode;
-          if(elem.classlist.includes("question")) {
+          if(elem.classList.contains("question")) {
               type = 'questions';
               id = elem.getAttribute("data-question-id")
           } else {
@@ -40,11 +40,11 @@ const UpdateGUI = (updateData, clickedElement) => {
   let downVote;
   let count;
   voteNodes.forEach((el) => {
-      if (el.classList.includes("upvote")) {
+      if (el.classList.contains("upvote")) {
           upVote = el;
-      } else if (el.classList.includes("downvote")) {
+      } else if (el.classList.contains("downvote")) {
           downVote = el;
-      } else if (el.classList.includes("count")) {
+      } else if (el.classList.contains("count")) {
           count = el;
       }
   })
@@ -63,9 +63,9 @@ downvote.forEach((el) => {
         let type;
         let id;
         let elem = e.target
-        while (!elem.classlist.includes("question") || !elem.classlist.includes("answer")) {
+        while (!elem.classList.contains("question") && !elem.classList.contains("answer")) {
             elem = elem.parentNode;
-            if (elem.classlist.includes("question")) {
+            if (elem.classList.contains("question")) {
                 type = 'questions';
                 id = elem.getAttribute("data-question-id")
             } else {

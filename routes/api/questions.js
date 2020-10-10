@@ -116,30 +116,30 @@ router.post(
 // )
 
 
-router.get(
-  "/:questionId(\\d+)/answers/:answerId(\\d)/votestotal",
-  asyncHandler(async (req, res) => {
-    const answerId = req.params.answerId;
-    const answer = await Answer.findOne({
-      where: { id: answerId },
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-                    SELECT COALESCE(SUM(av.value), 0)
-	                  FROM "AnswerVotes" AS av
-	                  WHERE
-                    av."answerId" = "Answer".id
-                )`),
-            'score'
-          ],
-        ]
-      },
-    }
-    );
-    res.json({ score: answer.get().score })
-  })
-)
+// router.get(
+//   "/:questionId(\\d+)/answers/:answerId(\\d)/votestotal",
+//   asyncHandler(async (req, res) => {
+//     const answerId = req.params.answerId;
+//     const answer = await Answer.findOne({
+//       where: { id: answerId },
+//       attributes: {
+//         include: [
+//           [
+//             sequelize.literal(`(
+//                     SELECT COALESCE(SUM(av.value), 0)
+// 	                  FROM "AnswerVotes" AS av
+// 	                  WHERE
+//                     av."answerId" = "Answer".id
+//                 )`),
+//             'score'
+//           ],
+//         ]
+//       },
+//     }
+//     );
+//     res.json({ score: answer.get().score })
+//   })
+// )
 
 
 //current state   upvote   downvote
@@ -150,21 +150,22 @@ router.get(
 
 
 router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
-  console.log('req.user is:', req.user)
   const questionId = req.params.questionId;
   const { voteValue } = req.body;
   const currentState = await QuestionVote.findOne({
     where: {
-      id: questionId,
+      questionId: questionId,
       userId: req.user.id
     }
   })
+
   if (!currentState) {
     await QuestionVote.create({
-      userId: req.userId.id,
+      userId: req.user.id,
       value: voteValue,
       questionId: req.params.questionId,
     });
+
   } else if (currentState.value === voteValue) {
     currentState.value = 0;
     await currentState.save()
@@ -191,19 +192,18 @@ router.post('/:questionId(\\d+)/vote', asyncHandler(async (req, res) => {
   }
   );
 
-  res.json({ currentVoteValue: question.score, currentStateValue: currentState.value })
+  res.json({ currentVoteValue: question.dataValues.score, currentStateValue: currentState.value })
 }));
 
 
 
 router.post('/:questionId(\\d+)/answers/:answerId(\\d)/vote', asyncHandler(async (req, res) => {
-  console.log('req.user is:', req.user)
   const answerId = req.params.questionId;
   const { voteValue } = req.body;
   const currentState = await AnswerVote.findOne({
     where: {
-      id: answerId,
-      answerId: req.user.id
+      answerId: answerId,
+      userId: req.user.id
     }
   })
   if (!currentState) {
@@ -238,7 +238,7 @@ router.post('/:questionId(\\d+)/answers/:answerId(\\d)/vote', asyncHandler(async
   }
   );
 
-  res.json({ currentVoteValue: answer.score, currentStateValue: currentState.value })
+  res.json({ currentVoteValue: answer.dataValues.score, currentStateValue: currentState.value })
 }));
 
 module.exports = router;
