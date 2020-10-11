@@ -1,0 +1,48 @@
+extend layout
+
+block content
+    .profileContainer
+        .logoAndStats
+            .logoForProfile
+                .userLogoProfile(style=`background-color:#${profileUser.color};`)
+                    a(class="userLetterProfile")= profileUser.capitalLetter
+            .stats
+                p Total Questions Asked: #{profileUser.Questions.length}
+                p Total Questions Answered: #{profileUser.Answers.length}
+                p Total Comments: #{profileUser.QuestionComments.length+profileUser.QuestionComments.length}
+        .tabs
+            .userProfileQuestionTab.userProfileTab.makeMeBold#profileQuestions
+                p.questionTabText.textInTab Questions
+            .userProfileAnswerTab.userProfileTab#profileAnswers
+                p.answerTabText.textInTab Answers
+            .userProfileCommentsTab.userProfileTab#profileComments
+                p.commentTabText.textInTab Comments
+        .search-results
+            .profileQuestions.resultPage
+                each question in profileUser.Questions
+                    .profileResult
+                        .textBlock
+                            h3.questionTitle
+                                a.colorMeBlack(href=`/questions/${question.id}`)=question.title
+                            p.content.moveMeUpScotty=question.content
+            .profileAnswers.profileHidden.resultPage
+                each answer in profileUser.Answers
+                    .profileResult
+                        .textBlock
+                            h3.questionTitle
+                                a.colorMeBlack(href=`/questions/${answer.Question.id}`)=answer.Question.title
+                            p.content.moveMeUpScotty=answer.content
+            .profileComments.resultPage.profileHidden
+                each comment in profileUser.QuestionComments
+                    .profileResult
+                        .textBlock
+                            h3.questionTitle
+                                a.colorMeBlack(href=`/questions/${comment.Question.id}`)=comment.Question.title
+                            p.content.moveMeUpScotty=comment.content
+                each comment in profileUser.AnswerComments
+                    .profileResult
+                        .textBlock
+                            h3.questionTitle
+                                a.colorMeBlack(href=`/questions/${comment.Answer.Question.id}`)=comment.Answer.Question.title
+                            p.content.moveMeUpScotty=comment.content
+    script(src="/js/profile.js")

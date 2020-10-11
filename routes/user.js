@@ -1,7 +1,7 @@
 const express = require("express");
 const {verifyUser, checkLoginDetails, generateNewToken, deleteCookie} = require("../utils/auth");
 const { asyncHandler } = require("../utils/utils");
-const {User} = require("../db/models")
+const {User, Question, Answer, QuestionComment, AnswerComment} = require("../db/models")
 const {convert} = require("../utils/utils")
 
 
@@ -35,6 +35,19 @@ router.get("/signup", (req, res) => {
       deleteCookie(res);
       res.redirect("/")
   })
+
+  router.get("/:id(\\d+)", asyncHandler(async(req, res, next)=>{
+      const user = req.user;
+      const profileUser = await User.findOne({
+          where:{id:req.params.id},
+          include: [{model: Question}, {model: Answer, include:{model:Question}}, {model: QuestionComment, include:{model:Question}}, {model: AnswerComment, include:{model:Answer, include:{model: Question}} }]
+      })
+      profileUser.hashedPassword = null;
+      profileUser.color = convert(profileUser.username);
+      profileUser.capitalLetter = profileUser.username[0].toUpperCase();
+      res.render("userProfile", {user, profileUser})
+
+  }))
 
 
 

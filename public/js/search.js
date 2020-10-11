@@ -33,7 +33,7 @@ const addQuestions = (resdata) =>{
     const container = document.getElementById("searchResults");
     resdata.forEach(function(el) {
         const result = document.createElement("div");
-        result.classList.add("result");
+        result.classList.add("search-result");
 
         const voteBlock = document.createElement("div");
         voteBlock.classList.add("voteBlock");

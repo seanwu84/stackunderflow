@@ -7,6 +7,7 @@
 @import "errors.css";
 @import "vote.css";
 @import "homepage.css";
+@import "userProfile.css";
 
 :root {
   --dark-color: #141c1f;
