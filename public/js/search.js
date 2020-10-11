@@ -26,7 +26,11 @@ const getQuery = async(query) => {
     });
     const resdata = await res.json();
     resdata.pop();
-    addQuestions(resdata)
+    if (resdata.length !== 0){
+      addQuestions(resdata);
+    } else {
+      noResults();
+    }
 }
 
 const addQuestions = (resdata) =>{
@@ -115,6 +119,19 @@ const addQuestions = (resdata) =>{
         container.appendChild(result)
 
     })
+}
+
+const noResults = () => {
+  const container = document.getElementById("searchResults");
+  const result = document.createElement("div");
+  result.classList.add("search-result");
+
+  const noResults = document.createElement("h3");
+  noResults.classList.add("no-results");
+  noResults.innerHTML = `No results for search: ${query}`;
+
+  result.appendChild(noResults);
+  container.appendChild(result)
 }
 
 getQuery(query)
