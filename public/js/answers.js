@@ -3,6 +3,7 @@ import { handleErrors } from "/js/utils.js";
 const answerForm = document.querySelector(".your-answer__form");
 const questionId = document.querySelector('.question').dataset.questionId;
 
+if (answerForm){
 answerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(answerForm);
@@ -30,3 +31,4 @@ answerForm.addEventListener("submit", async (e) => {
     handleErrors(err);
   }
 });
+}

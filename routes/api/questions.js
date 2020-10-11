@@ -2,7 +2,7 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const { verifyUser } = require("../../utils/auth");
-const { handleValidationErrors, asyncHandler, csrfProtection } = require("../../utils/utils");
+const { handleValidationErrors, asyncHandler, csrfProtection, prettifyDate } = require("../../utils/utils");
 const { User, Question, Answer, QuestionComment, QuestionVote, AnswerVote, sequelize } = require("../../db/models");
 const apiAnswersRouter = require("./answers");
 
@@ -62,7 +62,7 @@ router.get(
     const questionCommentsData = questionComments.map((questionComment) => {
       return {
         content: questionComment.content,
-        createdAt: questionComment.createdAt.toString(),
+        createdAt: prettifyDate(questionComment.createdAt),
         user: questionComment.User.username,
       };
     });
