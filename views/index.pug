@@ -1,3 +1,15 @@
 extends layout.pug
 
 block content
+  div(class="hero-image")
+    div(class="hero-text")
+      h1 Welcome to SlipBop Overflow
+  div(class="flex-container")
+    div(class="flex-item") 
+      h4 Share Knowledge
+      i(class="fas fa-comments fa-5x")
+      a(class="pure-button  slipbop-button" href="/users/signup") Sign Up
+    div(class="flex-item") 
+      h4 Acquire Knowledge
+      i(class="fas fa-question-circle fa-5x")
+      a(class="pure-button  slipbop-button" href="/questions") Browse Questions 

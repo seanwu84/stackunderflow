@@ -1,0 +1,50 @@
+.hero-image {
+  background-image: url("../images/hero-image.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  height: 60vh;
+}
+.hero-text {
+  text-align: center;
+  position: relative;
+  top: 10%;
+}
+.hero-text h1 {
+  margin: 0;
+}
+.flex-container {
+  display: flex;
+}
+
+.flex-item {
+  width: 50%;
+  padding: 10px;
+  border: 1px solid grey;
+  background: white;
+  text-align: center;
+}
+
+.flex-item h4 {
+  text-align: center;
+}
+
+.flex-item img {
+  display: block;
+  margin: 0 auto;
+}
+
+.flex-item p {
+  text-align: center;
+}
+
+.flex-item a {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+}
+.flex-item i {
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+}
