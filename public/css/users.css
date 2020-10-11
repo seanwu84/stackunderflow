@@ -53,6 +53,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 
 @media(max-width: 768px) {

@@ -26,7 +26,7 @@ block content
     if user
       .question__comments-form-container
         form(class="add-question-comment-form")
-          textarea(name="content")
+          textarea(name="content" rows=1)
           button(class="slipbop-button" type="submit") Add Comment
         .question__errors-container
 
@@ -49,7 +49,7 @@ block content
         if user
           .answer__comments-form-container
             form(id=`${answer.id}` class="add-question-comment-form")
-              textarea(name="content")
+              textarea(name="content" rows=1)
               button(class="slipbop-button" type="submit") Add Comment
             .answer__errors-container
   

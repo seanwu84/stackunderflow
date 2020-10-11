@@ -10,7 +10,6 @@
     border-bottom: 1px solid #dddd;
     display:flex;
     justify-content: center;
-    height: 150px;
 }
 
 .voteBlock{
@@ -27,6 +26,19 @@
     "title title title"
     "mainContent mainContent mainContent"
     "info info info";
+}
+
+.textBlock .content {
+      margin: 15px 0;
+}
+
+.textBlock .info p {
+    margin: 5px 0;
+    font-size: .8em;
+}
+
+.textBlock .info p.author {
+    font-weight: bold;
 }
 
 .no-results {
@@ -50,6 +62,7 @@
     grid-area: info;
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
 }
 
 .votes, .answers{
