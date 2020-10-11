@@ -15,15 +15,22 @@
   --secondary-color: #9bc9d1;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin-right: auto;
   margin-left: auto;
+  background-color: whitesmoke;
+  /* overflow-x: hidden; */
 }
 
 main {
   min-height: 85vh;
   margin-right: 10px;
   margin-left: 10px;
+  max-width: 100%;
 }
 
 .slipbop-button{

@@ -16,6 +16,7 @@
 }
 .flex-container {
   display: flex;
+  flex-direction: row;
 }
 
 .flex-item {
@@ -47,4 +48,14 @@
 .flex-item i {
   color: var(--secondary-color);
   margin-bottom: 20px;
+}
+
+@media (max-width: 370px) {
+  .flex-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .flex-item {
+    width: 100%;
+  }
 }

@@ -13,6 +13,12 @@
   align-self: center;
 }
 
+@media (max-width: 500px) {
+  .question__header {
+    font-size: 0.6em;
+  }
+}
+
 .vote-container {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
