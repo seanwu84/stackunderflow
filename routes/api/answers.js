@@ -82,18 +82,19 @@ router.post(
 );
 
 router.post(
-  "/:answerId(\\d)/vote",
+  "/:answerId(\\d+)/vote",
   asyncHandler(async (req, res) => {
     const answerId = req.params.answerId;
     const { voteValue } = req.body;
-    const currentState = await AnswerVote.findOne({
+    let currentState = await AnswerVote.findOne({
       where: {
         answerId: answerId,
         userId: req.user.id,
       },
     });
+
     if (!currentState) {
-      await AnswerVote.create({
+      currentState = await AnswerVote.create({
         userId: req.user.id,
         value: voteValue,
         answerId: req.params.answerId,
