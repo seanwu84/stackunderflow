@@ -1,18 +1,17 @@
-.usersContainer{
-    display:grid;
+.usersContainer {
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-row: repeat(10, 1fr);
     margin: 10px 50px 10px 50px;
 }
 
-.userDiv{
+.userDiv {
     display: flex;
     grid-row: span 1;
     grid-column: span 1;
     height: 75px;
 }
 
-.userLogoDiv{
+.userLogoDiv {
     border-radius: 4px;
     border: 1px solid #dddd;
     display: flex;
@@ -20,33 +19,46 @@
     height: 70px;
     width: 70px;
     align-items: center;
-  }
-  
-  .userLetter{
+}
+
+.userLetter {
     font-size: 45px;
-    color:white;
+    color: white;
     text-decoration: none;
     font-weight: 700;
     font-style: italic;
     font-family: 'Josefin Sans', sans-serif;
-  }
+}
 
-  .username{
-      font-style: italic;
-  }
+.username {
+    font-style: italic;
+}
 
-  .textPart{
-      display:flex;
-      flex-direction: column;
-      justify-content: center;
-  }
+.textPart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-  .textPart > p{
-      margin: 0 0 0 20px;
-  }
-  
-  .title{
-      width: 100%;
-      display: flex;
-      justify-content: center;
-  }
+.textPart>p {
+    margin: 0 0 0 20px;
+}
+
+.title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+@media(max-width: 768px) {
+    .usersContainer {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media(max-width: 540px) {
+    .usersContainer {
+        grid-template-columns: 1fr;
+    }
+}
+
