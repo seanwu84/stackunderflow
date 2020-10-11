@@ -7,7 +7,7 @@ answerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(answerForm);
   const content = formData.get("content");
-  // const _csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  const _csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   const body = { content };
   try {
     const res = await fetch(`/api/questions/${questionId}/answers`, {
@@ -15,9 +15,9 @@ answerForm.addEventListener("submit", async (e) => {
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
-        // "CSRF-Token": _csrf
+        "CSRF-Token": _csrf
       },
-      // credentials: "same-origin"
+      credentials: "same-origin"
     });
     if (!res.ok) {
       handleErrors(res, '.your-answer__errors-container');

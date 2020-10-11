@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 })
 
 router.get('/:id(\\d+)',
-  // csrfProtection,
+  csrfProtection,
   asyncHandler(async (req, res, next) => {
     const id = parseInt(req.params.id, 10);
 
@@ -89,7 +89,7 @@ router.get('/:id(\\d+)',
     }
 
     res.render('question', {
-      // csrfToken: req.csrfToken(),
+      csrfToken: req.csrfToken(),
       question: questionData,
       answers: answerData,
       user: req.user

@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
 router.post(
   "/",
   verifyUser,
-  // csrfProtection,
+  csrfProtection,
   validateContent,
   asyncHandler(async (req, res, next) => {
     if (req.errors) {
