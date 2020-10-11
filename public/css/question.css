@@ -138,6 +138,7 @@
   margin: 0px 10px;
   border-top: 1px solid #dddd;
   padding: 1em;
+  word-break: break-word;
 }
 
 .your-answer-container {
