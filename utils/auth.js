@@ -29,7 +29,6 @@ const checkLoginDetails = async (req, res, next) => {
   if (user) {
     passResult = await bcrypt.compare(password, user.hashedPassword.toString());
   }
-  console.log(passResult);
   if (!user || !passResult) {
     if (!req.errors) {
       req.errors = [];
@@ -41,7 +40,6 @@ const checkLoginDetails = async (req, res, next) => {
     return;
   }
   req.user = user;
-  console.log("sucess");
   next();
   return;
 };
@@ -58,7 +56,6 @@ const restoreUser = async (req, res, next) => {
   }
   const token = req.cookies.loginToken;
   jwt.verify(token, secret, null, async (err, payload) => {
-      // console.log("err",err, "payload", payload)
     if (err || !payload) {
       req.user = null;
       next();

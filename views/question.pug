@@ -1,46 +1,64 @@
 extends layout.pug
 
+block scripts
+  script(type="module" src="/js/vote.js")
+  script(type="module" src="/js/comments.js")
+  script(type="module" src="/js/answers.js")
+
 block content
   .question(data-question-id=question.id)
     .question__header
       h1 #{question.title}
-    .voteInsert.questionVoteInsert
-      div.upvote 
-      span.count=question.score
-      div.downvote
-    //- .question__vote-container
-    //-   span.question__upvote: i(id="upvote" class="fas fa-chevron-up fa-2x")
-    //-   .question__score-container= question.score
-    //-   span.question__downvote: i(id="upvote" class="fas fa-chevron-down fa-2x")
+    .vote-container
+      span.question__upvote: i(class="fas fa-chevron-up fa-2x")
+      .question__score-container= question.score
+      span.question__downvote: i(class="fas fa-chevron-down fa-2x")
+    //- .voteInsert.questionVoteInsert
+    //-   div.upvote 
+    //-   span.count=question.score
+    //-   div.downvote
     .question__content
       p= question.content
-    .question__user
+    .question__user(data-user-id=(user ? user.id : null))
       p= question.user.username
       p Asked on #{question.posted}
-    .comments 
+    .question__comments
     if user
       form(class="add-question-comment-form")
         textarea(name="content")
         button(type="submit") Add Comment
-    .errors-container
+    .question__errors-container
 
   .answer__sum
     h2 #{answers.length} Answers
 
-  
-  ol
+  .question-answers
     each answer in answers
-      li(class=`answer-${answer.id}` answer-id=answer.id)
-        ul
-          li ID: #{answer.id}
-          li Content: #{answer.content}
-          li Posted At: #{answer.posted}
-          li Score:  #{answer.score}
-          li User: #{answer.user.username}
-          .answer-comments(data-answer-id=answer.id)
-          if user
-            form(id=`${answer.id}` class="add-question-comment-form")
-              textarea(name="content")
-              button(type="submit") Add Comment
-          .errors-container
-  script(type="module" src="/js/comments.js")
+      .question-answer(id=`answer-${answer.id}` data-answer-id=answer.id)
+        .vote-container
+          span.answer__upvote: i(class="fas fa-chevron-up fa-2x")
+          .answer__score-container= answer.score
+          span.answer__downvote: i(class="fas fa-chevron-down fa-2x")
+        .answer__content
+          p= answer.content
+        .answer__user
+          p= answer.user.username
+          p Answered on #{answer.posted}
+        .answer__comments(data-answer-id=answer.id)
+        if user
+          form(id=`${answer.id}` class="add-question-comment-form")
+            textarea(name="content")
+            button(type="submit") Add Comment
+        .answer__errors-container
+
+  .your-answer
+    h2 Your Answer
+  
+  .your-answer-container
+    form.pure-form.your-answer__form
+      .formgroup
+        label(for="content") Body
+        textarea(name="content", cols="30", rows="10")
+      .formButtonContainer
+        button.slipbop-button(type="submit") Post Your Answer
+    .your-answer__errors-container

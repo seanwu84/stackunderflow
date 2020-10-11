@@ -2,18 +2,8 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const { verifyUser } = require("../../utils/auth");
-const {
-  handleValidationErrors,
-  asyncHandler,
-  csrfProtection,
-} = require("../../utils/utils");
-const {
-  User,
-  Question,
-  Answer,
-  QuestionComment,
-  AnswerComment,
-} = require("../../db/models");
+const { handleValidationErrors, asyncHandler, csrfProtection } = require("../../utils/utils");
+const { User, Answer, AnswerComment, AnswerVote, sequelize } = require("../../db/models");
 
 const router = express.Router({ mergeParams: true });
 
@@ -26,7 +16,6 @@ const validateContent = [
 
 router.get("/", (req, res) => {
   const id = req.params.questionId;
-  console.log(`Here in answers: ${id}`);
   res.send(`Here in answers: ${id}`);
 });
 
@@ -37,8 +26,7 @@ router.post(
   validateContent,
   asyncHandler(async (req, res, next) => {
     if (req.errors) {
-      // console.log(req.errors);
-      const err = new Error("Answer validation error.");
+      const err = new Error("Answer validation error.")
       err.status = 400;
       return next(err);
     }
@@ -77,7 +65,7 @@ router.post(
   "/:answerId(\\d+)/comment",
   verifyUser,
   validateContent,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     if (req.errors) {
       const err = new Error("Comment validation error.");
       err.status = 400;
@@ -94,19 +82,20 @@ router.post(
 );
 
 router.post(
-  "/:answerId(\\d)/vote",
+  "/:answerId(\\d+)/vote",
   asyncHandler(async (req, res) => {
-    const answerId = req.params.questionId;
+    const answerId = req.params.answerId;
     const { voteValue } = req.body;
-    const currentState = await AnswerVote.findOne({
+    let currentState = await AnswerVote.findOne({
       where: {
         answerId: answerId,
         userId: req.user.id,
       },
     });
+
     if (!currentState) {
-      await AnswerVote.create({
-        userId: req.userId.id,
+      currentState = await AnswerVote.create({
+        userId: req.user.id,
         value: voteValue,
         answerId: req.params.answerId,
       });
