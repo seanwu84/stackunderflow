@@ -23,8 +23,8 @@ const submitForm = async (e) =>{
 const demoLogin = (e) =>{
     e.stopPropagation();
     e.preventDefault();
-    document.getElementById("email").value = "jamesballard@gmail.com"
-    document.getElementById("password").value = "slambam123"
+    document.getElementById("email").value = "demo@user.com"
+    document.getElementById("password").value = "password"
 }
 
 
