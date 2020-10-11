@@ -29,13 +29,19 @@
     color: white;
     text-decoration: none;
     font-weight: 700;
-    font-style: italic;
-    font-family: 'Josefin Sans', sans-serif;
 }
 
 .username {
-    font-style: italic;
     font-weight: bold;
+}
+
+.username + p {
+    font-style: italic;
+}
+
+.username a {
+    text-decoration: none;
+    color: black;
 }
 
 .textPart {

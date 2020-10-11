@@ -12,14 +12,22 @@
     color:white;
     text-decoration: none;
     font-weight: 700;
-    font-style: italic;
-    font-family: 'Josefin Sans', sans-serif;
 }
 
 .logoAndStats{
     margin-top: 30px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 3fr;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+   
+}
+
+@media (min-width: 500px) {
+.logoAndStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 3fr;
+}
 }
 
 .stats{
@@ -28,6 +36,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+}
+
+
+.stats p span:first-child {
+    font-weight: bold;
 }
 
 .logoForProfile{

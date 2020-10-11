@@ -9,5 +9,6 @@ block content
                 .userLogoDiv(style=`background-color:#${thisUser.color};`)
                     a(class="userLetter" href=`/users/${thisUser.id}`)= thisUser.capitalLetter
                 .textPart
-                    p.username=thisUser.username
+                    p.username
+                      a(href=`/users/${thisUser.id}`)= thisUser.username
                     p User since #{thisUser.displayDate}
