@@ -24,4 +24,31 @@ window.addEventListener("DOMContentLoaded", () => {
       searchBar.style.display = "none";
     }
   });
+
+  const questionsRegex = RegExp(".+/questions$");
+  const usersRegex = RegExp(".+/users$");
+
+  const questions = questionsRegex.test(window.location.href);
+  const users = usersRegex.test(window.location.href);
+  const askQuestions = window.location.href.includes("ask");
+
+  if (questions) {
+    const questionLinks = document.querySelectorAll("a[href='/questions']");
+    questionLinks.forEach(
+      (questionLink) => (questionLink.style.fontWeight = "bold")
+    );
+  }
+  if (users) {
+    const usersLinks = document.querySelectorAll("a[href='/users']");
+    usersLinks.forEach((usersLink) => (usersLink.style.fontWeight = "bold"));
+  }
+
+  if (askQuestions) {
+    const askQuestionsLink = document.querySelectorAll(
+      "a[href='/questions/ask']"
+    );
+    askQuestionsLink.forEach(
+      (askQuestionsLink) => (askQuestionsLink.style.fontWeight = "bold")
+    );
+  }
 });
