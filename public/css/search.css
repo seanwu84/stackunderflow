@@ -29,6 +29,10 @@
     "info info info";
 }
 
+.no-results {
+  align-self: center;
+}
+
 .questionTitle{
     height: 42px;
     margin-bottom: 0px;
