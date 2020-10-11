@@ -2,18 +2,8 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const { verifyUser } = require("../../utils/auth");
-const {
-  handleValidationErrors,
-  asyncHandler,
-  csrfProtection,
-} = require("../../utils/utils");
-const {
-  User,
-  Question,
-  Answer,
-  QuestionComment,
-  AnswerComment,
-} = require("../../db/models");
+const { handleValidationErrors, asyncHandler, csrfProtection } = require("../../utils/utils");
+const { User, Answer, AnswerComment, AnswerVote, sequelize } = require("../../db/models");
 
 const router = express.Router({ mergeParams: true });
 

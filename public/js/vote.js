@@ -18,67 +18,24 @@ const getVotes = async () => {
   }
 }
 
-const upvote = document.querySelectorAll('.upvote');
-const downvote = document.querySelectorAll('.downvote');
-
-const questionId = document.querySelector('.question').dataset.questionId;
-
-if (qId) {
-  getVotes();
-}
-
-
-upvote.forEach((el) => {
-  el.addEventListener('click', async (e) => {
-    let type;
-    let id;
-    let url;
-    let elem = e.target
-    while (!elem.classList.contains("question") && !elem.classList.contains("answer")) {
-      elem = elem.parentNode;
-      if (elem.classList.contains("question")) {
-        type = 'questions';
-        id = elem.getAttribute("data-question-id");
-        url = `/api/${type}/${id}/vote`;
-      } else {
-        type = 'answers';
-        id = elem.getAttribute("answer-id");
-        url = `/api/questions/${qId}/${type}/${id}/vote`;
-      }
-    }
-
-    const res = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify({ voteValue: 1 }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-
-    const updateData = await res.json();
-    if (updateData.errors) {
-      alert('Something went wrong. Are you logged in?')
-      return
-    }
-    UpdateGUI(updateData, e.target)
-  });
-})
-
-const UpdateGUI = (updateData, clickedElement) => {
-  const voteNodes = clickedElement.parentNode.childNodes
-  let upVote;
-  let downVote;
-  let count;
-  voteNodes.forEach((el) => {
-    if (el.classList.contains("upvote")) {
-      upVote = el;
-    } else if (el.classList.contains("downvote")) {
-      downVote = el;
-    } else if (el.classList.contains("count")) {
-      count = el;
-    }
-  })
-  count.innerHTML = updateData.currentVoteValue;
+const updateGUI = (updateData, clickedElement) => {
+  const voteContainer = clickedElement.parentNode.parentNode;
+  const scoreContainer = voteContainer.querySelector('.question__score-container');
+  // const voteNodes = voteContainer.childNodes;
+  const upVote = voteContainer.querySelector('.question__upvote')
+    || voteContainer.querySelector('.answer__upvote');
+  const downVote = voteContainer.querySelector('.question__downvote')
+    || voteContainer.querySelector('.answer__upvote');
+  // voteNodes.forEach((el) => {
+  //   if (el.classList.contains("upvote")) {
+  //     upVote = el;
+  //   } else if (el.classList.contains("downvote")) {
+  //     downVote = el;
+  //   } else if (el.classList.contains("score")) {
+  //     count = el;
+  //   }
+  // })
+  scoreContainer.innerHTML = updateData.currentVoteValue;
   upVote.classList.remove('on');
   downVote.classList.remove('on');
   if (updateData.currentStateValue === 1) {
@@ -88,43 +45,100 @@ const UpdateGUI = (updateData, clickedElement) => {
   }
 };
 
-downvote.forEach((el) => {
-  el.addEventListener('click', async (e) => {
-    let type;
-    let id;
-    let elem = e.target
-    while (!elem.classList.contains("question") && !elem.classList.contains("answer")) {
-      elem = elem.parentNode;
-      if (elem.classList.contains("question")) {
-        type = 'questions';
-        id = elem.getAttribute("data-question-id")
-      } else {
-        type = 'answers';
-        id = elem.getAttribute("answer-id")
-      }
-    }
-    const res = await fetch(`/api/${type}/${id}/vote`, {
+// const getTotalVotes = async () => {
+//   const res = await fetch("/api/votes")
+//   const data = await res.json();
+
+//   return [data.questionVotes, data.getAnswerVotes]
+// }
+
+// const voteHandler = async (e, url, answerId=null) => {
+
+// }
+
+const answers = document.querySelectorAll('.question-answer');
+
+const questionId = document.querySelector('.question').dataset.questionId;
+
+// if (questionId) {
+getVotes();
+// }
+
+document
+  .querySelector('.question__upvote')
+  .addEventListener('click', async (e) => {
+    const res = await fetch(`/api/questions/${questionId}/vote`, {
       method: "POST",
-      body: JSON.stringify({ voteValue: -1 }),
+      body: JSON.stringify({ voteValue: 1 }),
       headers: {
         "Content-Type": "application/json",
       },
-    })
+    });
 
     const updateData = await res.json();
     if (updateData.errors) {
       alert('Something went wrong. Are you logged in?')
       return
     }
+    updateGUI(updateData, e.target)
+  });
 
-    UpdateGUI(updateData, e.target)
-  })
-})
+document
+  .querySelector('.question__downvote')
+  .addEventListener('click', async (e) => {
+    const res = await fetch(`/api/questions/${questionId}/vote`, {
+      method: "POST",
+      body: JSON.stringify({ voteValue: -1 }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-const getTotalVotes = async () => {
-  const res = await fetch("/api/votes")
-  const data = await res.json();
+    const updateData = await res.json();
+    if (updateData.errors) {
+      alert('Something went wrong. Are you logged in?');
+      return;
+    }
+    updateGUI(updateData, e.target);
+  });
 
-  return [data.questionVotes, data.getAnswerVotes]
-}
+answers.forEach(answer => {
+  const answerId = answer.dataset.answerId;
+  answer
+    .querySelector('.answer__upvote')
+    .addEventListener('click', async (e) => {
+      const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/vote`, {
+        method: "POST",
+        body: JSON.stringify({ voteValue: 1 }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
+      const updateData = await res.json();
+      if (updateData.errors) {
+        alert('Something went wrong. Are you logged in?')
+        return
+      }
+      updateGUI(updateData, e.target)
+    });
+
+  answer
+    .querySelector('.answer__downvote')
+    .addEventListener('click', async (e) => {
+      const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/vote`, {
+        method: "POST",
+        body: JSON.stringify({ voteValue: -1 }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const updateData = await res.json();
+      if (updateData.errors) {
+        alert('Something went wrong. Are you logged in?')
+        return
+      }
+      updateGUI(updateData, e.target)
+    });
+});
