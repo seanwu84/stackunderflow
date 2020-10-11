@@ -113,7 +113,7 @@ module.exports = {
     {username: "Armando_Pagac3", hashedPassword: "$2a$10$in/CCrt09YbHGpk0JPitWOHZc8YqoaGYPc1lj99BrEJI/rNxmJysm", email:"Lue.Stroman@hotmail.com", createdAt: new Date(), updatedAt: new Date()},
     {username: "Dorcas53", hashedPassword: "$2a$10$Sf/wTZD0.DVS1trx0qWTj.c0yeG8Fu2NEoUVc3K45YDLmX0emfZxS", email:"Edwin_Marvin86@yahoo.com", createdAt: new Date(), updatedAt: new Date()},
     {username: "Orland.Keebler", hashedPassword: "$2a$10$KjW1XUyaneaky13Vn.xTn.RjdWsKwlWc76tnHInBfYfmm..7rGJ5G", email:"Myra_Funk@yahoo.com", createdAt: new Date(), updatedAt: new Date()},
-    
+     { username: "demouser", hashedPassword: "$2a$10$jIfqLOqOD1iBXELrURaiDOjcdLQoWxpO/tLbpTsMqeHiCwpCrybRK", email: "demo@user.com", createdAt: new Date(), updatedAt: new Date() },
    ])
   },
 
