@@ -6,35 +6,34 @@ const getVotes = async () => {
     }
   });
   const votes = await res.json();
-  for (let id in votes) {
-    if (id = "questionVote") {
-      if (votes.questionVote === 1) {
-        document.querySelector(".question__upvote").classList.add("on")
-      } else if (votes.questionVote === -1) {
-        document.querySelector(".question__downvote").classList.add("on")
-      }
+  console.log("VOTES:", votes);
+
+  if (votes.questionVote) {
+    if (votes.questionVote === 1) {
+      document.querySelector(".question__upvote").classList.add("on")
+    } else if (votes.questionVote === -1) {
+      document.querySelector(".question__downvote").classList.add("on")
     }
-    ////ADD ANSWER ID SELECT!!!!!!!!!
   }
+
+  votes.answerVotes.forEach(obj => {
+    if (obj.value === 1) {
+      document.querySelector(`#answer-${obj.answerId} .answer__upvote`).classList.add("on")
+    } else {
+      document.querySelector(`#answer-${obj.answerId} .answer__downvote`).classList.add("on")
+    }
+  });
 }
 
 const updateGUI = (updateData, clickedElement) => {
   const voteContainer = clickedElement.parentNode.parentNode;
-  const scoreContainer = voteContainer.querySelector('.question__score-container');
-  // const voteNodes = voteContainer.childNodes;
+  const scoreContainer = voteContainer.querySelector('.question__score-container')
+    || voteContainer.querySelector('.answer__score-container');
   const upVote = voteContainer.querySelector('.question__upvote')
     || voteContainer.querySelector('.answer__upvote');
   const downVote = voteContainer.querySelector('.question__downvote')
-    || voteContainer.querySelector('.answer__upvote');
-  // voteNodes.forEach((el) => {
-  //   if (el.classList.contains("upvote")) {
-  //     upVote = el;
-  //   } else if (el.classList.contains("downvote")) {
-  //     downVote = el;
-  //   } else if (el.classList.contains("score")) {
-  //     count = el;
-  //   }
-  // })
+    || voteContainer.querySelector('.answer__downvote');
+
   scoreContainer.innerHTML = updateData.currentVoteValue;
   upVote.classList.remove('on');
   downVote.classList.remove('on');
@@ -45,100 +44,48 @@ const updateGUI = (updateData, clickedElement) => {
   }
 };
 
-// const getTotalVotes = async () => {
-//   const res = await fetch("/api/votes")
-//   const data = await res.json();
+const voteHandler = (url, vote) => {
+  return async (e) => {
+    const res = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({ voteValue: vote }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-//   return [data.questionVotes, data.getAnswerVotes]
-// }
+    const updateData = await res.json();
+    if (updateData.errors) {
+      return alert('Something went wrong. Are you logged in?');
+    }
+    updateGUI(updateData, e.target);
+  };
+}
 
-// const voteHandler = async (e, url, answerId=null) => {
-
-// }
 
 const answers = document.querySelectorAll('.question-answer');
 
 const questionId = document.querySelector('.question').dataset.questionId;
 
-// if (questionId) {
 getVotes();
-// }
 
 document
   .querySelector('.question__upvote')
-  .addEventListener('click', async (e) => {
-    const res = await fetch(`/api/questions/${questionId}/vote`, {
-      method: "POST",
-      body: JSON.stringify({ voteValue: 1 }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const updateData = await res.json();
-    if (updateData.errors) {
-      alert('Something went wrong. Are you logged in?')
-      return
-    }
-    updateGUI(updateData, e.target)
-  });
+  .addEventListener('click', voteHandler(`/api/questions/${questionId}/vote`, 1));
 
 document
   .querySelector('.question__downvote')
-  .addEventListener('click', async (e) => {
-    const res = await fetch(`/api/questions/${questionId}/vote`, {
-      method: "POST",
-      body: JSON.stringify({ voteValue: -1 }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const updateData = await res.json();
-    if (updateData.errors) {
-      alert('Something went wrong. Are you logged in?');
-      return;
-    }
-    updateGUI(updateData, e.target);
-  });
+  .addEventListener('click', voteHandler(`/api/questions/${questionId}/vote`, -1));
 
 answers.forEach(answer => {
   const answerId = answer.dataset.answerId;
   answer
     .querySelector('.answer__upvote')
-    .addEventListener('click', async (e) => {
-      const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/vote`, {
-        method: "POST",
-        body: JSON.stringify({ voteValue: 1 }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const updateData = await res.json();
-      if (updateData.errors) {
-        alert('Something went wrong. Are you logged in?')
-        return
-      }
-      updateGUI(updateData, e.target)
-    });
+    .addEventListener('click', 
+      voteHandler(`/api/questions/${questionId}/answers/${answerId}/vote`, 1));
 
   answer
     .querySelector('.answer__downvote')
-    .addEventListener('click', async (e) => {
-      const res = await fetch(`/api/questions/${questionId}/answers/${answerId}/vote`, {
-        method: "POST",
-        body: JSON.stringify({ voteValue: -1 }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const updateData = await res.json();
-      if (updateData.errors) {
-        alert('Something went wrong. Are you logged in?')
-        return
-      }
-      updateGUI(updateData, e.target)
-    });
+    .addEventListener('click',
+      voteHandler(`/api/questions/${questionId}/answers/${answerId}/vote`, -1));
 });

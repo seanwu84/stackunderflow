@@ -8,7 +8,6 @@ router.post("/:sortType/:page", asyncHandler( async(req, res, next) =>{
     let {sortType, page} = req.params;
     page--;
     const {query} = req.body;
-    // console.log(query)
     const questions = await Question.findAll({
         attributes: {
             include:[[
@@ -90,7 +89,6 @@ router.post("/:sortType/:page", asyncHandler( async(req, res, next) =>{
 
 router.post("/homePage", asyncHandler( async(req, res, next) =>{
     const {query} = req.body;
-    // console.log(query)
     const questions = await Question.findAll({
         limit: 100,
         attributes: {

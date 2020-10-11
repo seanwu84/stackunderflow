@@ -91,44 +91,45 @@ router.post(
   })
 );
 
-router.get(
-  "/:questionId(\\d+)/vote",
-  asyncHandler(async (req, res) => {
-    if (!req.user) {
-      res.json({});
-      return;
-    }
-    const user = req.user;
-    const qvote = await QuestionVote.findOne({
-      where: {
-        userId: user.id,
-        questionId: req.params.questionId,
-      },
-    });
-    const nestedAnswerVotes = await Question.findOne({
-      where: {
-        id: req.params.questionId,
-      },
+router.get("/:questionId(\\d+)/vote", asyncHandler(async (req, res) => {
+  if (!req.user) {
+    res.json({});
+    return;
+  }
+  const user = req.user;
+  const qvote = await QuestionVote.findOne({
+    where: {
+      userId: user.id,
+      questionId: req.params.questionId,
+    },
+  });
+  const nestedAnswerVotes = await Question.findOne({
+    where: {
+      id: req.params.questionId,
+    },
+    include: {
+      model: Answer,
       include: {
-        model: Answer,
-        include: {
-          model: AnswerVote,
-          where: {
-            userId: user.id,
-          },
-        },
-      },
+        model: AnswerVote,
+        where: {
+          userId: user.id
+        }
+      }
+    }
+  });
+  const answerVotes = nestedAnswerVotes.Answers
+    .map(answer => answer.AnswerVotes[0])
+    .filter(answerVote => answerVote.value !== 0)
+    .map(answerVote => {
+      return { answerId: answerVote.answerId, value: answerVote.value }
     });
-    const relevantVotes = {};
-    relevantVotes.questionVote = qvote.value;
-    nestedAnswerVotes.Answers.forEach(function (el) {
-      console.log(el);
-      console.log(el.AnswerVotes);
-      relevantVotes[el.id] = el.AnswerVotes[0].value;
-    });
+  const relevantVotes = {
+    questionVote: qvote ? qvote.value : null,
+    answerVotes: answerVotes
+  };
 
-    res.json(relevantVotes);
-  })
+  res.json(relevantVotes);
+})
 );
 
 router.post(

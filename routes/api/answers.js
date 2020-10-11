@@ -16,7 +16,6 @@ const validateContent = [
 
 router.get("/", (req, res) => {
   const id = req.params.questionId;
-  console.log(`Here in answers: ${id}`);
   res.send(`Here in answers: ${id}`);
 });
 
@@ -85,7 +84,7 @@ router.post(
 router.post(
   "/:answerId(\\d)/vote",
   asyncHandler(async (req, res) => {
-    const answerId = req.params.questionId;
+    const answerId = req.params.answerId;
     const { voteValue } = req.body;
     const currentState = await AnswerVote.findOne({
       where: {
@@ -95,7 +94,7 @@ router.post(
     });
     if (!currentState) {
       await AnswerVote.create({
-        userId: req.userId.id,
+        userId: req.user.id,
         value: voteValue,
         answerId: req.params.answerId,
       });
