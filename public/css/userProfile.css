@@ -36,10 +36,37 @@
 .tabs{
     display:flex;
     justify-content: space-evenly;
-    background-color: var(--primary-color);
+    background-color: white;
 }
 
 .userProfileTab{
     border: 1px solid #dddd;
     border-radius: 4px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.profileHidden{
+    display: none;
+}
+
+.profileResult{
+    padding-left: 10px;
+    border: 1px solid #dddd;
+    background-color: white;
+}
+
+.content.moveMeUpScotty{
+    position: relative;
+    top: -10px;
+}
+
+.makeMeBold{
+    font-size: 1.1em;
+    background-color: #f2f2f2;
+}
+
+.profileQuestions, .profileAnswers, .profileComments{
+    height: 100%;
 }

@@ -40,7 +40,7 @@ router.get("/signup", (req, res) => {
       const user = req.user;
       const profileUser = await User.findOne({
           where:{id:req.params.id},
-          include: [{model: Question}, {model: Answer}, {model: QuestionComment}, {model: AnswerComment}]
+          include: [{model: Question}, {model: Answer, include:{model:Question}}, {model: QuestionComment, include:{model:Question}}, {model: AnswerComment, include:{model:Answer, include:{model: Question}} }]
       })
       profileUser.hashedPassword = null;
       profileUser.color = convert(profileUser.username);
