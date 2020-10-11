@@ -7,9 +7,15 @@ block content
                 .userLogoProfile(style=`background-color:#${profileUser.color};`)
                     a(class="userLetterProfile")= profileUser.capitalLetter
             .stats
-                p Total Questions Asked: #{profileUser.Questions.length}
-                p Total Questions Answered: #{profileUser.Answers.length}
-                p Total Comments: #{profileUser.QuestionComments.length+profileUser.QuestionComments.length}
+                p
+                  span Total Questions Asked: 
+                  span  #{profileUser.Questions.length}
+                p 
+                  span Total Questions Answered:
+                  span  #{profileUser.Answers.length}
+                p
+                 span Total Comments:
+                 span  #{profileUser.QuestionComments.length+profileUser.QuestionComments.length}
         .tabs
             .userProfileQuestionTab.userProfileTab.makeMeBold#profileQuestions
                 p.questionTabText.textInTab Questions
