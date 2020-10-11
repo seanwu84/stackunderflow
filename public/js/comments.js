@@ -65,7 +65,7 @@ const fetchAnswerComments = async () => {
 const addAnswerComment = () => {
   //add event listener to each answer comment form
   document
-    .querySelectorAll(".answer__comments + form")
+    .querySelectorAll(".answer__comments-form-container form")
     .forEach((answerCommentForm) => {
       answerCommentForm.addEventListener("submit", async (e) => {
         e.preventDefault();

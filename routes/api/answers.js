@@ -2,7 +2,7 @@ const express = require("express");
 const { check } = require("express-validator");
 
 const { verifyUser } = require("../../utils/auth");
-const { handleValidationErrors, asyncHandler, csrfProtection } = require("../../utils/utils");
+const { handleValidationErrors, asyncHandler, csrfProtection, prettifyDate } = require("../../utils/utils");
 const { User, Answer, AnswerComment, AnswerVote, sequelize } = require("../../db/models");
 
 const router = express.Router({ mergeParams: true });
@@ -53,7 +53,7 @@ router.get(
     const answerCommentsData = answerComments.map((answerComment) => {
       return {
         content: answerComment.content,
-        createdAt: answerComment.createdAt.toString(),
+        createdAt: prettifyDate(answerComment.createdAt),
         user: answerComment.User.username,
       };
     });

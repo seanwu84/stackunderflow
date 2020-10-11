@@ -6,7 +6,6 @@ const getVotes = async () => {
     }
   });
   const votes = await res.json();
-  console.log("VOTES:", votes);
 
   if (votes.questionVote) {
     if (votes.questionVote === 1) {
@@ -63,29 +62,30 @@ const voteHandler = (url, vote) => {
 }
 
 
-const answers = document.querySelectorAll('.question-answer');
-
-const questionId = document.querySelector('.question').dataset.questionId;
-
-getVotes();
-
-document
+const userId = document.querySelector(".question__user").dataset.userId;
+const questionId = document.querySelector(".question").dataset.questionId;
+if (userId){
+  getVotes();
+  
+  document
   .querySelector('.question__upvote')
   .addEventListener('click', voteHandler(`/api/questions/${questionId}/vote`, 1));
-
-document
+  
+  document
   .querySelector('.question__downvote')
   .addEventListener('click', voteHandler(`/api/questions/${questionId}/vote`, -1));
-
-answers.forEach(answer => {
-  const answerId = answer.dataset.answerId;
-  answer
-    .querySelector('.answer__upvote')
-    .addEventListener('click', 
-      voteHandler(`/api/questions/${questionId}/answers/${answerId}/vote`, 1));
-
-  answer
-    .querySelector('.answer__downvote')
-    .addEventListener('click',
-      voteHandler(`/api/questions/${questionId}/answers/${answerId}/vote`, -1));
-});
+  
+  const answers = document.querySelectorAll('.question-answer');
+  answers.forEach(answer => {
+    const answerId = answer.dataset.answerId;
+    answer
+      .querySelector('.answer__upvote')
+      .addEventListener('click', 
+        voteHandler(`/api/questions/${questionId}/answers/${answerId}/vote`, 1));
+  
+    answer
+      .querySelector('.answer__downvote')
+      .addEventListener('click',
+        voteHandler(`/api/questions/${questionId}/answers/${answerId}/vote`, -1));
+  });
+}

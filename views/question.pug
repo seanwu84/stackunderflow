@@ -24,10 +24,11 @@ block content
       p Asked on #{question.posted}
     .question__comments
     if user
-      form(class="add-question-comment-form")
-        textarea(name="content")
-        button(type="submit") Add Comment
-    .question__errors-container
+      .question__comments-form-container
+        form(class="add-question-comment-form")
+          textarea(name="content")
+          button(class="slipbop-button" type="submit") Add Comment
+        .question__errors-container
 
   .answer__sum
     h2 #{answers.length} Answers
@@ -46,19 +47,21 @@ block content
           p Answered on #{answer.posted}
         .answer__comments(data-answer-id=answer.id)
         if user
-          form(id=`${answer.id}` class="add-question-comment-form")
-            textarea(name="content")
-            button(type="submit") Add Comment
-        .answer__errors-container
-
-  .your-answer
-    h2 Your Answer
+          .answer__comments-form-container
+            form(id=`${answer.id}` class="add-question-comment-form")
+              textarea(name="content")
+              button(class="slipbop-button" type="submit") Add Comment
+            .answer__errors-container
   
-  .your-answer-container
-    form.pure-form.your-answer__form
-      .formgroup
-        label(for="content") Body
-        textarea(name="content", cols="30", rows="10")
-      .formButtonContainer
-        button.slipbop-button(type="submit") Post Your Answer
-    .your-answer__errors-container
+  if user
+    .your-answer
+      h2 Your Answer
+    
+    .your-answer-container
+      form.pure-form.your-answer__form
+        .formgroup
+          label(for="content") Body
+          textarea(name="content", cols="30", rows="10")
+        .formButtonContainer
+          button.slipbop-button(type="submit") Post Your Answer
+      .your-answer__errors-container
