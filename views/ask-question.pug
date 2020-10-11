@@ -1,4 +1,7 @@
-extend layout
+extends layout
+
+block scripts
+  script(type="module" src="/js/ask-question.js")
 
 block content
   .errors-container
@@ -6,7 +9,7 @@ block content
       .raisedSlipbopFormContainer
         .formHeaderContainer
           h2.smallMargin Ask a public question
-        form.pure-form.question-form(method="POST" action="/api/questions")
+        form.pure-form.question-form
           .formgroup
             label(for="title") Title
             input(type="text", id="title", name="title")
@@ -15,4 +18,3 @@ block content
             textarea(type="text", id="content", name="content")
           .formButtonContainer  
             button.slipbop-button.formSubmit(type='submit') Ask your Question
-        script(type="module" src="/js/ask-question.js")

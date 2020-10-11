@@ -29,8 +29,7 @@ const validateQuestion = [
   handleValidationErrors,
 ];
 
-router.post(
-  "/",
+router.post("/",
   verifyUser,
   csrfProtection,
   validateQuestion,
@@ -75,7 +74,7 @@ router.post(
   "/:questionId(\\d+)/comment",
   verifyUser,
   validateComment,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     if (req.errors) {
       const err = new Error("Comment validation error.");
       err.status = 400;

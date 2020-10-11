@@ -38,7 +38,7 @@ const addQuestionComment = () => {
 
       await fetchQuestionComments(); 
     } catch (e) {
-      handleErrors(e); //TODO
+      handleErrors(e, '.question__errors-container'); //TODO
     }
   });
 };
@@ -92,7 +92,7 @@ const addAnswerComment = () => {
 
           await fetchAnswerComments();
         } catch (e) {
-          handleErrors(e);
+          handleErrors(e, `#answer-${answerId} .answer__errors-container`);
         }
       });
     });

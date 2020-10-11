@@ -10,88 +10,91 @@ router.get("/", (req, res) => {
   res.render("search", { user, title: "Most Popular Questions" })
 })
 
-router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-  const id = parseInt(req.params.id, 10);
+router.get('/:id(\\d+)',
+  // csrfProtection,
+  asyncHandler(async (req, res, next) => {
+    const id = parseInt(req.params.id, 10);
 
-  const question = await Question.findOne({
-    where: id,
-    attributes: {
-      include: [
-        [
-          sequelize.literal(`(
+    const question = await Question.findOne({
+      where: id,
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
             SELECT COALESCE(SUM(qv.value), 0)
             FROM "QuestionVotes" AS qv
             WHERE
             qv."questionId" = "Question".id
           )`),
-          'score'
-        ],
-      ]
-    },
-    include: [{
-      model: User
-    }],
-  });
+            'score'
+          ],
+        ]
+      },
+      include: [{
+        model: User
+      }],
+    });
 
-  questionData = {
-    id: question.id,
-    title: question.title,
-    content: question.content,
-    posted: prettifyDate(question.createdAt),
-    score: question.dataValues.score,
-    user: {
-      username: question.User.username
+    questionData = {
+      id: question.id,
+      title: question.title,
+      content: question.content,
+      posted: prettifyDate(question.createdAt),
+      score: question.dataValues.score,
+      user: {
+        username: question.User.username
+      }
     }
-  }
 
-  const answers = await Answer.findAll({
-    where: {
-      questionId: question.id
-    },
-    attributes: {
-      include: [
-        [
-          sequelize.literal(`(
+    const answers = await Answer.findAll({
+      where: {
+        questionId: question.id
+      },
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
                     SELECT COALESCE(SUM(av.value), 0)
 	                  FROM "AnswerVotes" AS av
 	                  WHERE
                     av."answerId" = "Answer".id
                 )`),
-          'score'
-        ],
-      ]
-    },
-    include: [{
-      model: User
-    }],
-    order: [
-      [sequelize.literal('score'), 'DESC']
-    ],
-    limit: 5,
-    offset: 0
-  });
+            'score'
+          ],
+        ]
+      },
+      include: [{
+        model: User
+      }],
+      order: [
+        [sequelize.literal('score'), 'DESC']
+      ],
+      limit: 5,
+      offset: 0
+    });
 
-  answerData = answers.map(answer => {
-    return {
-      id: answer.id,
-      content: answer.content,
-      posted: prettifyDate(answer.createdAt),
-      score: answer.dataValues.score,
-      user: {
-        username: answer.User.username
+    answerData = answers.map(answer => {
+      return {
+        id: answer.id,
+        content: answer.content,
+        posted: prettifyDate(answer.createdAt),
+        score: answer.dataValues.score,
+        user: {
+          username: answer.User.username
+        }
       }
+    });
+    if (req.user) {
+      req.user.hashedPassword = 0000;
     }
-  });
-  if (req.user) {
-    req.user.hashedPassword = 0000;
-  }
 
-  res.render('question', {
-    question: questionData,
-    answers: answerData,
-    user: req.user
-  });
-}));
+    res.render('question', {
+      // csrfToken: req.csrfToken(),
+      question: questionData,
+      answers: answerData,
+      user: req.user
+    });
+  }));
 
 router.get('/ask', csrfProtection, (req, res, next) => {
   if (!req.user) {

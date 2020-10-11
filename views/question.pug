@@ -1,7 +1,11 @@
 extends layout.pug
 
+block scripts
+  script(type="module" src="/js/vote.js")
+  script(type="module" src="/js/comments.js")
+  script(type="module" src="/js/answers.js")
+
 block content
-  //- .question__main
   .question(data-question-id=question.id)
     .question__header
       h1 #{question.title}
@@ -26,7 +30,7 @@ block content
     .question__errors-container
 
   .answer__sum
-      h2 #{answers.length} Answers
+    h2 #{answers.length} Answers
 
   .question-answers
     each answer in answers
@@ -47,4 +51,14 @@ block content
             button(type="submit") Add Comment
         .answer__errors-container
 
-  script(type="module" src="/js/comments.js")
+  .your-answer
+    h2 Your Answer
+  
+  .your-answer-container
+    form.pure-form.your-answer__form
+      .formgroup
+        label(for="content") Body
+        textarea(name="content", cols="30", rows="10")
+      .formButtonContainer
+        button.slipbop-button(type="submit") Post Your Answer
+    .your-answer__errors-container

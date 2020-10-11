@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
 router.post(
   "/",
   verifyUser,
-  csrfProtection,
+  // csrfProtection,
   validateContent,
   asyncHandler(async (req, res, next) => {
     if (req.errors) {
@@ -65,7 +65,7 @@ router.post(
   "/:answerId(\\d+)/comment",
   verifyUser,
   validateContent,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     if (req.errors) {
       const err = new Error("Comment validation error.");
       err.status = 400;

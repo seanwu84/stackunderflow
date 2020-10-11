@@ -1,6 +1,6 @@
-export const handleErrors = async (err) => {
+export const handleErrors = async (err, querySelection = ".errors-container") => {
   const errorJSON = await err.json();
-  const errorsContainer = document.querySelector(".errors-container");
+  const errorsContainer = document.querySelector(querySelection);
   let errorsHtml = [`<p class="errorMessage">${errorJSON}</p>`];
   const { errors } = errorJSON;
   if (errors && Array.isArray(errors)) {
