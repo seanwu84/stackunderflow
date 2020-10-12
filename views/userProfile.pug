@@ -28,9 +28,9 @@ block content
                 each question in profileInfo.questions
                     .profileResult
                         .textBlock
-                            h3.questionTitle
+                            .questionTitle
                                 a.colorMeBlack(href=`/questions/${question.id}`)=question.title
-                            p.content.moveMeUpScotty=question.content
+                            .content=question.content
             .profileAnswers.profileHidden.resultPage#profileAnswersResultPage
                 //- each answer in profileUser.Answers
                 //-     .profileResult

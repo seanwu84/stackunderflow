@@ -31,7 +31,7 @@ const getAnswerAndCommentData = async () =>{
         textBlock.classList.add("textBlock");
         profileResult.appendChild(textBlock);
 
-        const questionTitle = document.createElement("h3");
+        const questionTitle = document.createElement("div");
         questionTitle.classList.add("questionTitle");
         textBlock.appendChild(questionTitle);
 
@@ -41,8 +41,8 @@ const getAnswerAndCommentData = async () =>{
         anchor.innerHTML = el.Question.title;
         questionTitle.appendChild(anchor);
 
-        const content = document.createElement("p");
-        content.classList.add("content", "moveMeUpScotty");
+        const content = document.createElement("div");
+        content.classList.add("content");
         content.innerHTML = el.content;
         textBlock.appendChild(content);
 
@@ -56,7 +56,7 @@ const getAnswerAndCommentData = async () =>{
         textBlock.classList.add("textBlock");
         profileResult.appendChild(textBlock);
 
-        const questionTitle = document.createElement("h3");
+        const questionTitle = document.createElement("div");
         questionTitle.classList.add("questionTitle");
         textBlock.appendChild(questionTitle);
 
@@ -66,8 +66,8 @@ const getAnswerAndCommentData = async () =>{
         anchor.innerHTML = el.Question.title;
         questionTitle.appendChild(anchor);
 
-        const content = document.createElement("p");
-        content.classList.add("content", "moveMeUpScotty");
+        const content = document.createElement("div");
+        content.classList.add("content");
         content.innerHTML = el.content;
         textBlock.appendChild(content);
 
@@ -81,7 +81,7 @@ const getAnswerAndCommentData = async () =>{
         textBlock.classList.add("textBlock");
         profileResult.appendChild(textBlock);
 
-        const questionTitle = document.createElement("h3");
+        const questionTitle = document.createElement("div");
         questionTitle.classList.add("questionTitle");
         textBlock.appendChild(questionTitle);
 
@@ -91,8 +91,8 @@ const getAnswerAndCommentData = async () =>{
         anchor.innerHTML = el.Answer.Question.title;
         questionTitle.appendChild(anchor);
 
-        const content = document.createElement("p");
-        content.classList.add("content", "moveMeUpScotty");
+        const content = document.createElement("div");
+        content.classList.add("content");
         content.innerHTML = el.content;
         textBlock.appendChild(content);
 
