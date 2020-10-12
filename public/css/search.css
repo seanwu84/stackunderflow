@@ -8,6 +8,7 @@
     border: 1px solid #dddd;
     display: flex;
     align-items: flex-start;
+    width: 100%;
 }
 
 .voteBlock{
@@ -50,8 +51,8 @@
 }
 
 .content{
-    line-height: 1em;
-    max-height: 6em;
+    line-height: 1.2em;
+    max-height: 7.2em;
     overflow: hidden;
     grid-area: mainContent;
 }
@@ -91,4 +92,8 @@
 .votes > div,
 .answers > div {
     font-size: .7em;
+}
+
+.date {
+  margin-top: .2em;
 }
