@@ -78,7 +78,7 @@
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   align-self: center;
-  padding: 0px 1em;
+  padding: 1em 1em 1em 0em;
 }
 
 .answer__user, .question__user {
