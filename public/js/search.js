@@ -7,9 +7,6 @@ if(page.includes("search")){
     page = "home";
 }
 
-
-
-
 const getQuery = async(query) => {
     let url;
     if(page === "search"){
@@ -54,45 +51,51 @@ const addQuestions = (resdata) =>{
         const answers = document.createElement("div");
         answers.classList.add("answers")
         if(el.Answers){
-            voteBlock.appendChild(answers);
+          voteBlock.appendChild(answers);
         }
-
-        const voteNumber = document.createElement("p");
+        
+        const voteNumber = document.createElement("div");
         voteNumber.classList.add("voteNumber");
+        voteNumber.innerHTML = el.score;
         votes.appendChild(voteNumber);
-
-        const h6votes = document.createElement("h6");
+        
+        const h6votes = document.createElement("div");
+        h6votes.innerHTML = "Votes";
         votes.appendChild(h6votes);
-
-        const answerNumber = document.createElement("p");
+        
+        const answerNumber = document.createElement("div");
         answerNumber.classList.add("answerNumber");
         answers.appendChild(answerNumber);
-
-        const h6answers = document.createElement("h6");
+        
+        const h6answers = document.createElement("div");
+        h6answers.innerHTML = "Answers";
         answers.appendChild(h6answers);
-
-        const questionTitle = document.createElement("h3");
+        
+        const questionTitle = document.createElement("div");
         questionTitle.classList.add("questionTitle");
+        questionTitle.innerHTML = el.title || el.Question.title;
         textBlock.appendChild(questionTitle);
-
-        const content = document.createElement("p");
+        
+        const content = document.createElement("div");
         content.classList.add("content");
+        content.innerHTML = el.content;
         textBlock.appendChild(content);
-
+        
         const info = document.createElement("div");
         info.classList.add("info")
         textBlock.appendChild(info);
-
-        const author = document.createElement("p");
+        
+        const author = document.createElement("div");
         author.classList.add("author");
+        author.innerHTML = el.User.username;
         info.appendChild(author);
-
-        const date = document.createElement("p");
+        
+        const date = document.createElement("div");
         date.classList.add("date");
+        el.createdAt = new Date(el.createdAt);
+        date.innerHTML = el.createdAt.toString().split(':').slice(0, -1).join(':');
         info.appendChild(date);
 
-        voteNumber.innerHTML = el.score;
-        h6votes.innerHTML = "Votes";
         let type;
         if(el.Answers){
             type = "Q: "
@@ -100,8 +103,6 @@ const addQuestions = (resdata) =>{
         }else{
             type= "A: "
         }
-        h6answers.innerHTML = "Answers";
-        questionTitle.innerHTML = el.title || el.Question.title;
         if(page === "search"){
             questionTitle.innerHTML = type + questionTitle.innerHTML;
         }
@@ -111,11 +112,6 @@ const addQuestions = (resdata) =>{
             questionTitle.innerHTML = `<a class="colorMeBlack" href="/questions/${el.id}"> ${questionTitle.innerHTML}</a>`;
         }
        
-        content.innerHTML = el.content;
-        author.innerHTML = el.User.username;
-        el.createdAt = new Date(el.createdAt)
-        date.innerHTML = `${el.createdAt.getMonth()}/${el.createdAt.getDate()}/${el.createdAt.getFullYear()}`;
-
         container.appendChild(result)
 
     })
