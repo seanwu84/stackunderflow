@@ -9,13 +9,13 @@ block content
             .stats
                 p
                   span Total Questions Asked: 
-                  span  #{profileUser.Questions.length}
+                  span  #{profileInfo.questionNumber}
                 p 
                   span Total Questions Answered:
-                  span  #{profileUser.Answers.length}
+                  span  #{profileInfo.answerNumber}
                 p
                  span Total Comments:
-                 span  #{profileUser.QuestionComments.length+profileUser.QuestionComments.length}
+                 span  #{profileInfo.commentNumber}
         .tabs
             .userProfileQuestionTab.userProfileTab.makeMeBold#profileQuestions
                 p.questionTabText.textInTab Questions
@@ -25,30 +25,30 @@ block content
                 p.commentTabText.textInTab Comments
         .search-results
             .profileQuestions.resultPage
-                each question in profileUser.Questions
+                each question in profileInfo.questions
                     .profileResult
                         .textBlock
-                            h3.questionTitle
+                            .questionTitle
                                 a.colorMeBlack(href=`/questions/${question.id}`)=question.title
-                            p.content.moveMeUpScotty=question.content
-            .profileAnswers.profileHidden.resultPage
-                each answer in profileUser.Answers
-                    .profileResult
-                        .textBlock
-                            h3.questionTitle
-                                a.colorMeBlack(href=`/questions/${answer.Question.id}`)=answer.Question.title
-                            p.content.moveMeUpScotty=answer.content
-            .profileComments.resultPage.profileHidden
-                each comment in profileUser.QuestionComments
-                    .profileResult
-                        .textBlock
-                            h3.questionTitle
-                                a.colorMeBlack(href=`/questions/${comment.Question.id}`)=comment.Question.title
-                            p.content.moveMeUpScotty=comment.content
-                each comment in profileUser.AnswerComments
-                    .profileResult
-                        .textBlock
-                            h3.questionTitle
-                                a.colorMeBlack(href=`/questions/${comment.Answer.Question.id}`)=comment.Answer.Question.title
-                            p.content.moveMeUpScotty=comment.content
+                            .content=question.content
+            .profileAnswers.profileHidden.resultPage#profileAnswersResultPage
+                //- each answer in profileUser.Answers
+                //-     .profileResult
+                //-         .textBlock
+                //-             h3.questionTitle
+                //-                 a.colorMeBlack(href=`/questions/${answer.Question.id}`)=answer.Question.title
+                //-             p.content.moveMeUpScotty=answer.content
+            .profileComments.resultPage.profileHidden#profileCommentsResultPage
+                //- each comment in profileUser.QuestionComments
+                //-     .profileResult
+                //-         .textBlock
+                //-             h3.questionTitle
+                //-                 a.colorMeBlack(href=`/questions/${comment.Question.id}`)=comment.Question.title
+                //-             p.content.moveMeUpScotty=comment.content
+                //- each comment in profileUser.AnswerComments
+                //-     .profileResult
+                //-         .textBlock
+                //-             h3.questionTitle
+                //-                 a.colorMeBlack(href=`/questions/${comment.Answer.Question.id}`)=comment.Answer.Question.title
+                //-             p.content.moveMeUpScotty=comment.content
     script(src="/js/profile.js")
