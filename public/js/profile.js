@@ -12,4 +12,9 @@ const addBoldAndMakeVisible = (e) =>{
 }
 tabs.forEach(el=>{
     el.addEventListener("click", addBoldAndMakeVisible);
-})
+});
+
+
+const getAnswerAndCommentData = () =>{
+    
+}
