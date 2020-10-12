@@ -8,7 +8,7 @@ block scripts
 block content
   .question(data-question-id=question.id)
     .question__header
-      h1 #{question.title}
+      span #{question.title}
     .vote-container
       span.question__upvote: i(class="fas fa-chevron-up fa-2x")
       .question__score-container= question.score
@@ -18,10 +18,10 @@ block content
     //-   span.count=question.score
     //-   div.downvote
     .question__content
-      p= question.content
+      span= question.content
     .question__user(data-user-id=(user ? user.id : null))
-      p= question.user.username
-      p Asked on #{question.posted}
+      span.username= question.user.username
+      span.date Asked on #{question.posted}
     .question__comments
     if user
       .question__comments-form-container
@@ -41,10 +41,10 @@ block content
           .answer__score-container= answer.score
           span.answer__downvote: i(class="fas fa-chevron-down fa-2x")
         .answer__content
-          p= answer.content
+          span= answer.content
         .answer__user
-          p= answer.user.username
-          p Answered on #{answer.posted}
+          span.username= answer.user.username
+          span.date Answered on #{answer.posted}
         .answer__comments(data-answer-id=answer.id)
         if user
           .answer__comments-form-container

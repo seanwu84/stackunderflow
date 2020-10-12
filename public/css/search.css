@@ -64,7 +64,7 @@
 }
 
 .colorMeBlack{
-    color: black;
+    color: var(--primary-color);
     text-decoration: none;
 } 
 
