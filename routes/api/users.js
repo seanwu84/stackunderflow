@@ -6,7 +6,7 @@ const { verifyUser, checkLoginDetails, generateNewToken, createCookie, deleteCoo
 const router = express.Router();
 const db = require("../../db/models");
 
-const { User } = db;
+const { User, Question, Answer, AnswerComment, QuestionComment } = db;
 
 const validateEmailAndPassword = [
   check("email")
@@ -52,6 +52,15 @@ router.post("/token", checkLoginDetails, async (req, res, next) => {
 router.get("/test-token", verifyUser, (req, res) => {
   res.send(req.user.username)
 })
+
+router.get("/:id(\\d+)", asyncHandler(async (req, res, next) =>{
+  const profileUser = await User.findOne({
+     where:{id:req.params.id},
+    include: [{model: Question}, {model: Answer, include:{model:Question}}, {model: QuestionComment, include:{model:Question}}, {model: AnswerComment, include:{model:Answer, include:{model: Question}} }]
+    });
+    profileUser.hashedPassword = null;
+    res.json(profileUser)
+}))
 
 
 

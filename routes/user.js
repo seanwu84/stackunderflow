@@ -38,14 +38,16 @@ router.get("/signup", (req, res) => {
 
   router.get("/:id(\\d+)", asyncHandler(async(req, res, next)=>{
       const user = req.user;
-      const profileUser = await User.findOne({
-          where:{id:req.params.id},
-          include: [{model: Question}, {model: Answer, include:{model:Question}}, {model: QuestionComment, include:{model:Question}}, {model: AnswerComment, include:{model:Answer, include:{model: Question}} }]
-      })
-      profileUser.hashedPassword = null;
+      const profileUser = await User.findByPk(req.params.id)
+      const questions = await Question.findAll({where:{userId:req.params.id}});
+      const answers = await Answer.findAll({where:{userId:req.params.id}});
+      const questionComments = await QuestionComment.findAll({where:{userId:req.params.id}});
+      const answerComments = await AnswerComment.findAll({where:{userId:req.params.id}});
       profileUser.color = convert(profileUser.username);
       profileUser.capitalLetter = profileUser.username[0].toUpperCase();
-      res.render("userProfile", {user, profileUser})
+      const commentNumber = questionComments.length + answerComments.length;
+      const profileInfo = {questionNumber: questions.length, answerNumber: answers.length, commentNumber:commentNumber, questions}
+      res.render("userProfile", {user, profileInfo, profileUser})
 
   }))
 
@@ -53,3 +55,4 @@ router.get("/signup", (req, res) => {
 
 
 module.exports = router;
+
