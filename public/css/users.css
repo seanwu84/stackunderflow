@@ -9,9 +9,8 @@
     display: flex;
     grid-row: span 1;
     grid-column: span 1;
-    height: 75px;
-    /* width: 275px; */
     justify-content: space-between;
+    border: 1px solid #dddd;
 }
 
 .userLogoDiv {
@@ -48,7 +47,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 200px;
+    width: 250px;
+    overflow: hidden;
 }
 
 .textPart>p {
@@ -62,15 +62,17 @@
     text-align: center;
 }
 
-@media(max-width: 768px) {
+@media(max-width: 1024px) {
     .usersContainer {
         grid-template-columns: 1fr 1fr;
+        width: 660px;
     }
 }
 
-@media(max-width: 540px) {
+@media(max-width: 670px) {
     .usersContainer {
         grid-template-columns: 1fr;
+        width: 100%;
     }
 }
 
