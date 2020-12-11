@@ -4,6 +4,12 @@
 
 ![ERD](./documentation/database-schema/erd.png)
 
+https://drawsql.app/stackunderflowaa/diagrams/slipbopoverflow
+
+## WireFrames
+
+https://balsamiq.cloud/stq3icg/pewtmv/r2278
+
 ## Routes
 ### Front-End Routes
 - GET /
