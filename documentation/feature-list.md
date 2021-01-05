@@ -15,10 +15,14 @@
 - As a User
 - I want to be able to answer questions
 - So that I can be helpful... or other reasons.
-## Search for Questions
+## Search Questions and Answers
 - As a User
-- I want to be able to search for questions
+- I want to be able to search for questions and answers.
 - So that I can find previously answered questions.
+## Upvote / Downvote Question
+- As a User
+- I want to be able to upvote or downvote a question
+- So that I can improve the visibility of good questions and hide bad ones.
 ## Upvote / Downvote Answer
 - As a User
 - I want to be able to upvote or downvote an answer
@@ -35,10 +39,6 @@
 - As a User
 - I want tags 
 - So that it is easier for others to find and answer my questions
-## Bonus: Polymorphic Up/Down Votes: Questions, Answers, Comments
-- As a Coder
-- I want to have polymorphic up/down votes for questions, answers, and comments
-- So that my code is DRY.
 ## Bonus: Comment on Questions / Answers
 - As a User
 - I want to comment on questions and answers
