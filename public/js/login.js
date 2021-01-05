@@ -1,7 +1,8 @@
 import { handleErrors } from "/js/utils.js";
 
 const submitForm = async (e) =>{
-    e.preventDefault() 
+    e.preventDefault();
+    console.log('Called', e.target);
     const form = e.target;
     const data = new FormData(form);
     const email = data.get("email");
@@ -24,7 +25,8 @@ const demoLogin = (e) =>{
     e.stopPropagation();
     e.preventDefault();
     document.getElementById("email").value = "demo@user.com"
-    document.getElementById("password").value = "password"
+    document.getElementById("password").value = "password";
+    document.querySelector(".formSubmit").click();
 }
 
 
