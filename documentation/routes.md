@@ -1,0 +1,64 @@
+# Routes
+## Front-End Routes
+- ### Splash Page
+  - GET /
+    - When not logged in - Splash page
+    - When logged in - Redirect to /questions
+- ### User Signup
+  - GET /users/signup
+- ### User Login
+  - GET /users/login
+- ### Users
+  - GET /users
+    - All users with links to user profile pages
+- ### User Profile
+  - GET /users/{user-id}
+- ### Questions
+  - GET /questions/
+    - All questions sorted by popularity
+- ### Question
+  - GET /questions/{question-id}
+    - Page for individual question
+    - Displays associated comments and answers
+- ### Ask a Question
+  - GET /questions/ask
+- ### Search
+  - GET /search?q={the-question}
+    - Page for search results for the search term
+    - Sorts matching questions and answers by popularity
+***
+## Back-End Routes
+- ### Auth
+  - POST /api/users/token
+- ### Users
+  - POST /api/users
+- ### Questions
+  - POST /api/questions
+- ### Comments
+  - GET /api/questions/{question-id}/comments
+    - question comments - AJAX on /questions/{id} page
+  - GET /api/questions/{question-id}/answers/{answer-id}/comments
+    - answer comments - AJAX on /questions/{id} page
+  - POST /api/questions/{question-id}/comment
+    - post a question comment - AJAX on /questions/{id} page
+  - POST /api/questions/{question-id}/answers/{answer-id}/comment
+    - post an answer comment - AJAX on /questions/{id} page
+- ### Answers
+  - POST /api/questions/{question-id}/answers
+    - answer a question - AJAX on /questions/{id} page
+- ### Votes
+  - POST /api/questions/{question-id}/votes
+    - upvote a question (or take away a previous upvote)
+  - DELETE /api/questions/{question-id}/votes/
+    - downvote a question (or take away a previous downvote)
+  - POST /api/questions/{question-id}/answers/{answer-id}/votes
+    - upvote an answer (or take away a previous upvote)
+  - DELETE /api/questions/{question-id}/answers/{answer-id}/votes
+    - downvote an answer (or take away a previous downvote)
+- ### Search
+  - POST /api/search/{sort}
+***
+## Routes for Stretch Goals
+- GET /tags
+- GET /questions/tagged/{tag-name}
+- PUT /api/users/{userid}/edit

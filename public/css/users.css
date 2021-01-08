@@ -11,6 +11,7 @@
     grid-column: span 1;
     justify-content: space-between;
     border: 1px solid #dddd;
+    margin: 0.25rem;
 }
 
 .userLogoDiv {
@@ -21,6 +22,7 @@
     height: 70px;
     width: 70px;
     align-items: center;
+    margin: 0.5rem;
 }
 
 .userLetter {

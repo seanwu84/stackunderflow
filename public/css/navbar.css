@@ -47,6 +47,15 @@
   display: none;
 }
 
+#desktop-searchBar input{
+  margin-right: 10px;
+  padding: 4px;
+}
+
+#mobile-search {
+  padding: 4px;
+}
+
 #links a {
   display: block;
   padding: 12px 14px;
@@ -112,7 +121,7 @@
 .user-logo {
   color: white;
   border-radius: 4px;
-  border: 1px solid #dddd;
+  border: none;
   margin-right: 10px;
   display: flex;
   justify-content: center;

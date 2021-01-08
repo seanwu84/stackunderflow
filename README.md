@@ -1,59 +1,71 @@
 # SlipbopOverflow
 
-## Database Diagram
+[Live Link](https://slipbop.herokuapp.com/)
 
-![ERD](./documentation/database-schema/erd.png)
+## Summary
+This is a clone of the popular site *StackOverflow*. Users are able to login and ask code related questions, answer other user's questions, and comment on both. Both questions and answers are voted on which is used to bring more popular or useful content to the top of term based search results.
 
-https://drawsql.app/stackunderflowaa/diagrams/slipbopoverflow
+Users are also able to track their own contributions using user profile pages, giving quick access to all content (questions, answers, comments) for that user.
+## Technologies Used
+- JavaScript
+- Node
+- Express
+- Sequelize
+- PostgreSQL
+- HTML
+- CSS
+- Pug
+- Heroku
 
-## WireFrames
+## Screenshots / GIFs
+![Question and Answer Page in use]()
 
-https://balsamiq.cloud/stq3icg/pewtmv/r2278
+## Future Features
+- Rich Text Editor
+- Question Tags
+- Search result pagination
 
-## Routes
-### Front-End Routes
-- GET /
-  - When logged in - Similar to /questions
-  - When not logged in - Splash page
-  
-- GET /users
-- GET /users/{user-id}
-- GET /users/signup
-- GET /users/login
-- GET /users/logout
+## Technical Implementation Details
+### Search
+- Anything you had to stop and think about before building
+- Descriptions of particular challenges
+- Snippets or links to see code for these
+### AJAX Voting
+- Anything you had to stop and think about before building
+- Descriptions of particular challenges
+- Snippets or links to see code for these
+### Authentication
+- Anything you had to stop and think about before building
+- Descriptions of particular challenges
+- Snippets or links to see code for these
 
-- GET /questions/
-- GET /questions/{question-id}
-  - Will grab associated answers
-- GET /questions/ask
-- GET /search?q={the-question}
+***
+## Useful Links
+- [Database Diagram](./documentation/erd.png)
+- [Routes](./documentation/routes.md)
+- [Feature List](./documentation/feature-list.md)
+***
+## Dev Instructions
 
-### Back-End Routes
-- POST /api/users
-- POST /api/users/token
-- POST /api/questions
-- GET /api/questions/{question-id}/comments
-  - question comments - AJAX on /questions/{id} page
-- GET /api/questions/{question-id}/answers/{answer-id}/comments
-  - answer comments - AJAX on /questions/{id} page
-- POST /api/questions/{question-id}/answers
-  - answer a question - AJAX on /questions/{id} page
-- POST /api/questions/{question-id}/comment
-  - post a question comment - AJAX on /questions/{id} page
-- POST /api/questions/{question-id}/answers/{answer-id}/comment
-  - post an answer comment - AJAX on /questions/{id} page
-- POST /api/questions/{question-id}/votes
-  - upvote a question (or take away a previous upvote)
-- DELETE /api/questions/{question-id}/votes/
-  - downvote a question (or take away a previous downvote)
-- POST /api/questions/{question-id}/answers/{answer-id}/votes
-  - upvote an answer (or take away a previous upvote)
-- DELETE /api/questions/{question-id}/answers/{answer-id}/votes
-  - downvote an answer (or take away a previous downvote)
-- POST /api/search/{sort}
+1. Clone this repository:
+    ```bash
+    git clone https://github.com/seanwu84/StackUnderflow.git
+    ```
 
-### Stretch
+2. Install dependencies
+    ```bash
+    npm install
+    ```
+3. Create a **.env** file based on the example with proper settings for your
+   development environment (refer to **.env.example**)
+4. Create your database, migrate your database, seed your database, and start your express app
+    ```bash
+    npx dotenv sequelize db:create
+    npx dotenv sequelize db:migrate
+    npx dotenv sequelize db:seed:all
+    npm start
+    ```
+5. Navigate to your app running on http://localhost:8080
 
-- GET /tags
-- GET /questions/tagged/{tag-name}
-- PUT /api/users/{userid}/edit
+## Heroku Instructions
+...TODO

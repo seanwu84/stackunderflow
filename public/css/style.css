@@ -36,6 +36,7 @@ main {
 
 .slipbop-button{
   border-radius: 4px;
+  border: none;
   background: var(--primary-color);
   color: white;
   font-size: 14px;
@@ -47,4 +48,8 @@ main {
     margin-left: auto;
     width: 1000px;
   }
+}
+
+.text-area {
+  resize: none;
 }
