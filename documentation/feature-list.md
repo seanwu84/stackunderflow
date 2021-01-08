@@ -1,4 +1,4 @@
-# Stack Overflow Clone
+# Feature List
 ## User Sign-Up
 - As a prospective user
 - I want to be able to sign-up
