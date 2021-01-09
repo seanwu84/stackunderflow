@@ -20,6 +20,7 @@ Users are also able to track their own contributions using user profile pages, g
 ## Features
 ### Search
 ![Search for question](./documentation/search.gif)
+
 Search returns the most upvoted questions and answers that contain the search term. Below is a snippet that populates the user's homepage with the top one hundred questions. Similar logic is used for search, but includes answers. 
 
 ```js
@@ -46,7 +47,9 @@ router.post("/homePage", asyncHandler( async(req, res, next) =>{
 ![Answer on question](./documentation/answer.gif)
 ### Voting
 ![Vote on question](./documentation/vote.gif)
+
 AJAX voting for real time updates. This snippet shows the associated code.
+
 ```js
 const getVotes = async () => {
   const res = await fetch(`/api/questions/${questionId}/vote`, {
